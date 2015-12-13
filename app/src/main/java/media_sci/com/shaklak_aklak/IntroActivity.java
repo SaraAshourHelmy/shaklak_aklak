@@ -23,7 +23,7 @@ public class IntroActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         SetupTools();
-        //Bassem
+        //Bassem22222tgt
     }
 
     private void SetupTools() {
