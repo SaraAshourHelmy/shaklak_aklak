@@ -6,12 +6,12 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -129,20 +129,36 @@ public class Utility {
         }
     }
 
-    public static HttpResponse SetHttpGet(String url) {
+    public static HttpGet SetHttpGet(String url) {
 
-        HttpResponse response = null;
+        HttpGet Get = null;
         try {
-            HttpGet Get = new HttpGet(url);
-            HttpClient httpClient = SetTimeOut();
-            response = httpClient.execute(Get);
+            Get = new HttpGet(url);
+            //HttpClient httpClient = SetTimeOut();
+
+            //response = httpClient.execute(Get);
+
 
         } catch (Exception e) {
             Log.e("Http_Get Error :", "" + e);
 
         }
-        return response;
+        return Get;
 
+    }
+
+    public static int isValidEmail(String mail) {
+        // true case
+        if (!TextUtils.isEmpty(mail) && android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches())
+            return 1;
+            // empty case
+        else if (TextUtils.isEmpty(mail))
+            return 2;
+            // not match mail format  case
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches())
+            return 3;
+        else
+            return 0;
     }
 
     public static HttpClient SetTimeOut() {

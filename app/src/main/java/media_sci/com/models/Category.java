@@ -105,4 +105,10 @@ public class Category {
     public void setImg_url(String img_url) {
         this.img_url = img_url;
     }
+
+    public static void DeleteCategory(Context con)
+    {
+        SQLiteDatabase db = Utility.ReadDatabase(con);
+
+    }
 }

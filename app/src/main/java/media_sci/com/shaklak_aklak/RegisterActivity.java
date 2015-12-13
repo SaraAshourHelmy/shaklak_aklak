@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -154,7 +153,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
             et_password.requestFocus();
             checkFlag = false;
         }
-        int validMail = isValidEmail(et_email.getText().toString());
+        int validMail = Utility.isValidEmail(et_email.getText().toString());
 
         if (validMail != 1) {
             checkFlag = false;
@@ -199,19 +198,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
 
     }
 
-    public int isValidEmail(String mail) {
-        // true case
-        if (!TextUtils.isEmpty(mail) && android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches())
-            return 1;
-            // empty case
-        else if (TextUtils.isEmpty(mail))
-            return 2;
-            // not match mail format  case
-        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches())
-            return 3;
-        else
-            return 0;
-    }
+
 
     private void Register() {
 
