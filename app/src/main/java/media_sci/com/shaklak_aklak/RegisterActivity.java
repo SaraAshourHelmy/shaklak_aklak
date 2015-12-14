@@ -55,7 +55,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
 
     private void SetupTools() {
 
-        gender = "0"; // by default selected male
+        gender = "-1"; // by default selected male
 
         tv_firstName = (TextView) findViewById(R.id.tv_firstName);
         tv_lastName = (TextView) findViewById(R.id.tv_lastName);
@@ -81,7 +81,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
         rd_female = (RadioButton) findViewById(R.id.rb_female);
         btn_sign_in = (Button) findViewById(R.id.btn_signIn);
 
-        rd_male.setButtonDrawable(R.drawable.checked);
+        rd_male.setButtonDrawable(R.color.white);
         rd_female.setButtonDrawable(R.color.white);
 
         rdg_genders.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -144,10 +144,17 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
         }
         if (et_age.getText().length() < 1 || et_age.getText().length() > 2) {
             et_age.setError("Please enter Real Age");
+            // change background to red rectangle or set message
             et_age.requestFocus();
             checkFlag = false;
         }
 
+        if (rdg_genders.getCheckedRadioButtonId() <= 0) {
+            checkFlag = false;
+            Log.e("gender","no selected");
+            rd_male.setError("Select Item");
+            rd_male.requestFocus();
+        }
         if (et_password.getText().length() < 1) {
             et_password.setError("Please Enter Password");
             et_password.requestFocus();
@@ -197,7 +204,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
         new RegisterAsyncTask().execute();
 
     }
-
 
 
     private void Register() {

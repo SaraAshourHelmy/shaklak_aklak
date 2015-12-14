@@ -19,6 +19,7 @@ public class ParseData {
     public static void ParseCategory(JSONObject categoryJson, Context context) {
 
         ArrayList<Category> lst_category = new ArrayList<>();
+        ArrayList<Integer> lst_deleteCategory = new ArrayList<>();
 
         Category category;
         try {
@@ -37,6 +38,12 @@ public class ParseData {
                 lst_category.add(category);
             }
             Category.InsertCategory(lst_category, context);
+            for (int i = 0; i < deleteList.length(); i++) {
+                updateObject = deleteList.getJSONObject(i);
+                int category_id = updateObject.getInt("id");
+                lst_deleteCategory.add(category_id);
+            }
+            Category.DeleteCategory(lst_deleteCategory,context);
 
 
         } catch (Exception e) {

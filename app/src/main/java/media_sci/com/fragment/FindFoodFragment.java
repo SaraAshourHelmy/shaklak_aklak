@@ -39,6 +39,11 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
         lst_category = (ListView) view.findViewById(R.id.lst_category);
 
         // get category from db or webservice then set adapter
+        ArrayList<Integer> lst_test = new ArrayList<>();
+        lst_test.add(1);
+       // lst_test.add(3);
+        Category.DeleteCategory(lst_test, getActivity());
+
         lst_category_items = Category.GetAllCategory(getActivity());
         categoryAdapter = new CategoryAdapter(getActivity()
                 , R.layout.adapter_category, lst_category_items);

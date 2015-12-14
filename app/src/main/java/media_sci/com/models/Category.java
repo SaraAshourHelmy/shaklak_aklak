@@ -74,6 +74,29 @@ public class Category {
         return lst_category;
     }
 
+    public static void DeleteCategory(ArrayList<Integer> lst_deleteCategory, Context con) {
+        SQLiteDatabase db = Utility.ReadDatabase(con);
+        try {
+            String deleteCategory = "(";
+            for (int i = 0; i < lst_deleteCategory.size(); i++) {
+                deleteCategory += lst_deleteCategory.get(i);
+                if (i < lst_deleteCategory.size() - 1) {
+                    deleteCategory += ",";
+                }
+
+            }
+            deleteCategory += ")";
+            String query = "delete from category where id in" + deleteCategory;
+            db.execSQL(query);
+            Log.e("category_delete", "done");
+
+        } catch (Exception e) {
+            Log.e("delete Category error", "" + e);
+        }
+        db.close();
+
+    }
+
     public int getId() {
         return id;
     }
@@ -104,11 +127,5 @@ public class Category {
 
     public void setImg_url(String img_url) {
         this.img_url = img_url;
-    }
-
-    public static void DeleteCategory(Context con)
-    {
-        SQLiteDatabase db = Utility.ReadDatabase(con);
-
     }
 }

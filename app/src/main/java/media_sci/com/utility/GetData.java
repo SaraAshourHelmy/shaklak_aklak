@@ -29,6 +29,7 @@ public class GetData {
 
     public GetData(Context context) {
         this.context = context;
+        new DataAsyncTask().execute();
     }
 
     private void GetCategory() {
@@ -61,6 +62,8 @@ public class GetData {
                 lastUpdate = new LastUpdate(lastUpdate_id, "category", last_update);
                 LastUpdate.InsertLastUpdate(lastUpdate, context);
 
+                // parse update and delete category
+                ParseData.ParseCategory(CategoryJson, context);
             }
         } catch (Exception e) {
             Log.e("category error", "" + e);
