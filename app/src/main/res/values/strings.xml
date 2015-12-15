@@ -13,4 +13,9 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="skip">Skip</string>
     <string name="your_food">Your Food</string>
+    <string name="logout">Logout</string>
+    <string name="setting">Settings</string>
+    <string name="guide">Nutrition Guide</string>
+    <string name="terms">Terms and Condition</string>
+
 </resources>

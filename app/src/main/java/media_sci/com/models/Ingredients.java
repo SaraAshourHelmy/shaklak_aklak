@@ -15,16 +15,15 @@ import media_sci.com.utility.Utility;
  */
 public class Ingredients {
 
-    public int id;
-    public String item_name_en;
-    public String item_name_ar;
-    public int cat_id;
-    public int res_id;
-    public int unit_id;
-    public double water, energy, protein, fat, sat_fat, cholest;
-    public double carbo_tot, sugars, carbo_fiber, ash, calcium, phosphorus;
-    public double iron, sodium, potassium, vit_a, thiamine_b1, riboflavin_b2;
-    public double niacin_b3, ascorbic_acid, ndb_no;
+    private int id;
+    private String item_name_en;
+    private String item_name_ar;
+    private int cat_id, type;
+    private int res_id;
+    private double water, energy, protein, fat, sat_fat, cholest;
+    private double carbo_tot, sugars, carbo_fiber, ash, calcium, phosphorus;
+    private double iron, sodium, potassium, vit_a, thiamine_b1, riboflavin_b2;
+    private double niacin_b3, ascorbic_acid, ndb_no;
 
     public static void InsertIngredients(ArrayList<Ingredients> lst_ingredients, Context con) {
         Ingredients ingredients;
@@ -32,11 +31,11 @@ public class Ingredients {
         for (int i = 0; i < lst_ingredients.size(); i++) {
             ingredients = lst_ingredients.get(i);
             String query = "insert or Replace into ingredients" +
-                    "(id,item_name_en,item_name_ar,cat_id,res_id,unit_id," +
+                    "(id,item_name_en,item_name_ar,cat_id,res_id," +
                     "water,energy,protein,fat,sat_fat,cholest," +
                     "carbo_tot,sugars,carbo_fiber,ash,calcium,phosphorus," +
                     "iron,sodium,potassium,vit_a,thiamine_b1,riboflavin_b2," +
-                    "niacin_b3,ascorbic_acid,ndb_no) " +
+                    "niacin_b3,ascorbic_acid,ndb_no,type) " +
                     "values(?,?,?,?,?,?,?,?,?,?," +
                     "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             SQLiteStatement insertStmt = db.compileStatement(query);
@@ -46,28 +45,28 @@ public class Ingredients {
             insertStmt.bindString(3, ingredients.item_name_ar);
             insertStmt.bindLong(4, ingredients.cat_id);
             insertStmt.bindLong(5, ingredients.res_id);
-            insertStmt.bindLong(6, ingredients.unit_id);
-            insertStmt.bindDouble(7, ingredients.water);
-            insertStmt.bindDouble(8, ingredients.energy);
-            insertStmt.bindDouble(9, ingredients.protein);
-            insertStmt.bindDouble(10, ingredients.fat);
-            insertStmt.bindDouble(11, ingredients.sat_fat);
-            insertStmt.bindDouble(12, ingredients.cholest);
-            insertStmt.bindDouble(13, ingredients.carbo_tot);
-            insertStmt.bindDouble(14, ingredients.sugars);
-            insertStmt.bindDouble(15, ingredients.carbo_fiber);
-            insertStmt.bindDouble(16, ingredients.ash);
-            insertStmt.bindDouble(17, ingredients.calcium);
-            insertStmt.bindDouble(18, ingredients.phosphorus);
-            insertStmt.bindDouble(19, ingredients.iron);
-            insertStmt.bindDouble(20, ingredients.sodium);
-            insertStmt.bindDouble(21, ingredients.potassium);
-            insertStmt.bindDouble(22, ingredients.vit_a);
-            insertStmt.bindDouble(23, ingredients.thiamine_b1);
-            insertStmt.bindDouble(24, ingredients.riboflavin_b2);
-            insertStmt.bindDouble(25, ingredients.niacin_b3);
-            insertStmt.bindDouble(26, ingredients.ascorbic_acid);
-            insertStmt.bindDouble(27, ingredients.ndb_no);
+            insertStmt.bindDouble(6, ingredients.water);
+            insertStmt.bindDouble(7, ingredients.energy);
+            insertStmt.bindDouble(8, ingredients.protein);
+            insertStmt.bindDouble(9, ingredients.fat);
+            insertStmt.bindDouble(10, ingredients.sat_fat);
+            insertStmt.bindDouble(11, ingredients.cholest);
+            insertStmt.bindDouble(12, ingredients.carbo_tot);
+            insertStmt.bindDouble(13, ingredients.sugars);
+            insertStmt.bindDouble(14, ingredients.carbo_fiber);
+            insertStmt.bindDouble(15, ingredients.ash);
+            insertStmt.bindDouble(16, ingredients.calcium);
+            insertStmt.bindDouble(17, ingredients.phosphorus);
+            insertStmt.bindDouble(18, ingredients.iron);
+            insertStmt.bindDouble(19, ingredients.sodium);
+            insertStmt.bindDouble(20, ingredients.potassium);
+            insertStmt.bindDouble(21, ingredients.vit_a);
+            insertStmt.bindDouble(22, ingredients.thiamine_b1);
+            insertStmt.bindDouble(23, ingredients.riboflavin_b2);
+            insertStmt.bindDouble(24, ingredients.niacin_b3);
+            insertStmt.bindDouble(25, ingredients.ascorbic_acid);
+            insertStmt.bindDouble(26, ingredients.ndb_no);
+            insertStmt.bindLong(27, ingredients.type);
             insertStmt.executeInsert();
         }
         db.close();
@@ -89,7 +88,6 @@ public class Ingredients {
                 ingredients.setItem_name_ar(c.getString(c.getColumnIndex("item_name_ar")));
                 ingredients.setCat_id(c.getInt(c.getColumnIndex("cat_id")));
                 ingredients.setId(c.getInt(c.getColumnIndex("res_id")));
-                ingredients.setUnit_id(c.getInt(c.getColumnIndex("unit_id")));
                 ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
                 ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
                 ingredients.setProtein(c.getDouble(c.getColumnIndex("protein")));
@@ -111,6 +109,7 @@ public class Ingredients {
                 ingredients.setNiacin_b3(c.getDouble(c.getColumnIndex("niacin_b3")));
                 ingredients.setAscorbic_acid(c.getDouble(c.getColumnIndex("ascorbic_acid")));
                 ingredients.setNdb_no(c.getDouble(c.getColumnIndex("ndb_no")));
+                ingredients.setType(c.getInt(c.getColumnIndex("type")));
 
                 lst_ingredients.add(ingredients);
 
@@ -118,6 +117,14 @@ public class Ingredients {
         }
         db.close();
         return lst_ingredients;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public double getNiacin_b3() {
@@ -288,13 +295,6 @@ public class Ingredients {
         this.protein = protein;
     }
 
-    public int getUnit_id() {
-        return unit_id;
-    }
-
-    public void setUnit_id(int unit_id) {
-        this.unit_id = unit_id;
-    }
 
     public int getCat_id() {
         return cat_id;

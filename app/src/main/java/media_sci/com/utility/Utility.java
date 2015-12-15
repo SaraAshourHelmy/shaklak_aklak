@@ -43,7 +43,9 @@ public class Utility {
         ImageView img_action_icon = (ImageView) view.findViewById(R.id.img_action_icon);
 
         tv_action_title.setText(title);
-        if (type == 1) {
+        if (type == 0) {
+            // actionbar without icons
+        } else if (type == 1) {
 
             // set icon image search icon
         } else if (type == 2) {

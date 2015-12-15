@@ -13,6 +13,7 @@ import android.widget.TextView;
 import media_sci.com.fragment.ArticlesFragment;
 import media_sci.com.fragment.FindFoodFragment;
 import media_sci.com.fragment.FoodPyramidFragment;
+import media_sci.com.fragment.SettingFragment;
 
 
 public class MainActivity extends FragmentActivity {
@@ -46,6 +47,14 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("FoodPyramid").setIndicator("Food", null),
                 FoodPyramidFragment.class, null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("FoodPyramid").setIndicator("Food", null),
+                FoodPyramidFragment.class, null);
+
+        // setting tab
+        mTabHost.addTab(
+                mTabHost.newTabSpec("Setting").setIndicator("Setting", null),
+                SettingFragment.class, null);
 
         // hide tab 3
         // tabHost.getTabWidget().getChildAt(0).setVisibility(View.GONE);
