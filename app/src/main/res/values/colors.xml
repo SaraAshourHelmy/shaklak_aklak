@@ -9,4 +9,5 @@
     <color name="transparent">#00000000</color>
     <color name="app_color">#37FFD1</color>
     <color name="app_color_pressed">#00D4FF</color>
+    <color name="light_gray">#F0F0F0</color>
 </resources>

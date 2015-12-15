@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import media_sci.com.models.Category;
+import media_sci.com.models.Restaurant;
 
 /**
  * Created by Bassem on 12/13/2015.
@@ -39,11 +40,43 @@ public class ParseData {
             }
             Category.InsertCategory(lst_category, context);
             for (int i = 0; i < deleteList.length(); i++) {
-                updateObject = deleteList.getJSONObject(i);
-                int category_id = updateObject.getInt("id");
-                lst_deleteCategory.add(category_id);
+                lst_deleteCategory.add(deleteList.getInt(i));
             }
-            Category.DeleteCategory(lst_deleteCategory,context);
+            Category.DeleteCategory(lst_deleteCategory, context);
+
+
+        } catch (Exception e) {
+            Log.e("category_Parse_error", "" + e);
+        }
+
+    }
+
+    public static void ParseRestaurant(JSONObject restaurantJson, Context context) {
+
+        ArrayList<Restaurant> lst_restaurant = new ArrayList<>();
+        ArrayList<Integer> lst_deleteRestaurant = new ArrayList<>();
+
+        Restaurant restaurant;
+        try {
+
+            JSONObject updateObject;
+            JSONArray updateList = restaurantJson.getJSONArray("update");
+            JSONArray deleteList = restaurantJson.getJSONArray("delete");
+            for (int i = 0; i < updateList.length(); i++) {
+
+                updateObject = updateList.getJSONObject(i);
+                restaurant = new Restaurant();
+                restaurant.setId(updateObject.getInt("id"));
+                restaurant.setName_en(updateObject.getString("restaurant_name_en"));
+                restaurant.setName_ar(updateObject.getString("restaurant_name_ar"));
+                restaurant.setImg_url(updateObject.getString("image"));
+                lst_restaurant.add(restaurant);
+            }
+            Restaurant.InsertRestaurant(lst_restaurant, context);
+            for (int i = 0; i < deleteList.length(); i++) {
+                lst_deleteRestaurant.add(deleteList.getInt(i));
+            }
+            Restaurant.DeleteRestaurant(lst_deleteRestaurant, context);
 
 
         } catch (Exception e) {

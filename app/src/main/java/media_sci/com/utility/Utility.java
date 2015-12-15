@@ -1,12 +1,15 @@
 package media_sci.com.utility;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +25,8 @@ import org.apache.http.params.HttpParams;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import media_sci.com.shaklak_aklak.R;
 
@@ -31,47 +36,27 @@ public class Utility {
     private static SharedPreferences shared_db;
 
 
-    public static void ActionBarSetting(View view, int type, String title
-            , final Activity currentActivity) {
+    public static void ActionBarSetting(View view, String title, int type) {
 
 
-        ImageView img_app_logo = (ImageView) view.findViewById(R.id.img_app_logo);
         TextView tv_action_title = (TextView) view.findViewById(R.id.tv_action_title);
-        ImageView img_action_menu = (ImageView) view.findViewById(R.id.img_action_menu);
-        ImageView img_action_back = (ImageView) view.findViewById(R.id.img_action_back);
-        ImageView img_action_close = (ImageView) view.findViewById(R.id.img_action_close);
-        // default action bar
-        if (type == 0) {
-            img_app_logo.setVisibility(View.VISIBLE);
-            img_action_back.setVisibility(View.GONE);
-            img_action_close.setVisibility(View.GONE);
-
-        } else if (type == 1) {
-            img_app_logo.setVisibility(View.GONE);
-            img_action_back.setVisibility(View.VISIBLE);
-            img_action_close.setVisibility(View.GONE);
-        } else if (type == 2) {
-            img_app_logo.setVisibility(View.VISIBLE);
-            img_action_back.setVisibility(View.GONE);
-            img_action_close.setVisibility(View.VISIBLE);
-        }
+        ImageView img_action_icon = (ImageView) view.findViewById(R.id.img_action_icon);
 
         tv_action_title.setText(title);
+        if (type == 1) {
 
+            // set icon image search icon
+        } else if (type == 2) {
+            // set icon image category icon;
+        }
 
-        img_action_menu.setOnClickListener(new View.OnClickListener() {
+        img_action_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // go to menu activity that have degree of transparent background
-            }
-        });
-        img_action_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                currentActivity.finish();
             }
         });
+
     }
 
     public static SQLiteDatabase ReadDatabase(Context con) {
@@ -198,5 +183,29 @@ public class Utility {
         }
         return HaveConnectedWifi || HaveConnectedMobile;
     }
+
+    public static void printHashKey(Context context) {
+        PackageInfo info;
+        try {
+            info = context.getPackageManager().getPackageInfo
+                    (context.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                // String something = new
+                // String(Base64.encodeBytes(md.digest()));
+                Log.e("hash key", something);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("name not found", e1.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("no such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("exception", e.toString());
+        }
+    }
+
 
 }

@@ -35,42 +35,54 @@ public class Category {
     public static void InsertCategory(ArrayList<Category> lst_category, Context con) {
         Category category;
         SQLiteDatabase db = Utility.ReadDatabase(con);
-        for (int i = 0; i < lst_category.size(); i++) {
-            category = lst_category.get(i);
-            String query = "insert or Replace into category(id,name_en,name_ar,img_url) " +
-                    "values(?,?,?,?)";
-            SQLiteStatement insertStmt = db.compileStatement(query);
-            insertStmt.clearBindings();
-            insertStmt.bindLong(1, category.id);
-            insertStmt.bindString(2, category.name_en);
-            insertStmt.bindString(3, category.name_ar);
-            insertStmt.bindString(4, category.img_url);
-            insertStmt.executeInsert();
+        try {
+
+
+            for (int i = 0; i < lst_category.size(); i++) {
+                category = lst_category.get(i);
+                String query = "insert or Replace into category(id,name_en,name_ar,img_url) " +
+                        "values(?,?,?,?)";
+                SQLiteStatement insertStmt = db.compileStatement(query);
+                insertStmt.clearBindings();
+                insertStmt.bindLong(1, category.id);
+                insertStmt.bindString(2, category.name_en);
+                insertStmt.bindString(3, category.name_ar);
+                insertStmt.bindString(4, category.img_url);
+                insertStmt.executeInsert();
+            }
+            db.close();
+            Log.e("Categories", "inserted");
+        } catch (Exception e) {
+            Log.e("category db error", "" + e);
         }
-        db.close();
-        Log.e("Categories", "inserted");
     }
 
     public static ArrayList<Category> GetAllCategory(Context con) {
 
         SQLiteDatabase db = Utility.ReadDatabase(con);
         ArrayList<Category> lst_category = new ArrayList<>();
-        Category category;
-        String query = "select * from category";
-        Cursor c = db.rawQuery(query, null);
-        if (c.moveToFirst()) {
-            do {
-                int CatId = c.getInt(c.getColumnIndex("id"));
-                String Name_en = c.getString(c.getColumnIndex("name_en"));
-                String Name_ar = c.getString(c.getColumnIndex("name_ar"));
-                String ImgURL = c.getString(c.getColumnIndex("img_url"));
 
-                category = new Category(CatId, Name_en, Name_ar, ImgURL);
-                lst_category.add(category);
+        try {
+            Category category;
+            String query = "select * from category";
+            Cursor c = db.rawQuery(query, null);
+            if (c.moveToFirst()) {
+                do {
+                    int CatId = c.getInt(c.getColumnIndex("id"));
+                    String Name_en = c.getString(c.getColumnIndex("name_en"));
+                    String Name_ar = c.getString(c.getColumnIndex("name_ar"));
+                    String ImgURL = c.getString(c.getColumnIndex("img_url"));
 
-            } while (c.moveToNext());
+                    category = new Category(CatId, Name_en, Name_ar, ImgURL);
+                    lst_category.add(category);
+
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("category db error", "" + e);
         }
         db.close();
+
         return lst_category;
     }
 

@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import media_sci.com.utility.Utility;
-
 /**
  * Created by Bassem on 11/19/2015.
  */
@@ -38,6 +36,6 @@ public class MenuActivity extends Activity {
         tv_search = (TextView) findViewById(R.id.tv_search_menu);
         tv_contactUs = (TextView) findViewById(R.id.tv_contactUs_menu);
         tv_followUs = (TextView) findViewById(R.id.tv_followUs_menu);
-        Utility.ActionBarSetting(actionbar, 2, "", this);
+        //Utility.ActionBarSetting(actionbar, 2, "", this);
     }
 }

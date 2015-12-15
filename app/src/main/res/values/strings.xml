@@ -11,4 +11,6 @@
     <string name="change_password">Change Password</string>
     <string name="new_password">Save New Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="skip">Skip</string>
+    <string name="your_food">Your Food</string>
 </resources>

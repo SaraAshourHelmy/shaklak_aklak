@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity {
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
         mTabHost.addTab(
-                mTabHost.newTabSpec("home").setIndicator("",
+                mTabHost.newTabSpec("FindFood").setIndicator("",
                         getResources().getDrawable(R.drawable.logo)),
                 FindFoodFragment.class, null);
 

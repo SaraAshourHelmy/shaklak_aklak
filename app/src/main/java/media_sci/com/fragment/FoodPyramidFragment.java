@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import media_sci.com.shaklak_aklak.R;
-import media_sci.com.utility.Utility;
 
 /**
  * Created by Bassem on 11/18/2015.
@@ -29,7 +28,7 @@ public class FoodPyramidFragment extends Fragment {
     private void SetupTools(View view) {
         img_foodPyramid = (ImageView) view.findViewById(R.id.img_foodPyramid);
         actionbar = (View) view.findViewById(R.id.food_actionbar);
-        Utility.ActionBarSetting(actionbar, 0, "الهرم الغذائي", getActivity());
+        //Utility.ActionBarSetting(actionbar, 0, "الهرم الغذائي", getActivity());
     }
 
 
