@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import media_sci.com.models.UserData;
 import media_sci.com.utility.Utility;
 
 /**
@@ -151,7 +152,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
 
         if (rdg_genders.getCheckedRadioButtonId() <= 0) {
             checkFlag = false;
-            Log.e("gender","no selected");
+            Log.e("gender", "no selected");
             rd_male.setError("Select Item");
             rd_male.requestFocus();
         }
@@ -298,10 +299,17 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
             super.onPostExecute(aVoid);
             dialog.dismiss();
             if (result == 1) {
-                // call intent
+
+
+                // save user data
+                UserData userData = new UserData(RegisterActivity.this);
+                userData.setUserData(firstName, lastName, mobileNo, email, password,
+                        gender, age, height, weight);
+
                 Toast.makeText(RegisterActivity.this, "Register Success"
                         , Toast.LENGTH_SHORT).show();
 
+                // call intent
                 finish();
             } else if (result == 0) {
                 Toast.makeText(RegisterActivity.this, responseMessage

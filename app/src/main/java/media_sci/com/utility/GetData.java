@@ -30,6 +30,7 @@ public class GetData {
             "http://192.168.1.227/shaklk/public/api/categories/all";
     static String RestaurantURL =
             "http://192.168.1.227/shaklk/public/api/categories/restaurants";
+    static String UnitURL = "http://192.168.1.227/shaklk/public/api/categories/units";
     Context context;
 
     public GetData(Context context) {
@@ -57,7 +58,7 @@ public class GetData {
             httpPost.setEntity(new UrlEncodedFormEntity(data));
             HttpResponse response = httpClient.execute(httpPost);
             int status = response.getStatusLine().getStatusCode();
-            Log.e("json_status", "" + status);
+            Log.e("category_status", "" + status);
             if (status == 200) {
                 HttpEntity entity = response.getEntity();
                 String category = EntityUtils.toString(entity);
@@ -97,7 +98,7 @@ public class GetData {
             httpPost.setEntity(new UrlEncodedFormEntity(data));
             HttpResponse response = httpClient.execute(httpPost);
             int status = response.getStatusLine().getStatusCode();
-            Log.e("json_status", "" + status);
+            Log.e("restaurant_status", "" + status);
             if (status == 200) {
                 HttpEntity entity = response.getEntity();
                 String restaurant = EntityUtils.toString(entity);
@@ -107,11 +108,52 @@ public class GetData {
                 lastUpdate = new LastUpdate(lastUpdate_id, "restaurant", last_update);
                 LastUpdate.InsertLastUpdate(lastUpdate, context);
 
-                // parse update and delete category
+                // parse update and delete restaurant
                 ParseData.ParseRestaurant(RestaurantJson, context);
             }
         } catch (Exception e) {
-            Log.e("restaurant error", "" + e);
+            Log.e("restaurant_error", "" + e);
+        }
+
+    }
+
+    private void GetUnit() {
+
+        HttpClient httpClient = Utility.SetTimeOut();
+        HttpPost httpPost = Utility.SetHttpPost(UnitURL);
+
+        String last_update;
+        int lastUpdate_id;
+        LastUpdate lastUpdate = LastUpdate.GetLastUpdate(context, "unit");
+        if (lastUpdate != null) {
+            last_update = lastUpdate.last_update;
+            lastUpdate_id = lastUpdate.lastUpdate_id;
+        } else {
+            last_update = "0";
+            lastUpdate_id = 3;
+        }
+        try {
+
+            List<NameValuePair> data = new ArrayList<NameValuePair>();
+            data.add(new BasicNameValuePair("lastupdate", last_update));
+            httpPost.setEntity(new UrlEncodedFormEntity(data));
+            HttpResponse response = httpClient.execute(httpPost);
+            int status = response.getStatusLine().getStatusCode();
+            Log.e("unit_status", "" + status);
+            if (status == 200) {
+                HttpEntity entity = response.getEntity();
+                String unit = EntityUtils.toString(entity);
+
+                JSONObject UnitJson = new JSONObject(unit);
+                last_update = UnitJson.getString("lastupdate");
+                lastUpdate = new LastUpdate(lastUpdate_id, "unit", last_update);
+                LastUpdate.InsertLastUpdate(lastUpdate, context);
+
+                // parse update and delete unit
+                ParseData.ParseUnit(UnitJson, context);
+            }
+        } catch (Exception e) {
+            Log.e("unit_error", "" + e);
         }
 
     }

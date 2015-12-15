@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 import media_sci.com.models.Category;
 import media_sci.com.models.Restaurant;
+import media_sci.com.models.Unit;
 
 /**
  * Created by Bassem on 12/13/2015.
  */
 public class ParseData {
-
 
     public static void ParseCategory(JSONObject categoryJson, Context context) {
 
@@ -81,6 +81,40 @@ public class ParseData {
 
         } catch (Exception e) {
             Log.e("category_Parse_error", "" + e);
+        }
+
+    }
+
+    public static void ParseUnit(JSONObject unitJson, Context context) {
+
+        ArrayList<Unit> lst_unit = new ArrayList<>();
+        ArrayList<Integer> lst_deleteUnit = new ArrayList<>();
+
+        Unit unit;
+        try {
+
+            JSONObject updateObject;
+            JSONArray updateList = unitJson.getJSONArray("update");
+            JSONArray deleteList = unitJson.getJSONArray("delete");
+            for (int i = 0; i < updateList.length(); i++) {
+
+                updateObject = updateList.getJSONObject(i);
+                unit = new Unit();
+                unit.setId(updateObject.getInt("id"));
+                unit.setUnit(updateObject.getString("unit"));
+
+                lst_unit.add(unit);
+            }
+            Unit.InsertUnit(lst_unit, context);
+
+            for (int i = 0; i < deleteList.length(); i++) {
+                lst_deleteUnit.add(deleteList.getInt(i));
+            }
+            Unit.DeleteUnit(lst_deleteUnit, context);
+
+
+        } catch (Exception e) {
+            Log.e("unit_Parse_error", "" + e);
         }
 
     }
