@@ -156,8 +156,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
             rd_male.setError("Select Item");
             rd_male.requestFocus();
         }
-        if (et_password.getText().length() < 1) {
-            et_password.setError("Please Enter Password");
+        if (et_password.getText().length() < 4) {
+            et_password.setError("Password must be more 3 digits");
             et_password.requestFocus();
             checkFlag = false;
         }

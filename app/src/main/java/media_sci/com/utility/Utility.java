@@ -1,6 +1,7 @@
 package media_sci.com.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import media_sci.com.shaklak_aklak.MainActivity;
 import media_sci.com.shaklak_aklak.R;
 
 public class Utility {
@@ -36,7 +38,8 @@ public class Utility {
     private static SharedPreferences shared_db;
 
 
-    public static void ActionBarSetting(View view, String title, int type) {
+    public static void ActionBarSetting(View view, String title, int type
+            , String url) {
 
 
         TextView tv_action_title = (TextView) view.findViewById(R.id.tv_action_title);
@@ -48,8 +51,11 @@ public class Utility {
         } else if (type == 1) {
 
             // set icon image search icon
+            img_action_icon.setImageResource(R.drawable.search);
         } else if (type == 2) {
             // set icon image category icon;
+           // CustomImageLoader.getInstance().loadImage(url
+                  //  , img_action_icon, null);
         }
 
         img_action_icon.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +90,8 @@ public class Utility {
             DatabaseSetting(context);
         } else {
             Log.e("DB", "Already exist");
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
 
         }
 
@@ -110,6 +118,7 @@ public class Utility {
             SharedPreferences.Editor edit = shared_db.edit();
             edit.putBoolean("check", true);
             edit.commit();
+            GetData getData = new GetData(context);
 
         } catch (Exception e) {
             Log.e("create DBf error :", "" + e);

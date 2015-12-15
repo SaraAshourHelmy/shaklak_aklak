@@ -3,7 +3,6 @@ package media_sci.com.shaklak_aklak;
 import android.app.Activity;
 import android.os.Bundle;
 
-import media_sci.com.utility.GetData;
 import media_sci.com.utility.Utility;
 
 /**
@@ -31,7 +30,7 @@ public class Splash extends Activity {
             }
         }, 5000);*/
 
-        GetData getData = new GetData(this);
+       // GetData getData = new GetData(this);
 
 
     }

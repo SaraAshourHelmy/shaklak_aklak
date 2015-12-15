@@ -13,37 +13,37 @@ import java.util.Locale;
 
 import lb.library.SearchablePinnedHeaderListViewAdapter;
 import lb.library.StringArrayAlphabetIndexer;
-import media_sci.com.models.Category;
+import media_sci.com.models.Ingredients;
 import media_sci.com.shaklak_aklak.R;
 
 /**
  * Created by Bassem on 12/7/2015.
  */
-public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Category> {
+public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Ingredients> {
 
     Context context;
-    ArrayList<Category> lst_category;
+    ArrayList<Ingredients> lst_items;
 
-    public SearchAdapter(Context context, final ArrayList<Category> categories) {
+    public SearchAdapter(Context context, final ArrayList<Ingredients> items) {
         this.context = context;
-        setData(categories);
+        setData(items);
 
     }
 
 
-    public void setData(final ArrayList<Category> contacts) {
-        this.lst_category = contacts;
-        final String[] generatedContactNames = generateContactNames(contacts);
+    public void setData(final ArrayList<Ingredients> items) {
+        this.lst_items = items;
+        final String[] generatedContactNames = generateContactNames(items);
         // this line response for view of header of list
         setSectionIndexer(new StringArrayAlphabetIndexer(generatedContactNames, true));
     }
 
-    private String[] generateContactNames(final List<Category> contacts) {
-        final ArrayList<String> contactNames = new ArrayList<String>();
-        if (contacts != null)
-            for (final Category contactEntity : contacts)
-                contactNames.add(contactEntity.getName_en());
-        return contactNames.toArray(new String[contactNames.size()]);
+    private String[] generateContactNames(final List<Ingredients> items) {
+        final ArrayList<String> itemNames = new ArrayList<String>();
+        if (items != null)
+            for (final Ingredients itemEntity : items)
+                itemNames.add(itemEntity.getItem_name_en());
+        return itemNames.toArray(new String[itemNames.size()]);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Categor
 
         }
 
-        final Category category = getItem(position);
-        final String displayName = category.getName_en();
+        final Ingredients item = getItem(position);
+        final String displayName = item.getItem_name_en();
         TextView name = (TextView) convertView.findViewById(R.id.listview_item__friendNameTextView);
         name.setText(displayName);
         TextView tv_header = (TextView) convertView.findViewById(R.id.header_text);
@@ -71,16 +71,16 @@ public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Categor
     }
 
     @Override
-    public boolean doFilter(final Category item, final CharSequence constraint) {
+    public boolean doFilter(final Ingredients item, final CharSequence constraint) {
         if (TextUtils.isEmpty(constraint))
             return true;
-        final String displayName = item.getName_en();
+        final String displayName = item.getItem_name_en();
         return !TextUtils.isEmpty(displayName) && displayName.toLowerCase(Locale.getDefault())
                 .contains(constraint.toString().toLowerCase(Locale.getDefault()));
     }
 
     @Override
-    public ArrayList<Category> getOriginalList() {
-        return lst_category;
+    public ArrayList<Ingredients> getOriginalList() {
+        return lst_items;
     }
 }

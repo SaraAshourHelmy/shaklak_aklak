@@ -48,7 +48,7 @@ public class ArticlesFragment extends Fragment {
         lnr_home_default = (LinearLayout) view.findViewById(R.id.lnr_articles_default);
         lnr_home_details = (LinearLayout) view.findViewById(R.id.lnr_articles_details);
         actionbar = (View) view.findViewById(R.id.articles_actionbar);
-        Utility.ActionBarSetting(actionbar, "المقالات",1);
+        Utility.ActionBarSetting(actionbar, "المقالات",1,"");
 
         btn_test = (Button) view.findViewById(R.id.btn_test);
         btn_test.setOnClickListener(new View.OnClickListener() {

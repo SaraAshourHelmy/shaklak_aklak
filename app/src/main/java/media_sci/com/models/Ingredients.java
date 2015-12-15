@@ -28,95 +28,186 @@ public class Ingredients {
     public static void InsertIngredients(ArrayList<Ingredients> lst_ingredients, Context con) {
         Ingredients ingredients;
         SQLiteDatabase db = Utility.ReadDatabase(con);
-        for (int i = 0; i < lst_ingredients.size(); i++) {
-            ingredients = lst_ingredients.get(i);
-            String query = "insert or Replace into ingredients" +
-                    "(id,item_name_en,item_name_ar,cat_id,res_id," +
-                    "water,energy,protein,fat,sat_fat,cholest," +
-                    "carbo_tot,sugars,carbo_fiber,ash,calcium,phosphorus," +
-                    "iron,sodium,potassium,vit_a,thiamine_b1,riboflavin_b2," +
-                    "niacin_b3,ascorbic_acid,ndb_no,type) " +
-                    "values(?,?,?,?,?,?,?,?,?,?," +
-                    "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            SQLiteStatement insertStmt = db.compileStatement(query);
-            insertStmt.clearBindings();
-            insertStmt.bindLong(1, ingredients.id);
-            insertStmt.bindString(2, ingredients.item_name_en);
-            insertStmt.bindString(3, ingredients.item_name_ar);
-            insertStmt.bindLong(4, ingredients.cat_id);
-            insertStmt.bindLong(5, ingredients.res_id);
-            insertStmt.bindDouble(6, ingredients.water);
-            insertStmt.bindDouble(7, ingredients.energy);
-            insertStmt.bindDouble(8, ingredients.protein);
-            insertStmt.bindDouble(9, ingredients.fat);
-            insertStmt.bindDouble(10, ingredients.sat_fat);
-            insertStmt.bindDouble(11, ingredients.cholest);
-            insertStmt.bindDouble(12, ingredients.carbo_tot);
-            insertStmt.bindDouble(13, ingredients.sugars);
-            insertStmt.bindDouble(14, ingredients.carbo_fiber);
-            insertStmt.bindDouble(15, ingredients.ash);
-            insertStmt.bindDouble(16, ingredients.calcium);
-            insertStmt.bindDouble(17, ingredients.phosphorus);
-            insertStmt.bindDouble(18, ingredients.iron);
-            insertStmt.bindDouble(19, ingredients.sodium);
-            insertStmt.bindDouble(20, ingredients.potassium);
-            insertStmt.bindDouble(21, ingredients.vit_a);
-            insertStmt.bindDouble(22, ingredients.thiamine_b1);
-            insertStmt.bindDouble(23, ingredients.riboflavin_b2);
-            insertStmt.bindDouble(24, ingredients.niacin_b3);
-            insertStmt.bindDouble(25, ingredients.ascorbic_acid);
-            insertStmt.bindDouble(26, ingredients.ndb_no);
-            insertStmt.bindLong(27, ingredients.type);
-            insertStmt.executeInsert();
+        try {
+
+
+            for (int i = 0; i < lst_ingredients.size(); i++) {
+                ingredients = lst_ingredients.get(i);
+                String query = "insert or Replace into ingredients" +
+                        "(id,item_name_en,item_name_ar,cat_id,res_id," +
+                        "water,energy,protein,fat,sat_fat,cholest," +
+                        "carbo_tot,sugars,carbo_fiber,ash,calcium,phosphorus," +
+                        "iron,sodium,potassium,vit_a,thiamine_b1,riboflavin_b2," +
+                        "niacin_b3,ascorbic_acid,ndb_no,type) " +
+                        "values(?,?,?,?,?,?,?,?,?,?," +
+                        "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                SQLiteStatement insertStmt = db.compileStatement(query);
+                insertStmt.clearBindings();
+                insertStmt.bindLong(1, ingredients.id);
+                insertStmt.bindString(2, ingredients.item_name_en);
+                insertStmt.bindString(3, ingredients.item_name_ar);
+                insertStmt.bindLong(4, ingredients.cat_id);
+                insertStmt.bindLong(5, ingredients.res_id);
+                insertStmt.bindDouble(6, ingredients.water);
+                insertStmt.bindDouble(7, ingredients.energy);
+                insertStmt.bindDouble(8, ingredients.protein);
+                insertStmt.bindDouble(9, ingredients.fat);
+                insertStmt.bindDouble(10, ingredients.sat_fat);
+                insertStmt.bindDouble(11, ingredients.cholest);
+                insertStmt.bindDouble(12, ingredients.carbo_tot);
+                insertStmt.bindDouble(13, ingredients.sugars);
+                insertStmt.bindDouble(14, ingredients.carbo_fiber);
+                insertStmt.bindDouble(15, ingredients.ash);
+                insertStmt.bindDouble(16, ingredients.calcium);
+                insertStmt.bindDouble(17, ingredients.phosphorus);
+                insertStmt.bindDouble(18, ingredients.iron);
+                insertStmt.bindDouble(19, ingredients.sodium);
+                insertStmt.bindDouble(20, ingredients.potassium);
+                insertStmt.bindDouble(21, ingredients.vit_a);
+                insertStmt.bindDouble(22, ingredients.thiamine_b1);
+                insertStmt.bindDouble(23, ingredients.riboflavin_b2);
+                insertStmt.bindDouble(24, ingredients.niacin_b3);
+                insertStmt.bindDouble(25, ingredients.ascorbic_acid);
+                insertStmt.bindDouble(26, ingredients.ndb_no);
+                insertStmt.bindLong(27, ingredients.type);
+                insertStmt.executeInsert();
+            }
+            db.close();
+            Log.e("ingredients", "inserted");
+        } catch (Exception e) {
+            Log.e("ingredient_insert_error", "" + e);
         }
-        db.close();
-        Log.e("Restaurants", "inserted");
     }
 
-    public static ArrayList<Ingredients> GetAllRestaurant(Context con) {
+    public static ArrayList<Ingredients> GetAllIngredients(Context con) {
 
         SQLiteDatabase db = Utility.ReadDatabase(con);
         ArrayList<Ingredients> lst_ingredients = new ArrayList<>();
         Ingredients ingredients;
-        String query = "select * from ingredients";
-        Cursor c = db.rawQuery(query, null);
-        if (c.moveToFirst()) {
-            do {
-                ingredients = new Ingredients();
-                ingredients.setId(c.getInt(c.getColumnIndex("id")));
-                ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name_en")));
-                ingredients.setItem_name_ar(c.getString(c.getColumnIndex("item_name_ar")));
-                ingredients.setCat_id(c.getInt(c.getColumnIndex("cat_id")));
-                ingredients.setId(c.getInt(c.getColumnIndex("res_id")));
-                ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
-                ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
-                ingredients.setProtein(c.getDouble(c.getColumnIndex("protein")));
-                ingredients.setFat(c.getDouble(c.getColumnIndex("fat")));
-                ingredients.setSat_fat(c.getDouble(c.getColumnIndex("sat_fat")));
-                ingredients.setCholest(c.getDouble(c.getColumnIndex("cholest")));
-                ingredients.setCarbo_tot(c.getDouble(c.getColumnIndex("carbo_tot")));
-                ingredients.setSugars(c.getDouble(c.getColumnIndex("sugars")));
-                ingredients.setCarbo_fiber(c.getDouble(c.getColumnIndex("carbo_fiber")));
-                ingredients.setAsh(c.getDouble(c.getColumnIndex("ash")));
-                ingredients.setCalcium(c.getDouble(c.getColumnIndex("calcium")));
-                ingredients.setPhosphorus(c.getDouble(c.getColumnIndex("phosphorus")));
-                ingredients.setIron(c.getDouble(c.getColumnIndex("iron")));
-                ingredients.setSodium(c.getDouble(c.getColumnIndex("sodium")));
-                ingredients.setPotassium(c.getDouble(c.getColumnIndex("potassium")));
-                ingredients.setVit_a(c.getDouble(c.getColumnIndex("vit_a")));
-                ingredients.setThiamine_b1(c.getDouble(c.getColumnIndex("thiamine_b1")));
-                ingredients.setRiboflavin_b2(c.getDouble(c.getColumnIndex("riboflavin_b2")));
-                ingredients.setNiacin_b3(c.getDouble(c.getColumnIndex("niacin_b3")));
-                ingredients.setAscorbic_acid(c.getDouble(c.getColumnIndex("ascorbic_acid")));
-                ingredients.setNdb_no(c.getDouble(c.getColumnIndex("ndb_no")));
-                ingredients.setType(c.getInt(c.getColumnIndex("type")));
+        try {
 
-                lst_ingredients.add(ingredients);
 
-            } while (c.moveToNext());
+            String query = "select * from ingredients";
+            Cursor c = db.rawQuery(query, null);
+            if (c.moveToFirst()) {
+                do {
+                    ingredients = new Ingredients();
+                    ingredients.setId(c.getInt(c.getColumnIndex("id")));
+                    ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name_en")));
+                    ingredients.setItem_name_ar(c.getString(c.getColumnIndex("item_name_ar")));
+                    ingredients.setCat_id(c.getInt(c.getColumnIndex("cat_id")));
+                    ingredients.setId(c.getInt(c.getColumnIndex("res_id")));
+                    ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
+                    ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
+                    ingredients.setProtein(c.getDouble(c.getColumnIndex("protein")));
+                    ingredients.setFat(c.getDouble(c.getColumnIndex("fat")));
+                    ingredients.setSat_fat(c.getDouble(c.getColumnIndex("sat_fat")));
+                    ingredients.setCholest(c.getDouble(c.getColumnIndex("cholest")));
+                    ingredients.setCarbo_tot(c.getDouble(c.getColumnIndex("carbo_tot")));
+                    ingredients.setSugars(c.getDouble(c.getColumnIndex("sugars")));
+                    ingredients.setCarbo_fiber(c.getDouble(c.getColumnIndex("carbo_fiber")));
+                    ingredients.setAsh(c.getDouble(c.getColumnIndex("ash")));
+                    ingredients.setCalcium(c.getDouble(c.getColumnIndex("calcium")));
+                    ingredients.setPhosphorus(c.getDouble(c.getColumnIndex("phosphorus")));
+                    ingredients.setIron(c.getDouble(c.getColumnIndex("iron")));
+                    ingredients.setSodium(c.getDouble(c.getColumnIndex("sodium")));
+                    ingredients.setPotassium(c.getDouble(c.getColumnIndex("potassium")));
+                    ingredients.setVit_a(c.getDouble(c.getColumnIndex("vit_a")));
+                    ingredients.setThiamine_b1(c.getDouble(c.getColumnIndex("thiamine_b1")));
+                    ingredients.setRiboflavin_b2(c.getDouble(c.getColumnIndex("riboflavin_b2")));
+                    ingredients.setNiacin_b3(c.getDouble(c.getColumnIndex("niacin_b3")));
+                    ingredients.setAscorbic_acid(c.getDouble(c.getColumnIndex("ascorbic_acid")));
+                    ingredients.setNdb_no(c.getDouble(c.getColumnIndex("ndb_no")));
+                    ingredients.setType(c.getInt(c.getColumnIndex("type")));
+
+                    lst_ingredients.add(ingredients);
+
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ingredient_get_error", "" + e);
         }
         db.close();
         return lst_ingredients;
+    }
+
+    public static ArrayList<Ingredients> GetAllIngredientsCat(Context con, int cat_id) {
+
+        SQLiteDatabase db = Utility.ReadDatabase(con);
+        ArrayList<Ingredients> lst_ingredients = new ArrayList<>();
+        Ingredients ingredients;
+        try {
+
+
+            String query = "select * from ingredients where cat_id=" + cat_id;
+            Cursor c = db.rawQuery(query, null);
+            if (c.moveToFirst()) {
+                do {
+                    ingredients = new Ingredients();
+                    ingredients.setId(c.getInt(c.getColumnIndex("id")));
+                    ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name_en")));
+                    ingredients.setItem_name_ar(c.getString(c.getColumnIndex("item_name_ar")));
+                    ingredients.setCat_id(c.getInt(c.getColumnIndex("cat_id")));
+                    ingredients.setId(c.getInt(c.getColumnIndex("res_id")));
+                    ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
+                    ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
+                    ingredients.setProtein(c.getDouble(c.getColumnIndex("protein")));
+                    ingredients.setFat(c.getDouble(c.getColumnIndex("fat")));
+                    ingredients.setSat_fat(c.getDouble(c.getColumnIndex("sat_fat")));
+                    ingredients.setCholest(c.getDouble(c.getColumnIndex("cholest")));
+                    ingredients.setCarbo_tot(c.getDouble(c.getColumnIndex("carbo_tot")));
+                    ingredients.setSugars(c.getDouble(c.getColumnIndex("sugars")));
+                    ingredients.setCarbo_fiber(c.getDouble(c.getColumnIndex("carbo_fiber")));
+                    ingredients.setAsh(c.getDouble(c.getColumnIndex("ash")));
+                    ingredients.setCalcium(c.getDouble(c.getColumnIndex("calcium")));
+                    ingredients.setPhosphorus(c.getDouble(c.getColumnIndex("phosphorus")));
+                    ingredients.setIron(c.getDouble(c.getColumnIndex("iron")));
+                    ingredients.setSodium(c.getDouble(c.getColumnIndex("sodium")));
+                    ingredients.setPotassium(c.getDouble(c.getColumnIndex("potassium")));
+                    ingredients.setVit_a(c.getDouble(c.getColumnIndex("vit_a")));
+                    ingredients.setThiamine_b1(c.getDouble(c.getColumnIndex("thiamine_b1")));
+                    ingredients.setRiboflavin_b2(c.getDouble(c.getColumnIndex("riboflavin_b2")));
+                    ingredients.setNiacin_b3(c.getDouble(c.getColumnIndex("niacin_b3")));
+                    ingredients.setAscorbic_acid(c.getDouble(c.getColumnIndex("ascorbic_acid")));
+                    ingredients.setNdb_no(c.getDouble(c.getColumnIndex("ndb_no")));
+                    ingredients.setType(c.getInt(c.getColumnIndex("type")));
+
+                    lst_ingredients.add(ingredients);
+
+                } while (c.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ingredient_get_error", "" + e);
+        }
+        db.close();
+        return lst_ingredients;
+    }
+
+    public static void DeleteIngredient(ArrayList<Integer> lst_deleteIngredient, Context con) {
+        SQLiteDatabase db = Utility.ReadDatabase(con);
+        try {
+            String deleteIngredient = "(";
+            for (int i = 0; i < lst_deleteIngredient.size(); i++) {
+                deleteIngredient += lst_deleteIngredient.get(i);
+                if (i < lst_deleteIngredient.size() - 1) {
+                    deleteIngredient += ",";
+                }
+
+            }
+            deleteIngredient += ")";
+            String query = "delete from ingredients where id in" + deleteIngredient;
+            db.execSQL(query);
+            Log.e("ingredient_delete", "done");
+
+            // delete related rows in ingredient_unit table
+            IngredientUnit.DeleteIngredientUnit(deleteIngredient, con);
+
+
+        } catch (Exception e) {
+            Log.e("delete_ingredient_error", "" + e);
+        }
+        db.close();
+
     }
 
     public int getType() {
@@ -295,7 +386,6 @@ public class Ingredients {
         this.protein = protein;
     }
 
-
     public int getCat_id() {
         return cat_id;
     }
@@ -336,6 +426,4 @@ public class Ingredients {
         this.item_name_ar = item_name_ar;
     }
 
-
-    // read and write in db
 }

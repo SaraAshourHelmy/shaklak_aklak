@@ -18,28 +18,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
 import lb.library.PinnedHeaderListView;
 import media_sci.com.adapter.SearchAdapter;
-import media_sci.com.models.Category;
+import media_sci.com.models.Ingredients;
 
-/**
- * Created by Bassem on 12/8/2015.
- */
-public class SearchActivity extends Activity implements AdapterView.OnItemClickListener {
+public class IndexedSearchActivity extends Activity implements AdapterView.OnItemClickListener,
+        View.OnClickListener {
 
-    ArrayList<Category> lst_category = new ArrayList<>();
     int indexListSize;
     float sideIndexX, sideIndexY;
+    private ArrayList<Ingredients> lst_items = new ArrayList<>();
     private List<Object[]> alphabet = new ArrayList<Object[]>();
-    private ImageView img_search_food;
+    private ImageView img_search_cancel;
     private EditText et_search_food;
     private LinearLayout lnr_sideIndex;
-    private SearchAdapter categoryAdapter;
+    private SearchAdapter ingredientAdapter;
     private PinnedHeaderListView mListView;
 
     @Override
@@ -52,13 +48,14 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
     }
 
     private void SetupTools() {
-        SetCategories();
-        img_search_food = (ImageView) findViewById(R.id.img_search_food);
+
+        mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
+        img_search_cancel = (ImageView) findViewById(R.id.img_search_cancel);
         et_search_food = (EditText) findViewById(R.id.et_search_food);
         lnr_sideIndex = (LinearLayout) findViewById(R.id.lnr_sideIndex);
 
-        categoryAdapter = new SearchAdapter(this, lst_category);
 
+        img_search_cancel.setOnClickListener(this);
         // focus on edit text when touch
         et_search_food.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -79,7 +76,7 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 Log.e("text", "" + s);
-                SearchCategory(s.toString());
+                SearchItems(s.toString());
             }
 
             @Override
@@ -91,15 +88,19 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
     }
 
     private void SetupIndexedList() {
-        mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
+
+
+        lst_items = Ingredients.GetAllIngredients(this);
+        ingredientAdapter = new SearchAdapter(this, lst_items);
+
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         //int pinnedHeaderBackgroundColor = getResources().getColor(getResIdFromAttribute(this, android.R.attr.colorBackground));
         //categoryAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
-        categoryAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.colorAccent));
+        ingredientAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.colorAccent));
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.header_list, mListView, false));
-        mListView.setAdapter(categoryAdapter);
-        mListView.setOnScrollListener(categoryAdapter);
+        mListView.setAdapter(ingredientAdapter);
+        mListView.setOnScrollListener(ingredientAdapter);
         mListView.setEnableHeaderTransparencyChanges(false);
     }
 
@@ -112,9 +113,9 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
         String previousLetter = null;
         Object[] tmpIndexItem = null;
 
-        for (int i = 0; i < lst_category.size(); i++) {
+        for (int i = 0; i < lst_items.size(); i++) {
 
-            String category_name = lst_category.get(i).getName_en();
+            String category_name = lst_items.get(i).getItem_name_en();
             String firstLetter = category_name.substring(0, 1);
 
 
@@ -148,80 +149,21 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
         setAlphabet();
     }
 
-    private void SetCategories() {
+    private void SearchItems(String txt) {
 
-        Category category = new Category();
-        category.setName_en("ahmed");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("adel");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("nora");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("sara");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("farida");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("mariam");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("mohammed");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("mona");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("samar");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("heba");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("enas");
-        lst_category.add(category);
-
-        category = new Category();
-        category.setName_en("mahmoud");
-        lst_category.add(category);
-
-        // sort category list
-        Collections.sort(lst_category, new Comparator<Category>() {
-            @Override
-            public int compare(Category lhs, Category rhs) {
-                return lhs.getName_en().compareToIgnoreCase(rhs.getName_en());
-            }
-        });
-    }
-
-    private void SearchCategory(String txt) {
-        ArrayList<Category> searchList = new ArrayList<>();
+        ArrayList<Ingredients> searchList = new ArrayList<>();
 
         int searchListLength = searchList.size();
-        for (int i = 0; i < lst_category.size(); i++) {
-            if (lst_category.get(i).getName_en().contains(txt)) {
-                searchList.add(lst_category.get(i));
+        for (int i = 0; i < lst_items.size(); i++) {
+            if (lst_items.get(i).getItem_name_en().contains(txt)) {
+                searchList.add(lst_items.get(i));
             }
 
         }
-        categoryAdapter = new SearchAdapter(this, searchList);
-        mListView.setAdapter(categoryAdapter);
+        ingredientAdapter = new SearchAdapter(this, searchList);
+        mListView.setAdapter(ingredientAdapter);
 
     }
-
 
     public void setAlphabet() {
 
@@ -314,6 +256,19 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == img_search_cancel) {
+            et_search_food.setText("");
+            et_search_food.setFocusable(false);
+            lst_items = Ingredients.GetAllIngredients(this);
+            ingredientAdapter = new SearchAdapter(this, lst_items);
+            mListView.setAdapter(ingredientAdapter);
+        }
 
     }
 }

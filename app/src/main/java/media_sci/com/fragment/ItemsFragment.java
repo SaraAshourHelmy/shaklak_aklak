@@ -3,9 +3,13 @@ package media_sci.com.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,9 +27,10 @@ public class ItemsFragment extends Fragment {
     private ListView lst_items;
     private View actionbar;
     private int cat_id;
-    private String cat_name;
+    private String cat_name, cat_img;
     private ArrayList<Ingredients> lst_items_content;
     private ItemAdapter itemAdapter;
+    private EditText et_search;
 
     @Nullable
     @Override
@@ -37,19 +42,66 @@ public class ItemsFragment extends Fragment {
 
     private void SetupTools(View view) {
         Bundle bundle = getArguments();
-        if (bundle != null && bundle.containsKey("cat_id"))
+        if (bundle != null && bundle.containsKey("cat_id")) {
             cat_id = bundle.getInt("cat_id");
+            cat_name = bundle.getString("cat_name");
+            cat_img = bundle.getString("cat_img");
+        }
 
         lst_items = (ListView) view.findViewById(R.id.lst_items);
         actionbar = (View) view.findViewById(R.id.actionbar_items);
+        et_search = (EditText) view.findViewById(R.id.et_item_search);
 
-        Utility.ActionBarSetting(actionbar,cat_name,2); //
 
-        lst_items_content = Ingredients.GetAllRestaurant(getActivity());
+        Utility.ActionBarSetting(actionbar, cat_name, 2, cat_img); //
+
+        lst_items_content = Ingredients.GetAllIngredientsCat(getActivity(), cat_id);
         itemAdapter = new ItemAdapter(getActivity(), R.layout.adapter_item, lst_items_content);
         lst_items.setAdapter(itemAdapter);
 
+        // set touch focus in editText
+        et_search.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                et_search.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                SearchItems(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void SearchItems(String txt) {
+
+        ArrayList<Ingredients> searchList = new ArrayList<>();
+
+        int searchListLength = searchList.size();
+        for (int i = 0; i < lst_items_content.size(); i++) {
+            if (lst_items_content.get(i).getItem_name_en().contains(txt)) {
+                searchList.add(lst_items_content.get(i));
+            }
+
+        }
+        itemAdapter = new ItemAdapter(getActivity(),R.layout.adapter_item, searchList);
+        lst_items.setAdapter(itemAdapter);
 
     }
+
 
 }
