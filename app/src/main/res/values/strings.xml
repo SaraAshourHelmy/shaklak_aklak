@@ -17,5 +17,14 @@
     <string name="setting">Settings</string>
     <string name="guide">Nutrition Guide</string>
     <string name="terms">Terms and Condition</string>
+    <string name="daily">Daily Nutrition</string>
+
+    <string name="daily_calories">Daily Calories</string>
+    <string name="daily_nutrient">Daily Nutrients</string>
+    <string name="pie_chart">Pie Chart</string>
+    <string name="custom_calories">Custom Calories</string>
+    <string name="target_calories">Target Calories</string>
+    <string name="favourite">My Favourite</string>
+
 
 </resources>

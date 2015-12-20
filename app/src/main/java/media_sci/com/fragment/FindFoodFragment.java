@@ -86,7 +86,7 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
         ft.add(android.R.id.tabcontent, itemsFragment);
 
         ft.hide(FindFoodFragment.this);
-        ft.addToBackStack(ArticlesFragment.class.getName());
+        ft.addToBackStack(DailyFragment.class.getName());
         ft.commit();
     }
 }

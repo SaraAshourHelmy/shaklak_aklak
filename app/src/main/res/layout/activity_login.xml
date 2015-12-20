@@ -25,7 +25,7 @@
         <!-- Email -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/reigster_section"
+            android:layout_height="@dimen/register_section"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
@@ -52,7 +52,7 @@
         <!-- password -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/reigster_section"
+            android:layout_height="@dimen/register_section"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 

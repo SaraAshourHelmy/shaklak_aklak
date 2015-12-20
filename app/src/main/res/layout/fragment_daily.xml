@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+
+              tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/actionbar_daily"
+        layout="@layout/actionbar_default"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+      />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_daily_calories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_border"
+            android:gravity="center"
+            android:text="@string/daily_calories"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_daily_nutrients"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_border"
+            android:gravity="center"
+            android:text="@string/daily_nutrient"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_daily_pieChart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rectangle_border"
+            android:gravity="center"
+            android:text="@string/pie_chart"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_calories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <!--
+                <noman.weekcalendar.WeekCalendar
+                    android:id="@+id/weekCalendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:background="@color/light_gray"
+                    app:numOfPages="150"
+                    />-->
+
+        <TextView
+            android:id="@+id/tv_selected_date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/weekCalendar"
+            android:background="@color/light_gray"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_nutrients"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <cn.limc.androidcharts.diagram.PieChart
+            android:id="@+id/piechart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_gray"/>
+    </LinearLayout>
+
+</LinearLayout>

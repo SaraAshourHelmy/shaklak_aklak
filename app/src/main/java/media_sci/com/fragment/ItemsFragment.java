@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 11/24/2015.
  */
-public class ItemsFragment extends Fragment {
+public class ItemsFragment extends Fragment implements View.OnClickListener {
 
     private ListView lst_items;
+    private ImageView img_cancel;
     private View actionbar;
     private int cat_id;
     private String cat_name, cat_img;
@@ -51,13 +53,11 @@ public class ItemsFragment extends Fragment {
         lst_items = (ListView) view.findViewById(R.id.lst_items);
         actionbar = (View) view.findViewById(R.id.actionbar_items);
         et_search = (EditText) view.findViewById(R.id.et_item_search);
-
+        img_cancel = (ImageView) view.findViewById(R.id.img_searchItem_cancel);
+        img_cancel.setOnClickListener(this);
 
         Utility.ActionBarSetting(actionbar, cat_name, 2, cat_img); //
-
-        lst_items_content = Ingredients.GetAllIngredientsCat(getActivity(), cat_id);
-        itemAdapter = new ItemAdapter(getActivity(), R.layout.adapter_item, lst_items_content);
-        lst_items.setAdapter(itemAdapter);
+        SetupList();
 
         // set touch focus in editText
         et_search.setOnTouchListener(new View.OnTouchListener() {
@@ -87,6 +87,12 @@ public class ItemsFragment extends Fragment {
         });
     }
 
+    private void SetupList() {
+        lst_items_content = Ingredients.GetAllIngredientsCat(getActivity(), cat_id);
+        itemAdapter = new ItemAdapter(getActivity(), R.layout.adapter_item, lst_items_content);
+        lst_items.setAdapter(itemAdapter);
+    }
+
     private void SearchItems(String txt) {
 
         ArrayList<Ingredients> searchList = new ArrayList<>();
@@ -98,10 +104,17 @@ public class ItemsFragment extends Fragment {
             }
 
         }
-        itemAdapter = new ItemAdapter(getActivity(),R.layout.adapter_item, searchList);
+        itemAdapter = new ItemAdapter(getActivity(), R.layout.adapter_item, searchList);
         lst_items.setAdapter(itemAdapter);
 
     }
 
+    @Override
+    public void onClick(View v) {
 
+        if (v == img_cancel) {
+            et_search.setText("");
+            SetupList();
+        }
+    }
 }

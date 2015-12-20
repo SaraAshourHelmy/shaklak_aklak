@@ -21,7 +21,7 @@
             <!-- first name -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -48,7 +48,7 @@
             <!-- last name -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -74,7 +74,7 @@
             <!-- mobile number -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -87,6 +87,8 @@
                     android:text="Mobile Number"/>
 
                 <EditText
+                    android:hint="01XXXXXXXXX"
+                    android:textColorHint="@color/light_gray"
                     android:id="@+id/et_mobileNo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -102,7 +104,7 @@
             <!-- email -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -128,7 +130,7 @@
             <!-- Password -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -195,7 +197,7 @@
             <!-- age -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -222,7 +224,7 @@
             <!-- height -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -257,7 +259,7 @@
             <!-- Weight -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/reigster_section"
+                android:layout_height="@dimen/register_section"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 

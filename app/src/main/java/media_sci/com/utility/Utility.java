@@ -54,8 +54,13 @@ public class Utility {
             img_action_icon.setImageResource(R.drawable.search);
         } else if (type == 2) {
             // set icon image category icon;
-           // CustomImageLoader.getInstance().loadImage(url
-                  //  , img_action_icon, null);
+            // CustomImageLoader.getInstance().loadImage(url
+            //  , img_action_icon, null);
+        } else if (type == 3) {
+            // icon is edit calories icon
+            img_action_icon.setImageResource(R.drawable.edit);
+        } else if (type == 4) {
+            img_action_icon.setImageResource(R.drawable.cancle);
         }
 
         img_action_icon.setOnClickListener(new View.OnClickListener() {

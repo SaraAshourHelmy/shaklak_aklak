@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import media_sci.com.fragment.ArticlesFragment;
+import media_sci.com.fragment.DailyFragment;
 import media_sci.com.fragment.FindFoodFragment;
-import media_sci.com.fragment.FoodPyramidFragment;
+import media_sci.com.fragment.FavouriteFragment;
 import media_sci.com.fragment.SettingFragment;
 
 
@@ -40,16 +40,16 @@ public class MainActivity extends FragmentActivity {
                 FindFoodFragment.class, null);
 
         mTabHost.addTab(
-                mTabHost.newTabSpec("Articles").setIndicator("",
+                mTabHost.newTabSpec("Daily").setIndicator("",
                         getResources().getDrawable(R.drawable.back)),
-                ArticlesFragment.class, null);
+                DailyFragment.class, null);
 
         mTabHost.addTab(
-                mTabHost.newTabSpec("FoodPyramid").setIndicator("Food", null),
-                FoodPyramidFragment.class, null);
+                mTabHost.newTabSpec("Favourite").setIndicator("", null),
+                FavouriteFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("FoodPyramid").setIndicator("Food", null),
-                FoodPyramidFragment.class, null);
+                FavouriteFragment.class, null);
 
         // setting tab
         mTabHost.addTab(
@@ -61,7 +61,7 @@ public class MainActivity extends FragmentActivity {
         // tabHost.removeViewAt(0);//.setVisibility(View.GONE);
         mTabHost.setCurrentTab(0);
         mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab())
-                .setBackgroundResource(R.color.dialog_color);
+                .setBackgroundResource(R.color.app_color);
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -72,18 +72,19 @@ public class MainActivity extends FragmentActivity {
                             .setBackgroundResource(R.color.transparent); // unselected
                 }
                 mTabHost.getTabWidget().getChildAt(mTabHost.getCurrentTab())
-                        .setBackgroundResource(R.color.dialog_color); // selected
+                        .setBackgroundResource(R.color.app_color); // selected
 
             }
         });
 
         TabHostSetting();
+
     }
 
     private void TabHostSetting() {
         for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
             mTabHost.getTabWidget().getChildAt(i).getLayoutParams().height
-                    = (int) (80 * this.getResources().getDisplayMetrics().density);
+                    = (int) (60 * this.getResources().getDisplayMetrics().density);
         }
     }
 

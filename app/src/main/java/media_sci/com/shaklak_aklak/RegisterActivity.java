@@ -171,7 +171,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
             else if (validMail == 3)
                 et_email.setError("Email is wrong");
         }
-        if (et_mobileNo.getText().length() != 11) {
+        if (et_mobileNo.getText().length() != 11 &&
+                et_mobileNo.getText().toString().startsWith("01")) {
             et_mobileNo.setError("Mobile number is wrong");
             et_mobileNo.requestFocus();
             checkFlag = false;
