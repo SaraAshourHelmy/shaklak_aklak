@@ -1,6 +1,7 @@
 package media_sci.com.shaklak_aklak;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import java.util.Locale;
 import lb.library.PinnedHeaderListView;
 import media_sci.com.adapter.SearchAdapter;
 import media_sci.com.models.Ingredients;
+import media_sci.com.utility.Sorting;
 import media_sci.com.utility.Utility;
 
 public class IndexedSearchActivity extends Activity implements AdapterView.OnItemClickListener,
@@ -32,6 +34,7 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
 
     int indexListSize;
     float sideIndexX, sideIndexY;
+    ArrayList<Ingredients> searchList = new ArrayList<>();
     private ArrayList<Ingredients> lst_items = new ArrayList<>();
     private List<Object[]> alphabet = new ArrayList<Object[]>();
     private ArrayList<String> AllAlpha = new ArrayList<>();
@@ -96,18 +99,22 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
     private void SetupIndexedList() {
 
         lst_items = Ingredients.GetAllIngredients(this);
-        ingredientAdapter = new SearchAdapter(this, lst_items);
+
+        ingredientAdapter = new SearchAdapter(this, Sorting.
+                SortIngredients(lst_items));
 
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         //int pinnedHeaderBackgroundColor = getResources().getColor(getResIdFromAttribute(this, android.R.attr.colorBackground));
         //categoryAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
+
         ingredientAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.colorAccent));
 
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.header_list, mListView, false));
         mListView.setAdapter(ingredientAdapter);
         mListView.setOnScrollListener(ingredientAdapter);
         mListView.setEnableHeaderTransparencyChanges(false);
+        mListView.setOnItemClickListener(this);
     }
 
     public void setAlphabet() {
@@ -140,7 +147,8 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
             tmpTV = new TextView(this);
             tmpTV.setText(AllAlpha.get(i).toString());
             tmpTV.setGravity(Gravity.CENTER);
-            tmpTV.setTextSize(15);
+            tmpTV.setTextSize(12);
+            tmpTV.setTextColor(getResources().getColor(R.color.black));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
             tmpTV.setLayoutParams(params);
             lnr_sideIndex.addView(tmpTV);
@@ -170,8 +178,7 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
 
     private void SearchItems(String txt) {
 
-        ArrayList<Ingredients> searchList = new ArrayList<>();
-
+        searchList.clear();
         int searchListLength = searchList.size();
         for (int i = 0; i < lst_items.size(); i++) {
             String item_txt = lst_items.get(i).getItem_name_en().toLowerCase();
@@ -304,6 +311,13 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        Intent intent = new Intent(this, ItemDetailsActivity.class);
+        if (et_search_food.getText().toString().length() > 0)
+            intent.putExtra("item_id", searchList.get(position).getId());
+        else {
+            intent.putExtra("item_id", lst_items.get(position).getId());
+        }
+        startActivity(intent);
     }
 
     @Override
@@ -313,11 +327,13 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
             et_search_food.setText("");
             et_search_food.setFocusable(false);
             lst_items = Ingredients.GetAllIngredients(this);
-            ingredientAdapter = new SearchAdapter(this, lst_items);
+            ingredientAdapter = new SearchAdapter(this, Sorting.SortIngredients
+                    (lst_items));
             mListView.setAdapter(ingredientAdapter);
         }
 
     }
+
 }
 
 

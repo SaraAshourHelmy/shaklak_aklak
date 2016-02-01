@@ -18,24 +18,45 @@
     </RelativeLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/img_intro_facebook"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/logo_media"/>
+            android:background="@color/light_gray"
+            >
 
-        <ImageView
-            android:id="@+id/img_intro_instagram"
+            <ImageView
+                android:id="@+id/img_intro_facebook"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/facebook"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:src="@drawable/back"/>
+            android:background="@color/light_gray"
+            >
+
+            <ImageView
+
+                android:id="@+id/img_intro_twitter"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/twitter"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
     <TextView

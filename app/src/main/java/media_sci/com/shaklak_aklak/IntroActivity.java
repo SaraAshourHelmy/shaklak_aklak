@@ -19,7 +19,7 @@ import media_sci.com.utility.Utility;
 public class IntroActivity extends Activity implements View.OnClickListener {
 
     private RelativeLayout rltv_video;
-    private ImageView img_play_video, img_facebook, img_instagram;
+    private ImageView img_play_video, img_facebook, img_twitter;
     private TextView tv_title, tv_description;
     private Button btn_skip;
 
@@ -37,7 +37,7 @@ public class IntroActivity extends Activity implements View.OnClickListener {
         rltv_video = (RelativeLayout) findViewById(R.id.rltv_intro_video);
         img_play_video = (ImageView) findViewById(R.id.img_play_video);
         img_facebook = (ImageView) findViewById(R.id.img_intro_facebook);
-        img_instagram = (ImageView) findViewById(R.id.img_intro_instagram);
+        img_twitter = (ImageView) findViewById(R.id.img_intro_twitter);
         tv_title = (TextView) findViewById(R.id.tv_intro_title);
         tv_description = (TextView) findViewById(R.id.tv_intro_description);
         btn_skip = (Button) findViewById(R.id.btn_intro_skip);
@@ -45,7 +45,7 @@ public class IntroActivity extends Activity implements View.OnClickListener {
 
         img_play_video.setOnClickListener(this);
         img_facebook.setOnClickListener(this);
-        img_instagram.setOnClickListener(this);
+        img_twitter.setOnClickListener(this);
         btn_skip.setOnClickListener(this);
 
     }
@@ -65,10 +65,15 @@ public class IntroActivity extends Activity implements View.OnClickListener {
         } else if (v == img_facebook) {
             ShareSocialMedia(0);
 
-        } else if (v == img_instagram) {
+        } else if (v == img_twitter) {
             ShareSocialMedia(1);
+
         } else if (v == btn_skip) {
+
             // intent to home
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

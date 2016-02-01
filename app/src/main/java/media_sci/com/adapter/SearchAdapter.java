@@ -63,9 +63,10 @@ public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Ingredi
 
         final Ingredients item = getItem(position);
         final String displayName = item.getItem_name_en();
-        TextView name = (TextView) convertView.findViewById(R.id.listview_item__friendNameTextView);
+        TextView name = (TextView) convertView.findViewById(R.id.tv_search_itemName);
 
         name.setText(displayName);
+
 
         TextView tv_header = (TextView) convertView.findViewById(R.id.header_text);
 

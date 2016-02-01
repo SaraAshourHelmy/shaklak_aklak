@@ -22,7 +22,8 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 11/18/2015.
  */
-public class FindFoodFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class FindFoodFragment extends Fragment implements
+        AdapterView.OnItemClickListener, View.OnClickListener {
 
 
     ArrayList<Category> lst_category_items;
@@ -47,13 +48,7 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
                 , "", getActivity());
 
         img_search = (ImageView) actionbar.findViewById(R.id.img_action_icon);
-        img_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IndexedSearchActivity.class);
-                startActivity(intent);
-            }
-        });
+        img_search.setOnClickListener(this);
 
 
         // get category from db or webservice then set adapter
@@ -134,4 +129,12 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
         ft.commit();
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if (v == img_search) {
+            Intent intent = new Intent(getActivity(), IndexedSearchActivity.class);
+            startActivity(intent);
+        }
+    }
 }

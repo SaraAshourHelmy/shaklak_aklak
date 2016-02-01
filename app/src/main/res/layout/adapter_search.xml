@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/listview_item__friendNameTextView"
+            android:id="@+id/tv_search_itemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -40,7 +40,8 @@
             android:paddingStart="10dp"
             android:singleLine="true"
             android:text="friend name"
-            android:textSize="15sp"
+            android:textSize="@dimen/custom_food_font"
+            android:textColor="@color/black"
             tools:ignore="HardcodedText,NewApi"/>
 
     </LinearLayout>
