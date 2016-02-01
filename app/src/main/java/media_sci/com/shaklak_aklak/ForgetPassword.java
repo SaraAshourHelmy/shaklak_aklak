@@ -3,6 +3,7 @@ package media_sci.com.shaklak_aklak;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,16 +12,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 /**
@@ -28,10 +33,12 @@ import media_sci.com.utility.Utility;
  */
 public class ForgetPassword extends Activity implements View.OnClickListener {
 
-    private static String forgetPasswordURL = "";
     private TextView tv_forgetPassword, tv_email;
     private EditText et_email;
     private Button btn_changePassword;
+    private int user_id = -1;
+    private String code = "";
+    private boolean forget_flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,16 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
         btn_changePassword = (Button) findViewById(R.id.btn_change_password);
         btn_changePassword.setOnClickListener(this);
 
+        SetFont();
+
+    }
+
+    private void SetFont() {
+        Typeface typeface = Utility.GetFont(this);
+        tv_forgetPassword.setTypeface(typeface);
+        tv_email.setTypeface(typeface);
+        et_email.setTypeface(typeface);
+        btn_changePassword.setTypeface(typeface);
     }
 
     @Override
@@ -82,7 +99,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
     private void ForgetPassword() {
 
         HttpClient httpClient = Utility.SetTimeOut();
-        HttpPost httpPost = Utility.SetHttpPost(forgetPasswordURL);
+        HttpPost httpPost = Utility.SetHttpPost(StaticVarClass.ForgetPassword_URL);
         if (httpClient != null && httpPost != null) {
             // Set Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -95,6 +112,14 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
                 if (status == 200) {
 
                     // check json result
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    JSONObject returnData = new JSONObject(data);
+                    user_id = returnData.getInt("user_id");
+                    code = returnData.getString("verification_code");
+
+                    Log.e("forget_code", code);
+                    forget_flag = true;
                 }
             } catch (Exception e) {
                 Log.e("forgetPassword error", "" + e);
@@ -125,9 +150,17 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             dialog.dismiss();
-            // if success
-            Intent intent=new Intent(ForgetPassword.this,ChangePassword.class);
-            startActivity(intent);
+            if (forget_flag) {
+                Intent intent = new Intent(ForgetPassword.this, ConfirmForgetActivity.class);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("code", code);
+                startActivity(intent);
+                finish();
+            } else {
+                Utility.ViewDialog(ForgetPassword.this, getString(R.string.fail));
+            }
         }
     }
+
+
 }

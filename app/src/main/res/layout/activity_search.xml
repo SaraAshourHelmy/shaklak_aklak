@@ -14,10 +14,10 @@
         <EditText
             android:id="@+id/et_search_food"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="10"
             android:background="@color/light_gray"
             android:focusable="false"
             android:hint="search"
@@ -25,12 +25,13 @@
 
         <ImageView
             android:id="@+id/img_search_cancel"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/cancle"/>
+            android:src="@drawable/close"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -52,10 +53,9 @@
             android:scrollbars="none"
             android:scrollingCache="false"
             />
-
         <LinearLayout
             android:id="@+id/lnr_sideIndex"
-            android:layout_width="30dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"

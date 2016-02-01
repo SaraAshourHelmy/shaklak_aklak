@@ -1,14 +1,17 @@
 package media_sci.com.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,13 +26,13 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 11/24/2015.
  */
-public class ItemsFragment extends Fragment implements View.OnClickListener {
+public class ItemsFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ListView lst_items;
     private ImageView img_cancel;
     private View actionbar;
-    private int cat_id;
-    private String cat_name, cat_img;
+    private int section_id = -1, section_type = -1;
+    private String section_img;
     private ArrayList<Ingredients> lst_items_content;
     private ItemAdapter itemAdapter;
     private EditText et_search;
@@ -44,10 +47,12 @@ public class ItemsFragment extends Fragment implements View.OnClickListener {
 
     private void SetupTools(View view) {
         Bundle bundle = getArguments();
-        if (bundle != null && bundle.containsKey("cat_id")) {
-            cat_id = bundle.getInt("cat_id");
-            cat_name = bundle.getString("cat_name");
-            cat_img = bundle.getString("cat_img");
+        if (bundle != null && bundle.containsKey("sec_id")) {
+            section_id = bundle.getInt("sec_id");
+            section_img = bundle.getString("sec_img");
+
+            // type mean category or restaurant
+            section_type = bundle.getInt("sec_type");
         }
 
         lst_items = (ListView) view.findViewById(R.id.lst_items);
@@ -55,8 +60,11 @@ public class ItemsFragment extends Fragment implements View.OnClickListener {
         et_search = (EditText) view.findViewById(R.id.et_item_search);
         img_cancel = (ImageView) view.findViewById(R.id.img_searchItem_cancel);
         img_cancel.setOnClickListener(this);
+        lst_items.setOnItemClickListener(this);
 
-        Utility.ActionBarSetting(actionbar, cat_name, 2, cat_img); //
+        SetFont();
+        Utility.ActionBarSetting(actionbar, getString(R.string.your_food), 2
+                , section_img, getActivity()); //
         SetupList();
 
         // set touch focus in editText
@@ -87,8 +95,23 @@ public class ItemsFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void SetFont() {
+
+        Typeface typeface = Utility.GetFont(getActivity());
+        et_search.setTypeface(typeface);
+
+    }
+
     private void SetupList() {
-        lst_items_content = Ingredients.GetAllIngredientsCat(getActivity(), cat_id);
+        if (section_type == 0) {
+            // search item by category
+            lst_items_content = Ingredients.GetAllIngredientsCat(getActivity()
+                    , section_id);
+        } else if (section_type == 1) {
+            // search item by restaurant
+            lst_items_content = Ingredients.GetAllIngredientsRest(getActivity()
+                    , section_id);
+        }
         itemAdapter = new ItemAdapter(getActivity(), R.layout.adapter_item, lst_items_content);
         lst_items.setAdapter(itemAdapter);
     }
@@ -99,11 +122,14 @@ public class ItemsFragment extends Fragment implements View.OnClickListener {
 
         int searchListLength = searchList.size();
         for (int i = 0; i < lst_items_content.size(); i++) {
-            if (lst_items_content.get(i).getItem_name_en().contains(txt)) {
+
+            String item_txt = lst_items_content.get(i).getItem_name_en().toLowerCase();
+            if (item_txt.contains(txt.toLowerCase())) {
                 searchList.add(lst_items_content.get(i));
             }
 
         }
+
         itemAdapter = new ItemAdapter(getActivity(), R.layout.adapter_item, searchList);
         lst_items.setAdapter(itemAdapter);
 
@@ -116,5 +142,27 @@ public class ItemsFragment extends Fragment implements View.OnClickListener {
             et_search.setText("");
             SetupList();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        OpenItemDetailsFragment(lst_items_content.get(position).getId());
+    }
+
+    private void OpenItemDetailsFragment(int item_id) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("item_id", item_id);
+        bundle.putString("sec_img", section_img);
+
+        Fragment itemsFragment = new ItemDetailsFragment(); // set constructor with parameters
+        itemsFragment.setArguments(bundle);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(android.R.id.tabcontent, itemsFragment);
+
+        ft.hide(ItemsFragment.this);
+        ft.addToBackStack(ItemsFragment.class.getName());
+        ft.commit();
     }
 }

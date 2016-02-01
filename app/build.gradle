@@ -36,8 +36,11 @@ dependencies {
 
     compile project(':library')
     compile project(':src')
+    compile project(':weekcalendar')
 
-    compile 'noman.weekcalendar:weekcalendar:1.0.3'
+//    compile 'noman.weekcalendar:weekcalendar:1.0.3'
+
+    compile 'com.prolificinteractive:material-calendarview:1.1.0'
 
 
 

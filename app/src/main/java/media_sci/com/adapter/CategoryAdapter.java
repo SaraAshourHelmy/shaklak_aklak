@@ -1,6 +1,7 @@
 package media_sci.com.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 
 import media_sci.com.models.Category;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.utility.CustomImageLoader;
+import media_sci.com.utility.Utility;
 
 
 /**
@@ -28,6 +31,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         this.lst_category = lst_category;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -40,10 +44,13 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         TextView tv_catName = (TextView) convertView.findViewById(R.id.tv_category_name);
         ImageView img_arrow = (ImageView) convertView.findViewById(R.id.img_category_arrow);
 
-       // CustomImageLoader.getInstance().loadImage(lst_category.get(position).getImg_url()
-         //       , img_category, null);
+        CustomImageLoader.getInstance().loadImage(lst_category.get(position).getImg_url()
+                , img_category, null);
+
         tv_catName.setText(lst_category.get(position).getName_en());
 
+        Typeface typeface = Utility.GetFont(context);
+        tv_catName.setTypeface(typeface);
         return convertView;
 
     }

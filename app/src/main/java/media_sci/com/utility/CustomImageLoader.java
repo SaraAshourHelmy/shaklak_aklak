@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -11,8 +12,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
-import media_sci.com.shaklak_aklak.R;
 
 public class CustomImageLoader {
     private static DisplayImageOptions options;
@@ -35,7 +34,7 @@ public class CustomImageLoader {
         if (options == null) {
 
             options = new DisplayImageOptions.Builder()
-                    .showImageOnLoading(R.drawable.logo).showImageOnFail(R.drawable.logo)
+                    //.showImageOnLoading(R.drawable.logo_media).showImageOnFail(R.drawable.logo_media)
                     .resetViewBeforeLoading(false).cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(false)
                     .displayer(new FadeInBitmapDisplayer(300))
                     .build();

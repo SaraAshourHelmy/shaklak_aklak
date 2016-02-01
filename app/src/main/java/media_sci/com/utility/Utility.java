@@ -1,5 +1,6 @@
 package media_sci.com.utility;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,12 +8,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,9 +33,15 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.util.Calendar;
 
+import media_sci.com.models.UserData;
+import media_sci.com.service.DataService;
+import media_sci.com.shaklak_aklak.LoginActivity;
 import media_sci.com.shaklak_aklak.MainActivity;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.shaklak_aklak.Splash;
 
 public class Utility {
 
@@ -38,14 +49,36 @@ public class Utility {
     private static SharedPreferences shared_db;
 
 
+    public static String GetDecimalFormat(double number) {
+
+        return new DecimalFormat("##.##").format(number);
+    }
+
+    public static String GetStringDateNow() {
+
+        Calendar c = Calendar.getInstance();
+        String date = StaticVarClass.dash_format.format(c.getTime());
+        return date;
+    }
+
+    public static String GetMacAddress(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService
+                (context.WIFI_SERVICE);
+        WifiInfo wInfo = wifiManager.getConnectionInfo();
+        String macAddress = wInfo.getMacAddress();
+        return macAddress;
+    }
+
     public static void ActionBarSetting(View view, String title, int type
-            , String url) {
+            , String url, Context context) {
 
 
         TextView tv_action_title = (TextView) view.findViewById(R.id.tv_action_title);
         ImageView img_action_icon = (ImageView) view.findViewById(R.id.img_action_icon);
 
         tv_action_title.setText(title);
+        tv_action_title.setTypeface(Utility.GetFont(context), Typeface.BOLD);
+
         if (type == 0) {
             // actionbar without icons
         } else if (type == 1) {
@@ -54,13 +87,14 @@ public class Utility {
             img_action_icon.setImageResource(R.drawable.search);
         } else if (type == 2) {
             // set icon image category icon;
-            // CustomImageLoader.getInstance().loadImage(url
-            //  , img_action_icon, null);
+            CustomImageLoader.getInstance().loadImage(url
+                    , img_action_icon, null);
+
         } else if (type == 3) {
             // icon is edit calories icon
             img_action_icon.setImageResource(R.drawable.edit);
         } else if (type == 4) {
-            img_action_icon.setImageResource(R.drawable.cancle);
+            img_action_icon.setImageResource(R.drawable.close);
         }
 
         img_action_icon.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +104,13 @@ public class Utility {
             }
         });
 
+    }
+
+    public static Typeface GetFont(Context context) {
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "Kohinoor.ttc");
+
+        return typeface;
     }
 
     public static SQLiteDatabase ReadDatabase(Context con) {
@@ -85,22 +126,76 @@ public class Utility {
 
     }
 
-    public static void CreateDb(Context context) {
+    public static void CreateDb(Context context, int try_again) {
 
         shared_db = context.getSharedPreferences("check_db", context.MODE_PRIVATE);
         boolean check = shared_db.getBoolean("check", false);
         Log.e("check", "" + check);
         if (!check) {
+            // first run check internet connection
+            if (HaveNetworkConnection(context))
+                DatabaseSetting(context);
+            else {
+                ViewDialog(context, context.getString(R.string.no_internet));
+                Splash.tv_try_again.setVisibility(View.VISIBLE);
+                Splash.progress_download.setVisibility(View.GONE);
 
-            DatabaseSetting(context);
+            }
+
         } else {
             Log.e("DB", "Already exist");
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
 
+
+            if (try_again == 1) {
+
+                // this case if fail in first time but db created
+                GetData getData = new GetData(context, 1);
+
+            } else {
+                // call service
+                Intent service_intent = new Intent(context, DataService.class);
+                service_intent.putExtra("type", 1);
+                context.startService(service_intent);
+
+                UserData userData = new UserData(context);
+
+                if (userData.GetUserID() != -1) {
+                    if (StaticVarClass.verify_status == 0) {
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+
+                    } else if (StaticVarClass.verify_status == 1) {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+
+                } else {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
         }
 
+    }
 
+    public static boolean HaveNetworkConnection(Context context) {
+
+        boolean HaveConnectedWifi = false;
+        boolean HaveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    HaveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    HaveConnectedMobile = true;
+        }
+        return HaveConnectedWifi || HaveConnectedMobile;
     }
 
     private static void DatabaseSetting(Context context) {
@@ -123,11 +218,32 @@ public class Utility {
             SharedPreferences.Editor edit = shared_db.edit();
             edit.putBoolean("check", true);
             edit.commit();
-            GetData getData = new GetData(context);
+            GetData getData = new GetData(context, 1);
 
         } catch (Exception e) {
             Log.e("create DBf error :", "" + e);
         }
+    }
+
+    public static void ViewDialog(Context context, String msg) {
+
+        final Dialog dialog = new Dialog(context,
+                android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
+        dialog.setContentView(R.layout.dialog_msg);
+        TextView tv_msg = (TextView) dialog.findViewById(R.id.tv_msg);
+        Button btn_ok = (Button) dialog.findViewById(R.id.btn_ok);
+        tv_msg.setText(msg);
+        tv_msg.setTypeface(GetFont(context));
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     public static HttpGet SetHttpGet(String url) {
@@ -184,22 +300,6 @@ public class Utility {
         return httppost;
     }
 
-    public static boolean HaveNetworkConnection(Context context) {
-        boolean HaveConnectedWifi = false;
-        boolean HaveConnectedMobile = false;
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    HaveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    HaveConnectedMobile = true;
-        }
-        return HaveConnectedWifi || HaveConnectedMobile;
-    }
-
     public static void printHashKey(Context context) {
         PackageInfo info;
         try {
@@ -223,5 +323,5 @@ public class Utility {
         }
     }
 
-
 }
+

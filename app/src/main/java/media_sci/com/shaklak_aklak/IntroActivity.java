@@ -2,6 +2,8 @@ package media_sci.com.shaklak_aklak;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +12,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/**
- * Created by Bassem on 12/6/2015.
- */
+import java.util.List;
+
+import media_sci.com.utility.Utility;
+
 public class IntroActivity extends Activity implements View.OnClickListener {
 
     private RelativeLayout rltv_video;
@@ -20,16 +23,12 @@ public class IntroActivity extends Activity implements View.OnClickListener {
     private TextView tv_title, tv_description;
     private Button btn_skip;
 
-    {
-        // share with instagram
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         SetupTools();
-        //Bassem22222tgtdd
+        SetFont();
     }
 
     private void SetupTools() {
@@ -51,6 +50,13 @@ public class IntroActivity extends Activity implements View.OnClickListener {
 
     }
 
+    private void SetFont() {
+        Typeface typeface = Utility.GetFont(this);
+        tv_title.setTypeface(typeface);
+        tv_description.setTypeface(typeface);
+        btn_skip.setTypeface(typeface);
+    }
+
     @Override
     public void onClick(View v) {
         if (v == img_play_video) {
@@ -67,19 +73,46 @@ public class IntroActivity extends Activity implements View.OnClickListener {
     }
 
     private void ShareSocialMedia(int option) {
+
         String link = "http://media-sci.com/";
         if (option == 0) {
 
-            String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u="
-                    + link;
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
-            startActivity(intent.createChooser(intent, "Share With Facebook"));
+            FacebookShare(link);
 
         } else if (option == 1) {
 
-            // String video_link = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
-
+            String twitter =
+                    "https://twitter.com/intent/tweet?text=" + link;
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter));
+            startActivity(i);
         }
+    }
+
+    private void FacebookShare(String link) {
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, link);
+
+        // See if official Facebook app is found
+        boolean facebookAppFound = false;
+        List<ResolveInfo> matches = getPackageManager().queryIntentActivities(intent, 0);
+        for (ResolveInfo info : matches) {
+            if (info.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+                intent.setPackage(info.activityInfo.packageName);
+                facebookAppFound = true;
+                break;
+            }
+        }
+
+        // As fallback, launch sharer.php in a browser
+        if (!facebookAppFound) {
+            String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u="
+                    + link;
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
+        }
+
+        startActivity(intent);
     }
 }
 

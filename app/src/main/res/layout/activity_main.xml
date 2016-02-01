@@ -1,29 +1,112 @@
 <android.support.v4.app.FragmentTabHost
-    android:id="@android:id/tabhost"
+    android:id="@+id/tabhost"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
+
+        android:id="@+id/rltv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/rectangle_border"
-            />
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/rectangle_border"
 
-    </LinearLayout>
+                />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/popUp_color"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_servingSize_done"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:background="@color/popUp_color"
+                android:gravity="right|center_vertical"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="Done"
+                android:textColor="@color/black"
+                android:textSize="17sp"/>
+
+            <ListView
+                android:id="@+id/lst_serving_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/popUp_color"></ListView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/lnr_picker"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/popUp_color"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_servingNo_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/popUp_color"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="Done"
+                android:textColor="@color/black"
+                android:textSize="17sp"/>
+
+            <NumberPicker
+                android:id="@+id/pkr_integer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_servingNo_done"
+                android:layout_marginTop="10dp"
+                ></NumberPicker>
+
+            <NumberPicker
+
+                android:id="@+id/pkr_float"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_servingNo_done"
+                android:layout_marginTop="10dp">
+
+            </NumberPicker>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 </android.support.v4.app.FragmentTabHost>

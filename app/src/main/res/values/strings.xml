@@ -4,6 +4,8 @@
     <string name="home">home</string>
     <string name="forget_password">Forger Password?</string>
     <string name="register">Register</string>
+    <string name="ready">I\'m Ready</string>
+    <string name="back_login">Back To Login</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -25,6 +27,82 @@
     <string name="custom_calories">Custom Calories</string>
     <string name="target_calories">Target Calories</string>
     <string name="favourite">My Favourite</string>
+    <string name="serving_size">Serving Size</string>
+    <string name="serving_no">Number of Servings</string>
 
+    <!-- Nutrition Facts table value -->
+    <string name="calories">Calories</string>
+    <string name="calories_fat">Calories from Fat</string>
+    <string name="daily_value">Daily Value %</string>
+    <string name="total_fat">Total Fat</string>
+    <string name="saturated_fat">Saturated Fat</string>
+    <string name="cholest">Cholestrol</string>
+    <string name="sodium">Sodium</string>
+    <string name="potassium">Potassium</string>
+    <string name="total_carbo">Total Carbohydrate</string>
+    <string name="carbo">Carbohydrate</string>
+    <string name="dietary_fiber">Dietary Fiber</string>
+    <string name="sugars">Sugars</string>
+    <string name="protein">Protein</string>
+    <string name="vitamin_a">Vitamin A</string>
+    <string name="vitamin_c">Vitamin C</string>
+    <string name="calcium">Calcium</string>
+    <string name="iron">Iron</string>
+    <string name="add_to_meal">Add To My Meal</string>
+    <string name="add_to_favourite">Add To My Favourite</string>
+    <string name="thank">Thank You</string>
+    <string name="confirm_msg">We Have Just Sent Code To Your Mail</string>
+    <string name="register_code">Write It Here</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_msg">Are you sure to delete item ?</string>
+    <string name="custom_foods">Custom Foods</string>
+    <string name="highest">Highest</string>
+    <string name="lowest">Lowest</string>
+    <string name="footer">Nutrient level based on 100g of each food item</string>
+    <string name="food_title1">Advanced Food Selection</string>
+    <string name="food_title2">Sort food items based on nutirion type</string>
+    <string name="restaurant">Restaurants</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="add_recipes">Add Your Recipes</string>
+    <string name="gram">g</string>
+    <string name="milli_gram">mg</string>
+    <string name="kcal">Kcal</string>
+    <string name="exercise">Exercise</string>
+    <string name="per_week">days / Week</string>
+    <string name="enter_food">Enter Your Food</string>
+    <string name="ok">OK</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="wrong_email">Email Not Found</string>
+    <string name="wrong_password">Wrong Password </string>
+    <string name="loggedIn_user">User Already Login </string>
+    <string name="change_calories">Change Calories</string>
+    <string name="success_meal">Added To My Meal Success</string>
+    <string name="success_favourite">Added To My Favourite</string>
+    <string name="fail">Fail Operation</string>
+    <string name="error_connection">Error Connection</string>
+    <string name="error_mail">Email Already Exist</string>
+    <string name="verify_mail">Verify Mail</string>
+    <string name="wrong_code">Wrong Verification Code</string>
+    <string name="cancel">Cancel</string>
+    <string name="verify">Verify</string>
+    <string name="not_verify_user">User Not Verified</string>
+    <string name="verify_code">Verify code</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="try_again">Try again</string>
+
+    <array name="arr_exercise">
+        <item>No exercise</item>
+        <item>1-3</item>
+        <item>3-5</item>
+        <item>6-7</item>
+        <item>Very hard exercise</item>
+    </array>
+
+    <array name="arr_units">
+        <item>gram</item>
+        <item>liter</item>
+    </array>
 
 </resources>

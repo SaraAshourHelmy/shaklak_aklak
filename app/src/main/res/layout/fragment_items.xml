@@ -12,10 +12,14 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"></include>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".3dp"
+        android:background="@color/black"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="35dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -27,24 +31,31 @@
             android:layout_weight="5"
             android:background="@color/white"
             android:focusable="false"
+            android:gravity="center_vertical"
             android:hint="Search"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            android:textSize="@dimen/custom_food_font"/>
 
         <ImageView
             android:id="@+id/img_searchItem_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/cancle"/>
+            android:src="@drawable/close"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".3dp"
+        android:background="@color/black"/>
 
     <ListView
         android:id="@+id/lst_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/dark_gray"
-        android:dividerHeight="1dp"
+        android:divider="@color/black"
+        android:dividerHeight=".3dp"
         android:scrollbars="none"></ListView>
 
 </LinearLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/light_gray"
@@ -9,15 +9,21 @@
         android:id="@+id/actionbar_FindFood"
         layout="@layout/actionbar_default"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:layout_alignParentTop="true"></include>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".3dp"
+        android:background="@color/black"/>
 
     <ListView
         android:id="@+id/lst_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/actionbar_FindFood"
-        android:layout_marginTop="5dp"
+        android:divider="@color/black"
+        android:dividerHeight=".3dp"
         android:scrollbars="none"></ListView>
 
-</RelativeLayout>
+</LinearLayout>

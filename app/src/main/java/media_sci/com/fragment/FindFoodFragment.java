@@ -43,7 +43,8 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
 
         lst_category = (ListView) view.findViewById(R.id.lst_category);
         actionbar = (View) view.findViewById(R.id.actionbar_FindFood);
-        Utility.ActionBarSetting(actionbar, getString(R.string.your_food), 1, "");
+        Utility.ActionBarSetting(actionbar, getString(R.string.your_food), 1
+                , "", getActivity());
 
         img_search = (ImageView) actionbar.findViewById(R.id.img_action_icon);
         img_search.setOnClickListener(new View.OnClickListener() {
@@ -67,17 +68,27 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        OpenItemFragment(lst_category_items.get(position).getId(),
-                lst_category_items.get(position).getName_en(),
-                lst_category_items.get(position).getImg_url());
+        String cat_img = lst_category_items.get(position).getImg_url();
+
+        if (lst_category_items.get(position).getSection_type() == 0) {
+            OpenItemFragment(lst_category_items.get(position).getId(),
+                    cat_img);
+        } else if (lst_category_items.get(position).getSection_type() == 1) {
+
+            OpenResFragment(cat_img);
+        } else if (lst_category_items.get(position).getSection_type() == 2) {
+
+            // My Meal Custom
+            OpenCustomMealFragment(cat_img);
+        }
     }
 
-    private void OpenItemFragment(int cat_id, String cat_name, String cat_img) {
+    private void OpenItemFragment(int cat_id, String cat_img) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt("cat_id", cat_id);
-        bundle.putString("cat_name", cat_name);
-        bundle.putString("cat_img", cat_img);
+        bundle.putInt("sec_id", cat_id);
+        bundle.putInt("sec_type", 0);
+        bundle.putString("sec_img", cat_img);
 
         Fragment itemsFragment = new ItemsFragment(); // set constructor with parameters
         itemsFragment.setArguments(bundle);
@@ -86,7 +97,41 @@ public class FindFoodFragment extends Fragment implements AdapterView.OnItemClic
         ft.add(android.R.id.tabcontent, itemsFragment);
 
         ft.hide(FindFoodFragment.this);
-        ft.addToBackStack(DailyFragment.class.getName());
+        ft.addToBackStack(FindFoodFragment.class.getName());
         ft.commit();
     }
+
+    private void OpenResFragment(String img) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("sec_img", img);
+
+        Fragment restFragment = new RestFragment(); // set constructor with parameters
+        restFragment.setArguments(bundle);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(android.R.id.tabcontent, restFragment);
+
+        ft.hide(FindFoodFragment.this);
+        ft.addToBackStack(FindFoodFragment.class.getName());
+        ft.commit();
+    }
+
+    private void OpenCustomMealFragment(String img) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("sec_img", img);
+
+        Fragment customMealFragment = new ViewCustomFoodFragment(); // set constructor with parameters
+
+        customMealFragment.setArguments(bundle);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(android.R.id.tabcontent, customMealFragment);
+
+        ft.hide(FindFoodFragment.this);
+        ft.addToBackStack(FindFoodFragment.class.getName());
+        ft.commit();
+    }
+
 }

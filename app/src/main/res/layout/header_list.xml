@@ -15,6 +15,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="A"
-        android:textSize="15sp"
+        android:textSize="13sp"
         tools:ignore="HardcodedText"/>
 </LinearLayout>

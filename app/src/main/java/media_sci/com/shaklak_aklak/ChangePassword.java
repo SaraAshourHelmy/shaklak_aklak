@@ -2,6 +2,8 @@ package media_sci.com.shaklak_aklak;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,27 +12,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import media_sci.com.models.UserData;
+import media_sci.com.service.DataService;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
-/**
- * Created by Bassem on 12/13/2015.
- */
 public class ChangePassword extends Activity implements View.OnClickListener {
 
-    private static String changePasswordURL = "";
     private TextView tv_password, tv_confirm_password;
     private EditText et_new_password, et_confirm_password;
     private Button btn_save_password;
+    private int user_id = -1;
+    private boolean check_flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,22 @@ public class ChangePassword extends Activity implements View.OnClickListener {
         btn_save_password = (Button) findViewById(R.id.btn_save_Password);
 
         btn_save_password.setOnClickListener(this);
+        SetFont();
+
+        Bundle b = getIntent().getExtras();
+        if (b.containsKey("user_id")) {
+            user_id = b.getInt("user_id");
+        }
+    }
+
+    private void SetFont() {
+
+        Typeface typeface = Utility.GetFont(this);
+        tv_confirm_password.setTypeface(typeface);
+        tv_password.setTypeface(typeface);
+        et_confirm_password.setTypeface(typeface);
+        et_new_password.setTypeface(typeface);
+        btn_save_password.setTypeface(typeface);
     }
 
     @Override
@@ -67,10 +89,13 @@ public class ChangePassword extends Activity implements View.OnClickListener {
 
         boolean checkFlag = true;
         if (et_new_password.getText().length() < 1) {
+
             checkFlag = false;
             et_new_password.setError("Please Enter Password");
             et_new_password.requestFocus();
+
         } else {
+
             if (!et_confirm_password.getText().toString()
                     .equals(et_new_password.getText().toString())) {
                 checkFlag = false;
@@ -85,10 +110,13 @@ public class ChangePassword extends Activity implements View.OnClickListener {
     private void ChangePassword() {
 
         HttpClient httpClient = Utility.SetTimeOut();
-        HttpPost httpPost = Utility.SetHttpPost(changePasswordURL);
+        HttpPost httpPost = Utility.SetHttpPost(StaticVarClass.ChangePassword_URL);
         if (httpClient != null && httpPost != null) {
             // Set Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+            params.add(new BasicNameValuePair("user_id",
+                    String.valueOf(user_id)));
             params.add(new BasicNameValuePair("password",
                     et_new_password.getText().toString()));
             try {
@@ -98,6 +126,30 @@ public class ChangePassword extends Activity implements View.OnClickListener {
                 if (status == 200) {
 
                     // check json result
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    Log.e("right_data", data);
+                    JSONObject jsonObject = new JSONObject(data);
+
+                    String first_name = jsonObject.getString("first_name");
+                    String last_name = jsonObject.getString("last_name");
+                    String phone = jsonObject.getString("phone");
+                    String gender_txt = jsonObject.getString("gender");
+                    String age = jsonObject.getString("age");
+                    String height = jsonObject.getString("height");
+                    String weight = jsonObject.getString("weight");
+                    String email = jsonObject.getString("email");
+                    StaticVarClass.verify_status = jsonObject.getInt("is_verified");
+
+                    String gender = (gender_txt.equals("male")) ? "0" : "1";
+                    int exercise_type = jsonObject.getInt("exercise_type");
+                    double calories = jsonObject.getDouble("calories");
+
+                    UserData userData = new UserData(ChangePassword.this);
+                    userData.setUserData(user_id, first_name, last_name, phone, email,
+                            et_new_password.getText().toString(), gender, age, height, weight
+                            , exercise_type, calories);
+                    check_flag = true;
                 }
             } catch (Exception e) {
                 Log.e("changePassword error", "" + e);
@@ -127,6 +179,19 @@ public class ChangePassword extends Activity implements View.OnClickListener {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             dialog.dismiss();
+            if (check_flag) {
+
+                Intent service_intent = new Intent(ChangePassword.this, DataService.class);
+                service_intent.putExtra("type", 2);
+                startService(service_intent);
+
+                Intent intent = new Intent(ChangePassword.this, MainActivity.class);
+                startActivity(intent);
+
+                finish();
+            } else {
+                Utility.ViewDialog(ChangePassword.this, getString(R.string.fail));
+            }
 
         }
     }

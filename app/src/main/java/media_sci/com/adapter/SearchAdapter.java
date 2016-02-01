@@ -15,6 +15,7 @@ import lb.library.SearchablePinnedHeaderListViewAdapter;
 import lb.library.StringArrayAlphabetIndexer;
 import media_sci.com.models.Ingredients;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.utility.Utility;
 
 /**
  * Created by Bassem on 12/7/2015.
@@ -63,8 +64,13 @@ public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Ingredi
         final Ingredients item = getItem(position);
         final String displayName = item.getItem_name_en();
         TextView name = (TextView) convertView.findViewById(R.id.listview_item__friendNameTextView);
+
         name.setText(displayName);
+
         TextView tv_header = (TextView) convertView.findViewById(R.id.header_text);
+
+        name.setTypeface(Utility.GetFont(context));
+        tv_header.setTypeface(Utility.GetFont(context));
 
         bindSectionHeader(tv_header, null, position);
         return convertView;
