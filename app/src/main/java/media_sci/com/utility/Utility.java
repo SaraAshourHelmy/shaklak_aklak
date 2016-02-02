@@ -51,7 +51,7 @@ public class Utility {
 
     public static String GetDecimalFormat(double number) {
 
-        return new DecimalFormat("##.##").format(number);
+        return new DecimalFormat("##.#").format(number);
     }
 
     public static String GetStringDateNow() {

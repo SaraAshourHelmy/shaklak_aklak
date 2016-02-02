@@ -53,7 +53,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     private Button btn_calories, btn_nutrients, btn_pieChart;
     private TextView tv_selected_date;
     private ImageView img_edit;
-    private SimpleDateFormat txtDate_format, date_format;
+    private SimpleDateFormat txtDate_format;
     private PieChart pieChart;
 
     private ImageView img_calories, img_total_fat, img_cholest;
@@ -110,9 +110,9 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         UserMeal.GetUserConsuming(getActivity());
 
-        String gram = getString(R.string.gram);
-        String milli_gram = getString(R.string.milli_gram);
-        String kcal = getString(R.string.kcal);
+        // String gram = getString(R.string.gram);
+        // String milli_gram = getString(R.string.milli_gram);
+        // String kcal = getString(R.string.kcal);
 
         UserCalculation userCalculation = new UserCalculation(getActivity());
 
@@ -121,52 +121,52 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         tv_calories_need.setText(Utility.GetDecimalFormat(userCalculation.CaloriesCalc()));
 
         tv_total_fat_need.setText(Utility.GetDecimalFormat(userCalculation.TotalFat())
-                + gram);
+                + StaticVarClass.gram);
 
         tv_cholest_need.setText(String.valueOf(userCalculation.Cholest())
-                + milli_gram);
+                + StaticVarClass.milli_gram);
 
-        tv_sodium_need.setText(userCalculation.SodiumCalc() + milli_gram);
-        tv_potassium_need.setText(userCalculation.Potassium() + milli_gram);
-        tv_carbo_need.setText(userCalculation.Carbohydrate() + gram);
+        tv_sodium_need.setText(userCalculation.SodiumCalc() + StaticVarClass.milli_gram);
+        tv_potassium_need.setText(userCalculation.Potassium() + StaticVarClass.milli_gram);
+        tv_carbo_need.setText(userCalculation.Carbohydrate() + StaticVarClass.gram);
         tv_fiber_need.setText(Utility.GetDecimalFormat(userCalculation.Fiber())
-                + gram);
+                + StaticVarClass.gram);
         tv_sugars_need.setText(Utility.GetDecimalFormat(userCalculation.SugarCalc())
-                + gram);
+                + StaticVarClass.gram);
         tv_protein_need.setText(Utility.GetDecimalFormat(userCalculation.ProteinCalc())
-                + gram);
-        tv_vitaminA_need.setText(userCalculation.VitaminA() + "IU");
-        tv_vitaminC_need.setText(userCalculation.VitaminC() + milli_gram);
-        tv_calcium_need.setText(userCalculation.CalciumCalc() + milli_gram);
-        tv_iron_need.setText(userCalculation.IronCalc() + milli_gram);
+                + StaticVarClass.gram);
+        tv_vitaminA_need.setText(userCalculation.VitaminA() + StaticVarClass.IU);
+        tv_vitaminC_need.setText(userCalculation.VitaminC() + StaticVarClass.milli_gram);
+        tv_calcium_need.setText(userCalculation.CalciumCalc() + StaticVarClass.milli_gram);
+        tv_iron_need.setText(userCalculation.IronCalc() + StaticVarClass.milli_gram);
 
         // set taken
         tv_calories_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Calories)
-                + " " + kcal);
+                + " " + StaticVarClass.kcal);
         tv_total_fat_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Total_Fat)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
         tv_cholest_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Cholest)
-                + " " + milli_gram);
+                + " " + StaticVarClass.milli_gram);
         tv_sodium_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Sodium)
-                + " " + milli_gram);
+                + " " + StaticVarClass.milli_gram);
         tv_potassium_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Potassium)
-                + " " + milli_gram);
+                + " " + StaticVarClass.milli_gram);
         tv_carbo_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Carbo)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
         tv_fiber_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Fiber)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
         tv_sugars_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Sugars)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
         tv_protein_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Protein)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
         tv_vitaminA_taken.setText(Utility.GetDecimalFormat(StaticVarClass.VitaminA)
-                + " " + milli_gram);
+                + " " + StaticVarClass.milli_gram);
         tv_vitaminC_taken.setText(Utility.GetDecimalFormat(StaticVarClass.VitaminC)
-                + " " + milli_gram);
+                + " " + StaticVarClass.milli_gram);
         tv_calcium_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Calcium)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
         tv_iron_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Iron)
-                + " " + gram);
+                + " " + StaticVarClass.gram);
 
         // set Image
 
@@ -263,7 +263,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         }
 
         // Fiber
-        if (StaticVarClass.Fiber <= userCalculation.Fiber()) {
+        if (StaticVarClass.Fiber == userCalculation.Fiber()) {
 
             // set wink image green face
             img_fiber.setImageResource(R.drawable.nutriat_equal);
@@ -303,7 +303,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         }
 
         // Vitamin A
-        if (StaticVarClass.VitaminA <= userCalculation.VitaminA()) {
+        if (StaticVarClass.VitaminA == userCalculation.VitaminA()) {
             // set wink image green face
             img_vitaminA.setImageResource(R.drawable.nutriat_equal);
 
@@ -317,7 +317,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         }
 
         // Vitamin C
-        if (StaticVarClass.VitaminC <= userCalculation.VitaminC()) {
+        if (StaticVarClass.VitaminC == userCalculation.VitaminC()) {
 
             // set wink image green face
             img_vitaminC.setImageResource(R.drawable.nutriat_equal);
@@ -503,7 +503,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         selected_date = Calendar.getInstance();
         updated_date = Calendar.getInstance();
         txtDate_format = new SimpleDateFormat("EEEE MMMM dd, yyyy");
-        date_format = new SimpleDateFormat("yyyy-MM-dd");
 
         // set current date
         // Note calendar start month index from 0 so month number will be -1
@@ -591,7 +590,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         tv_potassium.setTypeface(typeface);
         tv_potassium_need.setTypeface(typeface);
-        tv_potassium_taken.setTypeface(typeface);
+        tv_potassium_taken.setTypeface(typeface, Typeface.BOLD);
 
         tv_carbo.setTypeface(typeface);
         tv_carbo_need.setTypeface(typeface);

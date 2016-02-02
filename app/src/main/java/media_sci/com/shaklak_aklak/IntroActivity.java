@@ -19,7 +19,8 @@ import media_sci.com.utility.Utility;
 public class IntroActivity extends Activity implements View.OnClickListener {
 
     private RelativeLayout rltv_video;
-    private ImageView img_play_video, img_facebook, img_twitter;
+    private ImageView img_play_video;
+    private RelativeLayout rltv_facebook, rltv_twitter;
     private TextView tv_title, tv_description;
     private Button btn_skip;
 
@@ -36,16 +37,16 @@ public class IntroActivity extends Activity implements View.OnClickListener {
         // Utility.printHashKey(this);
         rltv_video = (RelativeLayout) findViewById(R.id.rltv_intro_video);
         img_play_video = (ImageView) findViewById(R.id.img_play_video);
-        img_facebook = (ImageView) findViewById(R.id.img_intro_facebook);
-        img_twitter = (ImageView) findViewById(R.id.img_intro_twitter);
+        rltv_facebook = (RelativeLayout) findViewById(R.id.rltv_intro_facebook);
+        rltv_twitter = (RelativeLayout) findViewById(R.id.rltv_intro_twitter);
         tv_title = (TextView) findViewById(R.id.tv_intro_title);
         tv_description = (TextView) findViewById(R.id.tv_intro_description);
         btn_skip = (Button) findViewById(R.id.btn_intro_skip);
 
 
         img_play_video.setOnClickListener(this);
-        img_facebook.setOnClickListener(this);
-        img_twitter.setOnClickListener(this);
+        rltv_facebook.setOnClickListener(this);
+        rltv_twitter.setOnClickListener(this);
         btn_skip.setOnClickListener(this);
 
     }
@@ -54,7 +55,7 @@ public class IntroActivity extends Activity implements View.OnClickListener {
         Typeface typeface = Utility.GetFont(this);
         tv_title.setTypeface(typeface);
         tv_description.setTypeface(typeface);
-        btn_skip.setTypeface(typeface);
+        btn_skip.setTypeface(typeface, Typeface.BOLD);
     }
 
     @Override
@@ -62,10 +63,10 @@ public class IntroActivity extends Activity implements View.OnClickListener {
         if (v == img_play_video) {
 
             // intent to video player
-        } else if (v == img_facebook) {
+        } else if (v == rltv_facebook) {
             ShareSocialMedia(0);
 
-        } else if (v == img_twitter) {
+        } else if (v == rltv_twitter) {
             ShareSocialMedia(1);
 
         } else if (v == btn_skip) {
@@ -79,6 +80,7 @@ public class IntroActivity extends Activity implements View.OnClickListener {
 
     private void ShareSocialMedia(int option) {
 
+        // link of video
         String link = "http://media-sci.com/";
         if (option == 0) {
 

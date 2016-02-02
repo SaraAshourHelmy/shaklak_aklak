@@ -12,28 +12,28 @@
 
         <ImageView
             android:id="@+id/img_play_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/play"/>
     </RelativeLayout>
 
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/rltv_intro_facebook"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/light_gray"
-            >
+            android:background="@color/light_gray">
 
             <ImageView
-                android:id="@+id/img_intro_facebook"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/facebook"/>
 
@@ -41,18 +41,17 @@
 
 
         <RelativeLayout
+            android:id="@+id/rltv_intro_twitter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="3dp"
             android:layout_weight="1"
-            android:background="@color/light_gray"
-            >
+            android:background="@color/light_gray">
 
             <ImageView
 
-                android:id="@+id/img_intro_twitter"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/twitter"/>
         </RelativeLayout>
@@ -84,7 +83,10 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/button_selected"
-        android:text="@string/skip"/>
+        android:text="@string/skip"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/custom_food_font"/>
 
 
 </LinearLayout>

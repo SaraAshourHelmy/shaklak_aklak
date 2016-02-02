@@ -119,48 +119,51 @@
                 android:orientation="vertical">
 
                 <!-- Calories-->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_calories"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_calories"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_calories"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/calories"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_caloriesNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_caloriesTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -168,48 +171,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Total Fat -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_totalFat"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_totalFat"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_totalFat"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/total_fat"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_totalFatNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_totalFatTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -217,96 +223,102 @@
                     android:background="@color/black"></View>
 
                 <!-- Cholest -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_cholest"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_cholest"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_cholest"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/cholest"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_cholestNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_cholestTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/black"></View>
                 <!-- Sodium -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_sodium"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_sodium"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_sodium"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/sodium"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_sodiumNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_sodiumTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -314,48 +326,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Potassium -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_potassium"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_potassium"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_potassium"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/potassium"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_potassiumNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_potassiumTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -363,50 +378,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Carbo -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_carbo"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_carbo"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_carbo"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/carbo"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_carboNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/tv_daily_carbo"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_carboTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -414,48 +430,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Fiber -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_fiber"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_fiber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_fiber"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/dietary_fiber"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_fiberNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_fiberTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -463,48 +482,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Sugars -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_sugars"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_sugars"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_sugars"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/sugars"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_sugarsNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_sugarsTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -512,48 +534,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Protein -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_protein"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_protein"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_protein"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/protein"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_proteinNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_proteinTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -561,7 +586,7 @@
                     android:background="@color/black"></View>
 
                 <!-- Vitamin A -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height">
 
@@ -569,40 +594,42 @@
                         android:id="@+id/img_daily_vitaminA"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_vitaminA"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_vitaminA"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/vitamin_a"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_vitaminA_Needed"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_vitaminA_Taken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -610,48 +637,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Vitamin C -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_vitaminC"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_vitaminC"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_vitaminC"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/vitamin_c"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_vitaminC_Needed"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_vitaminC_Taken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -659,48 +689,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Calcium -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_calcium"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_calcium"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_calcium"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/calcium"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_calciumNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_calciumTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -708,48 +741,51 @@
                     android:background="@color/black"></View>
 
                 <!-- Iron -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height">
+                    android:layout_height="@dimen/button_height"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_daily_iron"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_daily_iron"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/img_daily_iron"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1.5"
                         android:text="@string/iron"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_ironNeeded"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
                         android:id="@+id/tv_daily_ironTaken"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -773,5 +809,6 @@
             android:layout_height="match_parent"
             android:background="@color/light_gray"/>
     </LinearLayout>
+
 
 </LinearLayout>

@@ -25,7 +25,7 @@ public class Ingredients {
     private int res_id, is_favourite;
     private double water, energy, protein, fat, sat_fat, cholest;
     private double carbo_tot, sugars, carbo_fiber, ash, calcium, phosphorus;
-    private double iron, sodium, potassium, vit_a, vit_c, thiamine_b1, riboflavin_b2;
+    private double iron, sodium, potassium, vit_a, thiamine_b1, riboflavin_b2;
     private double niacin_b3, ascorbic_acid, ndb_no;
 
 
@@ -760,13 +760,6 @@ public class Ingredients {
 
 //----------------------------------- Properties -------------------------------
 
-    public double getVit_c() {
-        return vit_c;
-    }
-
-    public void setVit_c(double vit_c) {
-        this.vit_c = vit_c;
-    }
 
     public int getId() {
         return id;
