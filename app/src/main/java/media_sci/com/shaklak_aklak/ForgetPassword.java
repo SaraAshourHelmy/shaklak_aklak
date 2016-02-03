@@ -64,7 +64,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
         tv_forgetPassword.setTypeface(typeface);
         tv_email.setTypeface(typeface);
         et_email.setTypeface(typeface);
-        btn_changePassword.setTypeface(typeface);
+        btn_changePassword.setTypeface(typeface,Typeface.BOLD);
     }
 
     @Override

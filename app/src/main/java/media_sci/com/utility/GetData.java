@@ -239,6 +239,7 @@ public class GetData {
             if (status == 200) {
                 HttpEntity entity = response.getEntity();
                 String ingredient_unit = EntityUtils.toString(entity);
+                Log.e("ingredient_unit",ingredient_unit);
 
                 JSONObject Ingredient_Unit_Json = new JSONObject(ingredient_unit);
                 last_update = Ingredient_Unit_Json.getString("lastupdate");

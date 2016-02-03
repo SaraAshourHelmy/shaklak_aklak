@@ -160,8 +160,10 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
+                        android:text="@string/kcal"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
+
 
                 </LinearLayout>
 
@@ -613,7 +615,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>

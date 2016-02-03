@@ -52,7 +52,7 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
         SetupIndexedList();
         // SetSideIndex();
 
-        setAlphabet();
+        //setAlphabet();
 
     }
 

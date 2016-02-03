@@ -123,11 +123,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         tv_total_fat_need.setText(Utility.GetDecimalFormat(userCalculation.TotalFat())
                 + StaticVarClass.gram);
 
-        tv_cholest_need.setText(String.valueOf(userCalculation.Cholest())
+        tv_cholest_need.setText(String.valueOf((int)userCalculation.Cholest())
                 + StaticVarClass.milli_gram);
 
-        tv_sodium_need.setText(userCalculation.SodiumCalc() + StaticVarClass.milli_gram);
-        tv_potassium_need.setText(userCalculation.Potassium() + StaticVarClass.milli_gram);
+        tv_sodium_need.setText((int)userCalculation.SodiumCalc() + StaticVarClass.milli_gram);
+        tv_potassium_need.setText((int)userCalculation.Potassium() + StaticVarClass.milli_gram);
         tv_carbo_need.setText(userCalculation.Carbohydrate() + StaticVarClass.gram);
         tv_fiber_need.setText(Utility.GetDecimalFormat(userCalculation.Fiber())
                 + StaticVarClass.gram);
@@ -135,10 +135,10 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 + StaticVarClass.gram);
         tv_protein_need.setText(Utility.GetDecimalFormat(userCalculation.ProteinCalc())
                 + StaticVarClass.gram);
-        tv_vitaminA_need.setText(userCalculation.VitaminA() + StaticVarClass.IU);
-        tv_vitaminC_need.setText(userCalculation.VitaminC() + StaticVarClass.milli_gram);
-        tv_calcium_need.setText(userCalculation.CalciumCalc() + StaticVarClass.milli_gram);
-        tv_iron_need.setText(userCalculation.IronCalc() + StaticVarClass.milli_gram);
+        tv_vitaminA_need.setText((int)userCalculation.VitaminA() + StaticVarClass.IU);
+        tv_vitaminC_need.setText((int)userCalculation.VitaminC() + StaticVarClass.milli_gram);
+        tv_calcium_need.setText((int)userCalculation.CalciumCalc() + StaticVarClass.milli_gram);
+        tv_iron_need.setText((int)userCalculation.IronCalc() + StaticVarClass.milli_gram);
 
         // set taken
         tv_calories_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Calories)
@@ -160,7 +160,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         tv_protein_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Protein)
                 + " " + StaticVarClass.gram);
         tv_vitaminA_taken.setText(Utility.GetDecimalFormat(StaticVarClass.VitaminA)
-                + " " + StaticVarClass.milli_gram);
+                + " " + StaticVarClass.IU);
         tv_vitaminC_taken.setText(Utility.GetDecimalFormat(StaticVarClass.VitaminC)
                 + " " + StaticVarClass.milli_gram);
         tv_calcium_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Calcium)

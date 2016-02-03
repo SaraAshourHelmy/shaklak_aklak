@@ -68,6 +68,7 @@
     <string name="add_recipes">Add Your Recipes</string>
     <string name="gram">g</string>
     <string name="milli_gram">mg</string>
+    <string name="IU">IU</string>
     <string name="kcal">Kcal</string>
     <string name="exercise">Exercise</string>
     <string name="per_week">days / Week</string>

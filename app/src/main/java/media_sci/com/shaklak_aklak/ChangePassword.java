@@ -32,7 +32,7 @@ import media_sci.com.utility.Utility;
 
 public class ChangePassword extends Activity implements View.OnClickListener {
 
-    private TextView tv_password, tv_confirm_password;
+    private TextView tv_password, tv_confirm_password, tv_title;
     private EditText et_new_password, et_confirm_password;
     private Button btn_save_password;
     private int user_id = -1;
@@ -49,6 +49,7 @@ public class ChangePassword extends Activity implements View.OnClickListener {
 
         tv_confirm_password = (TextView) findViewById(R.id.tv_confirm_password);
         tv_password = (TextView) findViewById(R.id.tv_new_password);
+        tv_title = (TextView) findViewById(R.id.tv_title_changePassword);
         et_new_password = (EditText) findViewById(R.id.et_new_password);
         et_confirm_password = (EditText) findViewById(R.id.et_confirm_password);
         btn_save_password = (Button) findViewById(R.id.btn_save_Password);
@@ -67,9 +68,10 @@ public class ChangePassword extends Activity implements View.OnClickListener {
         Typeface typeface = Utility.GetFont(this);
         tv_confirm_password.setTypeface(typeface);
         tv_password.setTypeface(typeface);
+        tv_title.setTypeface(typeface);
         et_confirm_password.setTypeface(typeface);
         et_new_password.setTypeface(typeface);
-        btn_save_password.setTypeface(typeface);
+        btn_save_password.setTypeface(typeface, Typeface.BOLD);
     }
 
     @Override

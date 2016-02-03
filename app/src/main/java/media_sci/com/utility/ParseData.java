@@ -219,6 +219,7 @@ public class ParseData {
                 ingredient_unit.setIngredient_id(updateObject.getInt("ingredient_id"));
                 ingredient_unit.setUnit_id(updateObject.getInt("unit_id"));
                 ingredient_unit.setUnit_value(updateObject.getDouble("unit_percent"));
+                ingredient_unit.setDefault_unit(updateObject.getInt("default_unit"));
 
                 lst_ingredient_unit.add(ingredient_unit);
             }
@@ -365,7 +366,7 @@ public class ParseData {
 
                 myMealObject = myMealList.getJSONObject(i);
                 userMeal = new UserMeal();
-                userMeal.setId(myMealObject.getInt("id"));
+                // userMeal.setId(myMealObject.getInt("id"));
                 userMeal.setIngredient_id(myMealObject.getString("ingredient_id"));
                 userMeal.setDate(myMealObject.getString("date"));
                 userMeal.setIs_custom(myMealObject.getInt("is_custom"));
