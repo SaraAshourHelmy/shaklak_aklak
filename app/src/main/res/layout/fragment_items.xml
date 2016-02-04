@@ -54,8 +54,8 @@
         android:id="@+id/lst_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/black"
-        android:dividerHeight=".3dp"
+        android:divider="@null"
         android:scrollbars="none"></ListView>
+
 
 </LinearLayout>

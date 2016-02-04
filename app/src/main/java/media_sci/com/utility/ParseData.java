@@ -315,6 +315,7 @@ public class ParseData {
                 ingredient = new Ingredients();
                 Log.e("custom_id", customMeal.getString("id"));
                 ingredient.setCustomID(customMeal.getString("id"));
+                ingredient.setCounter_id(customMeal.getInt("counter_id"));
                 ingredient.setItem_name_en(customMeal.getString("item_name"));
                 ingredient.setType(customMeal.getInt("type"));
                 ingredient.setWater(customMeal.getDouble("water"));

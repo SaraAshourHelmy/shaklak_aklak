@@ -26,7 +26,8 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 11/24/2015.
  */
-public class ItemsFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class ItemsFragment extends Fragment implements View.OnClickListener
+        , AdapterView.OnItemClickListener, View.OnTouchListener {
 
     private ListView lst_items;
     private ImageView img_cancel;
@@ -93,6 +94,7 @@ public class ItemsFragment extends Fragment implements View.OnClickListener, Ada
 
             }
         });
+        view.setOnTouchListener(this);
     }
 
     private void SetFont() {
@@ -142,12 +144,15 @@ public class ItemsFragment extends Fragment implements View.OnClickListener, Ada
             et_search.setText("");
             SetupList();
         }
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        Utility.HideKeyboard(getActivity(), et_search);
         OpenItemDetailsFragment(lst_items_content.get(position).getId());
+
     }
 
     private void OpenItemDetailsFragment(int item_id) {
@@ -164,5 +169,14 @@ public class ItemsFragment extends Fragment implements View.OnClickListener, Ada
         ft.hide(ItemsFragment.this);
         ft.addToBackStack(ItemsFragment.class.getName());
         ft.commit();
+
+    }
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v != et_search)
+            Utility.HideKeyboard(getActivity(), et_search);
+        return true;
     }
 }

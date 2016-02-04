@@ -2,7 +2,7 @@
     <string name="app_name">Shaklak_Aklak</string>
     <string name="action_settings">Settings</string>
     <string name="home">home</string>
-    <string name="forget_password">Forger Password?</string>
+    <string name="forget_password">Forget Password?</string>
     <string name="register">Register</string>
     <string name="ready">I\'m Ready</string>
     <string name="back_login">Back To Login</string>
@@ -92,6 +92,7 @@
     <string name="verify_code">Verify code</string>
     <string name="verification_code">Verification Code</string>
     <string name="try_again">Try again</string>
+    <string name="confirm">Confirm</string>
 
     <array name="arr_exercise">
         <item>No exercise</item>

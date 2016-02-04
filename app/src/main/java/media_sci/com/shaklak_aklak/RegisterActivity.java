@@ -39,7 +39,8 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 12/6/2015.
  */
-public class RegisterActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
+public class RegisterActivity extends Activity implements View.OnClickListener,
+        View.OnTouchListener {
 
     private int result;
     private int user_id = -1, exercise_type = 0;
@@ -54,12 +55,16 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
     private EditText et_firstName, et_lastName, et_mobileNo, et_email;
     private Spinner spnr_exercise;
     private double calories = 0;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         SetupTools();
+
+        view = getWindow().getDecorView().getRootView();
+        view.setOnTouchListener(this);
     }
 
     private void SetupTools() {
@@ -104,6 +109,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
         rdg_genders.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                Utility.HideKeyboard(RegisterActivity.this, getCurrentFocus());
 
                 if (checkedId == R.id.rb_male) {
                     gender = "0";
@@ -165,6 +172,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+
                 exercise_type = position;
             }
 
@@ -173,6 +181,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
 
             }
         });
+
     }
 
     private void SetFocusInTouch() {
@@ -364,6 +373,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
             et_height.setFocusableInTouchMode(true);
         else if (v == et_weight)
             et_weight.setFocusableInTouchMode(true);
+
+
         return false;
     }
 

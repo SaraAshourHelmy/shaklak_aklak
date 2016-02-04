@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,11 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import media_sci.com.models.UserData;
-import media_sci.com.service.DataService;
+import media_sci.com.utility.GetDataLogin;
 import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
-public class LoginActivity extends Activity implements View.OnClickListener {
+public class LoginActivity extends Activity implements View.OnClickListener,
+        View.OnTouchListener {
 
     private TextView tv_email, tv_password;
     private EditText et_email, et_password;
@@ -43,12 +45,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private int error_no = -1;
     private boolean connect_flag = true;
     private int type = 0;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         SetupTools();
+
+        view = getWindow().getDecorView().getRootView();
+        view.setOnTouchListener(this);
     }
 
     private void SetupTools() {
@@ -263,13 +269,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     SetVerifiedDialog();
                 } else {
 
+                    /*
                     Intent service_intent = new Intent(LoginActivity.this, DataService.class);
                     service_intent.putExtra("type", 2);
-                    startService(service_intent);
+                    startService(service_intent);*/
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    String date = Utility.GetStringDateNow();
+                    GetDataLogin dataLogin = new GetDataLogin(LoginActivity.this,
+                            date, 0, 1);
+
+                    // go to main activity after download user data
+
                 }
             } else {
 
@@ -332,6 +342,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        
+        if (v != et_email || v != et_password)
+            Utility.HideKeyboard(this, getCurrentFocus());
+        return false;
     }
 
     public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {

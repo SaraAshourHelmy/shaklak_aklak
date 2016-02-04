@@ -17,7 +17,7 @@ public class Ingredients {
     private int is_custom, unit_value;
 
     // this for normal items
-    private int id;
+    private int id, counter_id;
     private String CustomID;
     private String item_name_en;
     private String item_name_ar;
@@ -40,9 +40,9 @@ public class Ingredients {
                         "water,energy,protein,fat,sat_fat,cholest," +
                         "carbo_tot,sugars,carbo_fiber,ash,calcium,phosphorus," +
                         "iron,sodium,potassium,vit_a,thiamine_b1,riboflavin_b2," +
-                        "niacin_b3,ascorbic_acid,ndb_no,type,favourite,unit_value,unit_name) " +
+                        "niacin_b3,ascorbic_acid,ndb_no,type,favourite,unit_value,unit_name,counter_id) " +
                         "values(?,?,?,?,?,?,?,?,?,?," +
-                        "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 SQLiteStatement insertStmt = db.compileStatement(query);
                 insertStmt.clearBindings();
@@ -73,6 +73,7 @@ public class Ingredients {
                 insertStmt.bindLong(25, ingredients.is_favourite);
                 insertStmt.bindLong(26, ingredients.unit_value);
                 insertStmt.bindString(27, ingredients.unit_name);
+                insertStmt.bindLong(28, ingredients.counter_id);
                 insertStmt.executeInsert();
 
             }
@@ -99,6 +100,7 @@ public class Ingredients {
                 do {
                     ingredients = new Ingredients();
                     ingredients.setCustomID(c.getString(c.getColumnIndex("id")));
+                    ingredients.setCounter_id(c.getInt(c.getColumnIndex("counter_id")));
                     ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name")));
                     ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
                     ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
@@ -153,6 +155,7 @@ public class Ingredients {
                 do {
                     ingredients = new Ingredients();
                     ingredients.setCustomID(c.getString(c.getColumnIndex("id")));
+                    ingredients.setCounter_id(c.getInt(c.getColumnIndex("counter_id")));
                     ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name")));
                     ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
                     ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
@@ -740,15 +743,18 @@ public class Ingredients {
         db.close();
     }
 
-    public static int GetCustomItemCount(Context context) {
+    public static int GetMaxCounter(Context context) {
 
-        int count = -1;
+        int count = 0;
 
         try {
             SQLiteDatabase db = Utility.ReadDatabase(context);
-            String query = "select * from custom_ingredients";
+            String query = "select max(counter_id) as Counter_id from custom_ingredients";
             Cursor c = db.rawQuery(query, null);
-            count = c.getCount();
+            if (c.moveToFirst()) {
+                count = c.getInt(c.getColumnIndex("Counter_id"));
+                Log.e("counter_id", count + "");
+            }
             c.close();
             db.close();
 
@@ -1015,5 +1021,13 @@ public class Ingredients {
 
     public void setCustomID(String customID) {
         CustomID = customID;
+    }
+
+    public int getCounter_id() {
+        return counter_id;
+    }
+
+    public void setCounter_id(int counter_id) {
+        this.counter_id = counter_id;
     }
 }

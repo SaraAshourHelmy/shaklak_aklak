@@ -2,10 +2,12 @@ package media_sci.com.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -45,6 +47,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
     static private Calendar selected_date, updated_date;
     static private int selected_day, selected_month, selected_year;
+    ArrayList<UserMeal> userMeals;
     // static private WeekCalendar weekCalendar;
     View actionbar;
 
@@ -123,11 +126,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         tv_total_fat_need.setText(Utility.GetDecimalFormat(userCalculation.TotalFat())
                 + StaticVarClass.gram);
 
-        tv_cholest_need.setText(String.valueOf((int)userCalculation.Cholest())
+        tv_cholest_need.setText(String.valueOf((int) userCalculation.Cholest())
                 + StaticVarClass.milli_gram);
 
-        tv_sodium_need.setText((int)userCalculation.SodiumCalc() + StaticVarClass.milli_gram);
-        tv_potassium_need.setText((int)userCalculation.Potassium() + StaticVarClass.milli_gram);
+        tv_sodium_need.setText((int) userCalculation.SodiumCalc() + StaticVarClass.milli_gram);
+        tv_potassium_need.setText((int) userCalculation.Potassium() + StaticVarClass.milli_gram);
         tv_carbo_need.setText(userCalculation.Carbohydrate() + StaticVarClass.gram);
         tv_fiber_need.setText(Utility.GetDecimalFormat(userCalculation.Fiber())
                 + StaticVarClass.gram);
@@ -135,10 +138,10 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 + StaticVarClass.gram);
         tv_protein_need.setText(Utility.GetDecimalFormat(userCalculation.ProteinCalc())
                 + StaticVarClass.gram);
-        tv_vitaminA_need.setText((int)userCalculation.VitaminA() + StaticVarClass.IU);
-        tv_vitaminC_need.setText((int)userCalculation.VitaminC() + StaticVarClass.milli_gram);
-        tv_calcium_need.setText((int)userCalculation.CalciumCalc() + StaticVarClass.milli_gram);
-        tv_iron_need.setText((int)userCalculation.IronCalc() + StaticVarClass.milli_gram);
+        tv_vitaminA_need.setText((int) userCalculation.VitaminA() + StaticVarClass.IU);
+        tv_vitaminC_need.setText((int) userCalculation.VitaminC() + StaticVarClass.milli_gram);
+        tv_calcium_need.setText((int) userCalculation.CalciumCalc() + StaticVarClass.milli_gram);
+        tv_iron_need.setText((int) userCalculation.IronCalc() + StaticVarClass.milli_gram);
 
         // set taken
         tv_calories_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Calories)
@@ -735,23 +738,32 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         //String date = StaticVarClass.dash_format.format(updated_date.getTime());
         Log.e("date", date);
-        ArrayList<UserMeal> userMeals = UserMeal.GetUSerMeals(getActivity(),
+        userMeals = UserMeal.GetUSerMeals(getActivity(),
                 date);
         Log.e("userMeals_size", userMeals.size() + "");
         if (userMeals.size() == 0) {
 
             // call webservice with certain date
-            GetDataLogin getMyMeal = new GetDataLogin(getActivity(), date, 1, 2);
-            userMeals = UserMeal.GetUSerMeals(getActivity(),
-                    date);
+            if (Utility.HaveNetworkConnection(getActivity())) {
+                new GetMealsAsync(date).execute();
+            } else {
+                Utility.ViewDialog(getActivity(), getString(R.string.no_internet));
+            }
 
+
+        } else {
+            SetMealList();
         }
+    }
 
+
+    private void SetMealList() {
         SortMeals(userMeals);
         MealAdapter mealAdapter = new MealAdapter(getActivity(),
                 R.layout.adapter_meal, userMeals);
         lstv_userMeals.setAdapter(mealAdapter);
     }
+
 
     private void SortMeals(ArrayList<UserMeal> lst_userMeals) {
 
@@ -769,6 +781,44 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    public class GetMealsAsync extends AsyncTask<Void, Void, Void> {
+
+        String date;
+        ProgressDialog dialog;
+
+        public GetMealsAsync(String date) {
+            this.date = date;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            GetDataLogin getMyMeal = new GetDataLogin(getActivity(), date, 1, 2);
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Please wait ...");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            dialog.dismiss();
+            userMeals = UserMeal.GetUSerMeals(getActivity(),
+                    date);
+            Log.e("meals_size", userMeals.size() + "");
+            SetMealList();
+        }
     }
 
     private void SetVisibleView(LinearLayout lnr_first, LinearLayout lnr_second
