@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,19 +31,25 @@ import media_sci.com.service.DataService;
 import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
-public class ChangePassword extends Activity implements View.OnClickListener {
+public class ChangePassword extends Activity implements View.OnClickListener
+        , View.OnTouchListener {
 
     private TextView tv_password, tv_confirm_password, tv_title;
     private EditText et_new_password, et_confirm_password;
     private Button btn_save_password;
     private int user_id = -1;
     private boolean check_flag = false;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
         SetupTools();
+
+        view = getWindow().getDecorView().getRootView();
+        view.setOnTouchListener(this);
+
     }
 
     private void SetupTools() {
@@ -157,6 +164,14 @@ public class ChangePassword extends Activity implements View.OnClickListener {
                 Log.e("changePassword error", "" + e);
             }
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        Utility.HideKeyboard(this, getCurrentFocus());
+
+        return false;
     }
 
     public class ChangePasswordAsyncTask extends AsyncTask<Void, Void, Void> {

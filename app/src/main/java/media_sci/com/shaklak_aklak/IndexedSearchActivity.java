@@ -29,8 +29,9 @@ import media_sci.com.models.Ingredients;
 import media_sci.com.utility.Sorting;
 import media_sci.com.utility.Utility;
 
-public class IndexedSearchActivity extends Activity implements AdapterView.OnItemClickListener,
-        View.OnClickListener {
+public class IndexedSearchActivity extends Activity implements
+        AdapterView.OnItemClickListener,
+        View.OnClickListener, View.OnTouchListener {
 
     int indexListSize;
     float sideIndexX, sideIndexY;
@@ -43,6 +44,7 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
     private LinearLayout lnr_sideIndex;
     private SearchAdapter ingredientAdapter;
     private PinnedHeaderListView mListView;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
         // SetSideIndex();
 
         //setAlphabet();
+
+        view = getWindow().getDecorView().getRootView();
+        view.setOnTouchListener(this);
 
     }
 
@@ -117,6 +122,73 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
         mListView.setOnItemClickListener(this);
     }
 
+    private void SetFont() {
+        Typeface typeface = Utility.GetFont(this);
+        et_search_food.setTypeface(typeface);
+    }
+
+    private void SearchItems(String txt) {
+
+        searchList.clear();
+        int searchListLength = searchList.size();
+        for (int i = 0; i < lst_items.size(); i++) {
+            String item_txt = lst_items.get(i).getItem_name_en().toLowerCase();
+            if (item_txt.contains(txt.toLowerCase())) {
+                searchList.add(lst_items.get(i));
+            }
+
+        }
+
+        ingredientAdapter = new SearchAdapter(this, searchList);
+        mListView.setAdapter(ingredientAdapter);
+
+    }
+
+    private void SetSideIndex() {
+        // set side index
+
+        int start = 0;
+        int end = 0;
+        int size = 0;
+        String previousLetter = null;
+        Object[] tmpIndexItem = null;
+
+        for (int i = 0; i < lst_items.size(); i++) {
+
+            String category_name = lst_items.get(i).getItem_name_en();
+            String firstLetter = category_name.substring(0, 1);
+
+
+            // If we've changed to a new letter, add the previous letter to the alphabet scroller
+            if (previousLetter != null && !firstLetter.equals(previousLetter)) {
+
+                tmpIndexItem = new Object[3];
+                tmpIndexItem[0] = previousLetter.toUpperCase(Locale.UK);
+                tmpIndexItem[1] = start;
+                tmpIndexItem[2] = end;
+                alphabet.add(tmpIndexItem);
+
+                start = end + 1;
+            }
+
+
+            // Add the country to the list
+            size++;
+            previousLetter = firstLetter;
+        }
+
+        if (previousLetter != null) {
+            // Save the last letter
+            tmpIndexItem = new Object[3];
+            tmpIndexItem[0] = previousLetter.toUpperCase(Locale.UK);
+            tmpIndexItem[1] = start;
+            tmpIndexItem[2] = size - 1;
+            alphabet.add(tmpIndexItem);
+        }
+
+        setAlphabet();
+    }
+
     public void setAlphabet() {
 
         SetAllAlphabet();
@@ -169,28 +241,6 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
                 return false;
             }
         });
-    }
-
-    private void SetFont() {
-        Typeface typeface = Utility.GetFont(this);
-        et_search_food.setTypeface(typeface);
-    }
-
-    private void SearchItems(String txt) {
-
-        searchList.clear();
-        int searchListLength = searchList.size();
-        for (int i = 0; i < lst_items.size(); i++) {
-            String item_txt = lst_items.get(i).getItem_name_en().toLowerCase();
-            if (item_txt.contains(txt.toLowerCase())) {
-                searchList.add(lst_items.get(i));
-            }
-
-        }
-
-        ingredientAdapter = new SearchAdapter(this, searchList);
-        mListView.setAdapter(ingredientAdapter);
-
     }
 
     private void SetAllAlphabet() {
@@ -263,53 +313,10 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
         }
     }
 
-    private void SetSideIndex() {
-        // set side index
-
-        int start = 0;
-        int end = 0;
-        int size = 0;
-        String previousLetter = null;
-        Object[] tmpIndexItem = null;
-
-        for (int i = 0; i < lst_items.size(); i++) {
-
-            String category_name = lst_items.get(i).getItem_name_en();
-            String firstLetter = category_name.substring(0, 1);
-
-
-            // If we've changed to a new letter, add the previous letter to the alphabet scroller
-            if (previousLetter != null && !firstLetter.equals(previousLetter)) {
-
-                tmpIndexItem = new Object[3];
-                tmpIndexItem[0] = previousLetter.toUpperCase(Locale.UK);
-                tmpIndexItem[1] = start;
-                tmpIndexItem[2] = end;
-                alphabet.add(tmpIndexItem);
-
-                start = end + 1;
-            }
-
-
-            // Add the country to the list
-            size++;
-            previousLetter = firstLetter;
-        }
-
-        if (previousLetter != null) {
-            // Save the last letter
-            tmpIndexItem = new Object[3];
-            tmpIndexItem[0] = previousLetter.toUpperCase(Locale.UK);
-            tmpIndexItem[1] = start;
-            tmpIndexItem[2] = size - 1;
-            alphabet.add(tmpIndexItem);
-        }
-
-        setAlphabet();
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Utility.HideKeyboard(this, getCurrentFocus());
 
         Intent intent = new Intent(this, ItemDetailsActivity.class);
         if (et_search_food.getText().toString().length() > 0)
@@ -324,6 +331,8 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
     public void onClick(View v) {
 
         if (v == img_search_cancel) {
+            
+            Utility.HideKeyboard(this, getCurrentFocus());
             et_search_food.setText("");
             et_search_food.setFocusable(false);
             lst_items = Ingredients.GetAllIngredients(this);
@@ -334,6 +343,12 @@ public class IndexedSearchActivity extends Activity implements AdapterView.OnIte
 
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        Utility.HideKeyboard(this, getCurrentFocus());
+        return false;
+    }
 }
 
 

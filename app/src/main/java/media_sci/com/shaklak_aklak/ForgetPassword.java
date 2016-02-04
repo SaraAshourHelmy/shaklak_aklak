@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,8 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 12/13/2015.
  */
-public class ForgetPassword extends Activity implements View.OnClickListener {
+public class ForgetPassword extends Activity implements View.OnClickListener
+        , View.OnTouchListener {
 
     private TextView tv_forgetPassword, tv_email;
     private EditText et_email;
@@ -39,12 +41,16 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
     private int user_id = -1;
     private String code = "";
     private boolean forget_flag = false;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         SetupTools();
+
+        view = getWindow().getDecorView().getRootView();
+        view.setOnTouchListener(this);
     }
 
     private void SetupTools() {
@@ -64,7 +70,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
         tv_forgetPassword.setTypeface(typeface);
         tv_email.setTypeface(typeface);
         et_email.setTypeface(typeface);
-        btn_changePassword.setTypeface(typeface,Typeface.BOLD);
+        btn_changePassword.setTypeface(typeface, Typeface.BOLD);
     }
 
     @Override
@@ -125,6 +131,12 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
                 Log.e("forgetPassword error", "" + e);
             }
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Utility.HideKeyboard(this, getCurrentFocus());
+        return false;
     }
 
     public class ForgetPasswordAsyncTask extends AsyncTask
