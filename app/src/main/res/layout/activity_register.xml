@@ -5,6 +5,7 @@
               android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrl_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -39,12 +40,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_firstName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -69,12 +70,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_lastName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -99,12 +100,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_mobileNo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:hint="01XXXXXXXXX"
                     android:maxLength="11"
                     android:paddingLeft="10dp"
@@ -133,12 +134,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_email"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
@@ -163,12 +164,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_password"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:paddingLeft="10dp"
                     android:password="true"
                     android:textColor="@color/black"
@@ -193,11 +194,11 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <RadioGroup
-                    android:focusable="false"
                     android:id="@+id/rgp_gender"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
+                    android:focusable="false"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -239,12 +240,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_age"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:numeric="integer"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
@@ -274,12 +275,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_height"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:numeric="decimal"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
@@ -314,12 +315,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <EditText
-                    android:focusable="false"
                     android:id="@+id/et_weight"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_border"
+                    android:focusable="false"
                     android:numeric="decimal"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
@@ -354,12 +355,12 @@
                     android:textSize="@dimen/custom_food_font"/>
 
                 <Spinner
-                    android:focusable="false"
                     android:id="@+id/spnr_exercise"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:focusable="false"
                     android:paddingLeft="10dp"/>
 
                 <TextView
@@ -378,7 +379,7 @@
             <Button
                 android:id="@+id/btn_signIn"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="@dimen/button_height"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_selected"
                 android:gravity="center"
@@ -389,7 +390,7 @@
             <Button
                 android:id="@+id/btn_back_login"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="@dimen/button_height"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/button_selected"
                 android:gravity="center"

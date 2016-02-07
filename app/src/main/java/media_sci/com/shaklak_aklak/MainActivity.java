@@ -14,6 +14,7 @@ import media_sci.com.fragment.DailyFragment;
 import media_sci.com.fragment.FavouriteFragment;
 import media_sci.com.fragment.FindFoodFragment;
 import media_sci.com.fragment.SettingFragment;
+import media_sci.com.utility.Utility;
 
 
 public class MainActivity extends FragmentActivity {
@@ -27,6 +28,7 @@ public class MainActivity extends FragmentActivity {
     public void onBackPressed() {
 
         mTabHost.getTabWidget().setEnabled(true);
+       // Utility.NotPushLayoutKeyboard(this);
         if (screenNo == 2) {
             screenNo = 0;
             lnr_dialog.setVisibility(View.GONE);

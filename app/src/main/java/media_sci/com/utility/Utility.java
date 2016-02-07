@@ -1,5 +1,6 @@
 package media_sci.com.utility;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -49,10 +51,27 @@ public class Utility {
     private static int TimeOut = 20;
     private static SharedPreferences shared_db;
 
+    public static void PushLayoutKeyboard(Activity activity) {
+
+        activity.getWindow().setSoftInputMode
+                (WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
+                        | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
+
+    public static void NotPushLayoutKeyboard(Activity activity) {
+        activity.getWindow().setSoftInputMode
+                (WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
+
     public static void HideKeyboard(Context context, View v) {
-        InputMethodManager imm =
-                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        try {
+
+            InputMethodManager imm =
+                    (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        } catch (Exception e) {
+            Log.e("keyboard_error", e + "");
+        }
     }
 
     public static String GetDecimalFormat(double number) {

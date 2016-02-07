@@ -37,7 +37,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener
 
     private TextView tv_forgetPassword, tv_email;
     private EditText et_email;
-    private Button btn_changePassword;
+    private Button btn_changePassword, btn_back_login;
     private int user_id = -1;
     private String code = "";
     private boolean forget_flag = false;
@@ -59,7 +59,9 @@ public class ForgetPassword extends Activity implements View.OnClickListener
         tv_email = (TextView) findViewById(R.id.tv_forgetPassword_email);
         et_email = (EditText) findViewById(R.id.et_forgetPassword_email);
         btn_changePassword = (Button) findViewById(R.id.btn_change_password);
+        btn_back_login = (Button) findViewById(R.id.btn_change_back_login);
         btn_changePassword.setOnClickListener(this);
+        btn_back_login.setOnClickListener(this);
 
         SetFont();
 
@@ -71,6 +73,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener
         tv_email.setTypeface(typeface);
         et_email.setTypeface(typeface);
         btn_changePassword.setTypeface(typeface, Typeface.BOLD);
+        btn_back_login.setTypeface(typeface, Typeface.BOLD);
     }
 
     @Override
@@ -82,6 +85,11 @@ public class ForgetPassword extends Activity implements View.OnClickListener
                 // change password
                 new ForgetPasswordAsyncTask().execute();
             }
+        } else if (v == btn_back_login) {
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

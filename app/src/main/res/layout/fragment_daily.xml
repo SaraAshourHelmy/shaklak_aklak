@@ -90,10 +90,20 @@
             android:textColor="@color/black"
             android:textSize="15sp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height=".3dp"
+            android:background="@color/black"></View>
+
         <ListView
             android:id="@+id/lst_userMeals"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:divider="@color/black"
+            android:dividerHeight=".3dp"
+            android:scrollbarSize="2dp"
+            android:scrollbarThumbVertical="@color/black"></ListView>
     </LinearLayout>
 
     <LinearLayout
@@ -158,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:text="@string/kcal"
                         android:textColor="@color/black"
@@ -212,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -264,7 +274,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -315,7 +325,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -367,7 +377,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -419,7 +429,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -471,7 +481,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -523,7 +533,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -575,7 +585,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -626,7 +636,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -678,7 +688,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -730,7 +740,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>
@@ -777,12 +787,13 @@
                         android:textSize="@dimen/custom_food_font"/>
 
                     <TextView
+
                         android:id="@+id/tv_daily_ironTaken"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textSize="@dimen/custom_food_font"/>

@@ -331,7 +331,7 @@ public class IndexedSearchActivity extends Activity implements
     public void onClick(View v) {
 
         if (v == img_search_cancel) {
-            
+
             Utility.HideKeyboard(this, getCurrentFocus());
             et_search_food.setText("");
             et_search_food.setFocusable(false);

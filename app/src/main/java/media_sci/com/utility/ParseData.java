@@ -371,7 +371,7 @@ public class ParseData {
                 userMeal.setIngredient_id(myMealObject.getString("ingredient_id"));
                 userMeal.setDate(myMealObject.getString("date"));
                 userMeal.setIs_custom(myMealObject.getInt("is_custom"));
-                userMeal.setServing_size(myMealObject.getInt("serving_size"));
+                userMeal.setServing_size(myMealObject.getDouble("serving_size"));
                 userMeal.setServing_no(myMealObject.getDouble("serving_number"));
 
                 lst_userMeal.add(userMeal);

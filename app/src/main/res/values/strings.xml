@@ -82,7 +82,7 @@
     <string name="success_meal">Added To My Meal Success</string>
     <string name="success_favourite">Added To My Favourite</string>
     <string name="fail">Fail Operation</string>
-    <string name="error_connection">Error Connection</string>
+    <string name="error_connection">An error occurred. Please try again.</string>
     <string name="error_mail">Email Already Exist</string>
     <string name="verify_mail">Verify Mail</string>
     <string name="wrong_code">Wrong Verification Code</string>

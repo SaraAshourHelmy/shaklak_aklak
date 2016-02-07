@@ -2,7 +2,6 @@ package media_sci.com.shaklak_aklak;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import media_sci.com.models.UserData;
-import media_sci.com.service.DataService;
+import media_sci.com.utility.GetDataLogin;
 import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
@@ -198,14 +197,19 @@ public class ChangePassword extends Activity implements View.OnClickListener
             dialog.dismiss();
             if (check_flag) {
 
-                Intent service_intent = new Intent(ChangePassword.this, DataService.class);
+               /* Intent service_intent = new Intent(ChangePassword.this, DataService.class);
                 service_intent.putExtra("type", 2);
                 startService(service_intent);
 
                 Intent intent = new Intent(ChangePassword.this, MainActivity.class);
                 startActivity(intent);
 
-                finish();
+                finish();*/
+
+                String date = Utility.GetStringDateNow();
+                GetDataLogin dataLogin = new GetDataLogin(ChangePassword.this,
+                        date, 0, 1);
+                
             } else {
                 Utility.ViewDialog(ChangePassword.this, getString(R.string.fail));
             }

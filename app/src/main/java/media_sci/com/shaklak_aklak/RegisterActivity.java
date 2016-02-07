@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +55,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
     private TextView tv_exercise, tv_perWeek;
     private EditText et_firstName, et_lastName, et_mobileNo, et_email;
     private Spinner spnr_exercise;
+    private ScrollView scrl_parent;
     private double calories = 0;
+
     private View view;
 
     @Override
@@ -63,8 +66,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         setContentView(R.layout.activity_register);
         SetupTools();
 
+        scrl_parent = (ScrollView) findViewById(R.id.scrl_parent);
         view = getWindow().getDecorView().getRootView();
         view.setOnTouchListener(this);
+        scrl_parent.setOnTouchListener(this);
     }
 
     private void SetupTools() {
@@ -373,6 +378,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
             et_height.setFocusableInTouchMode(true);
         else if (v == et_weight)
             et_weight.setFocusableInTouchMode(true);
+        else
+            Utility.HideKeyboard(this, getCurrentFocus());
 
 
         return false;
