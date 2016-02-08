@@ -248,7 +248,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
             rd_male.requestFocus();
         }
         if (et_password.getText().length() < 4) {
-            et_password.setError("Password must be more 3 digits");
+            et_password.setError("Password must be at least 4 characters");
             et_password.requestFocus();
             checkFlag = false;
         }

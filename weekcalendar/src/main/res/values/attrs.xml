@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WeekCalendar">
+        <attr name="numOfPages" format="integer"/>
+        <attr name="daysTextSize" format="dimension"/>
+        <attr name="daysTextColor" format="color"/>
+        <attr name="daysBackgroundColor" format="color"/>
+        <attr name="weekTextSize" format="dimension"/>
+        <attr name="weekTextColor" format="color"/>
+        <attr name="weekBackgroundColor" format="color"/>
+        <attr name="selectedBgColor" format="color"/>
+        <attr name="todaysDateBgColor" format="color"/>
+    </declare-styleable>
+</resources>

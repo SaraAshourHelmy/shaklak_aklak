@@ -1,6 +1,5 @@
 package media_sci.com.utility;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,24 +51,14 @@ public class Utility {
     private static int TimeOut = 20;
     private static SharedPreferences shared_db;
 
-    public static void PushLayoutKeyboard(Activity activity) {
-
-        activity.getWindow().setSoftInputMode
-                (WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
-                        | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-    }
-
-    public static void NotPushLayoutKeyboard(Activity activity) {
-        activity.getWindow().setSoftInputMode
-                (WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-    }
-
     public static void HideKeyboard(Context context, View v) {
         try {
 
             InputMethodManager imm =
                     (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            MainActivity.mTabHost.getTabWidget().setVisibility(View.VISIBLE);
+
         } catch (Exception e) {
             Log.e("keyboard_error", e + "");
         }
@@ -187,18 +177,21 @@ public class Utility {
                 if (userData.GetUserID() != -1) {
                     if (StaticVarClass.verify_status == 0) {
                         Intent intent = new Intent(context, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         context.startActivity(intent);
 
                     } else if (StaticVarClass.verify_status == 1) {
                         Intent intent = new Intent(context, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         context.startActivity(intent);
                     }
 
                 } else {
                     Intent intent = new Intent(context, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     context.startActivity(intent);
                 }
             }
@@ -346,6 +339,42 @@ public class Utility {
         } catch (Exception e) {
             Log.e("exception", e.toString());
         }
+    }
+
+    public static void CheckKeyboardVisible(final View parentLayout) {
+
+        parentLayout.getViewTreeObserver().addOnGlobalLayoutListener
+                (new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        Rect r = new Rect();
+
+                        parentLayout.getWindowVisibleDisplayFrame(r);
+
+                        int screenHeight = parentLayout.getRootView().getHeight();
+                        int keyboardHeight = screenHeight - (r.bottom);
+
+                        if (screenHeight - keyboardHeight > 50) {
+                            // Do some stuff here
+                        }
+
+                        // screenHeight = keyboardHeight;
+                        if (keyboardHeight > 100) {
+                            SetTabVisibility(2);
+                            Log.e("keyboard", "on");
+                        } else {
+                            SetTabVisibility(1);
+                            Log.e("keyboard", "off");
+                        }
+                    }
+                });
+    }
+
+    public static void SetTabVisibility(int type) {
+        if (type == 1)
+            MainActivity.mTabHost.getTabWidget().setVisibility(View.VISIBLE);
+        else
+            MainActivity.mTabHost.getTabWidget().setVisibility(View.GONE);
     }
 
 }

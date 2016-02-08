@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_slip_band_area_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_slip_band_area_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_rose_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_rose_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_chart_list.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_chart_list.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_slip_line_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_slip_line_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_donut_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_donut_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_maslip_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_maslip_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_spider_web_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_spider_web_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_slip_candle_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_slip_candle_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_slip_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_slip_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_bollmaslip_candle_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_bollmaslip_candle_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_radar_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_radar_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_colored_slip_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_colored_slip_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_grid_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_grid_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_slip_minus_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_slip_minus_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_maslip_candle_stick_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_maslip_candle_stick_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_slip_area_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_slip_area_chart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_macdchart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_macdchart.xml"
+    },
+    {
+        "merged": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_pie_chart.xml",
+        "source": "D:\\Sara Work\\Android Studio WorkSpace\\shaklak_aklak\\src\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_pie_chart.xml"
+    }
+]

@@ -12,8 +12,6 @@
         android:orientation="horizontal">
 
         <EditText
-            android:textColor="@color/black"
-            android:textSize="@dimen/custom_food_font"
             android:id="@+id/et_search_food"
             android:layout_width="0dp"
             android:layout_height="35dp"
@@ -23,16 +21,18 @@
             android:background="@color/light_gray"
             android:focusable="false"
             android:hint="search"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/custom_food_font"/>
 
         <ImageView
             android:id="@+id/img_search_cancel"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:src="@drawable/close"/>
     </LinearLayout>
 
@@ -55,16 +55,17 @@
             android:fastScrollEnabled="true"
             android:scrollbars="none"
             android:scrollingCache="false"
-
             />
 
         <LinearLayout
-            android:layout_centerVertical="true"
             android:id="@+id/lnr_sideIndex"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:orientation="vertical"></LinearLayout>
+            android:layout_centerVertical="true"
+
+            android:orientation="vertical"
+            android:visibility="visible"></LinearLayout>
 
     </RelativeLayout>
 

@@ -133,9 +133,9 @@ public class LoginActivity extends Activity implements View.OnClickListener,
             else if (validMail == 3)
                 et_email.setError("Email is wrong");
         }
-        if (et_password.getText().length() < 4) {
+        if (et_password.getText().length() < 1) {
             checkFlag = false;
-            et_password.setError("Password must be more 3 digits");
+            et_password.setError("Password Enter Password");
         }
 
         return checkFlag;

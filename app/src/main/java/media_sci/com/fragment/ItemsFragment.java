@@ -47,6 +47,10 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
     }
 
     private void SetupTools(View view) {
+
+        // check keyboard
+        Utility.CheckKeyboardVisible(view);
+
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("sec_id")) {
             section_id = bundle.getInt("sec_id");
@@ -142,6 +146,7 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
 
         if (v == img_cancel) {
             et_search.setText("");
+            Utility.HideKeyboard(getActivity(), et_search);
             SetupList();
         }
 

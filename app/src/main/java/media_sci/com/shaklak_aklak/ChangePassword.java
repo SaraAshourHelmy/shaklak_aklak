@@ -96,10 +96,10 @@ public class ChangePassword extends Activity implements View.OnClickListener
     private boolean CheckDataValidation() {
 
         boolean checkFlag = true;
-        if (et_new_password.getText().length() < 1) {
+        if (et_new_password.getText().length() < 4) {
 
             checkFlag = false;
-            et_new_password.setError("Please Enter Password");
+            et_new_password.setError("Password must be at least 4 characters");
             et_new_password.requestFocus();
 
         } else {
@@ -209,7 +209,7 @@ public class ChangePassword extends Activity implements View.OnClickListener
                 String date = Utility.GetStringDateNow();
                 GetDataLogin dataLogin = new GetDataLogin(ChangePassword.this,
                         date, 0, 1);
-                
+
             } else {
                 Utility.ViewDialog(ChangePassword.this, getString(R.string.fail));
             }
