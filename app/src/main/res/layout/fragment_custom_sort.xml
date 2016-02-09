@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/light_gray"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/actionbar_custom_food"
+        layout="@layout/actionbar_default"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/black"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="10dp"
+        android:scrollbarSize="2dp"
+        android:scrollbarThumbVertical="@color/black"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_customFood_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/food_title1"
+                android:textColor="@color/black"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/tv_customFood_title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/food_title2"
+                android:textColor="@color/pink"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_gray"
+                android:orientation="vertical">
+
+                <!-- Calories -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_customFood_calories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/calories"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_lowest_calories"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/lowest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_highest_calories"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_lowest_calories"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/highest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"></View>
+
+                <!-- Total Fat -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_customFood_fat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/total_fat"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_lowest_fat"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/lowest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_highest_fat"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_lowest_fat"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/highest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"></View>
+
+                <!-- Cholest -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_customFood_cholest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/cholest"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_lowest_cholest"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/lowest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_highest_cholest"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_lowest_cholest"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/highest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"></View>
+
+                <!-- Sodium -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_customFood_sodium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/sodium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_lowest_sodium"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/lowest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_highest_sodium"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_lowest_sodium"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/highest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"></View>
+
+                <!-- protein -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_customFood_protein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/protein"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_lowest_protein"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/lowest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_highest_protein"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_lowest_protein"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/highest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"></View>
+
+                <!-- carbo -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_customFood_carbo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/carbo"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_lowest_carbo"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/lowest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                    <Button
+                        android:id="@+id/btn_highest_carbo"
+                        android:layout_width="@dimen/custom_food_width"
+                        android:layout_height="@dimen/register_section"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_lowest_carbo"
+                        android:background="@drawable/rectangle_border"
+                        android:text="@string/highest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/custom_food_font"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <!--
+            <TextView
+                android:id="@+id/tv_customFood_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/footer"
+                android:textColor="@color/pink"
+                android:textSize="12sp"/> -->
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
