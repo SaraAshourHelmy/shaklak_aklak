@@ -3,7 +3,9 @@ package media_sci.com.shaklak_aklak;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,11 +41,13 @@ public class IndexedSearchActivity extends Activity implements
     private ArrayList<Ingredients> lst_items = new ArrayList<>();
     private List<Object[]> alphabet = new ArrayList<Object[]>();
     private ArrayList<String> AllAlpha = new ArrayList<>();
+    private ArrayList<String> itemName;
     private ImageView img_search_cancel;
     private EditText et_search_food;
     private LinearLayout lnr_sideIndex;
     private SearchAdapter ingredientAdapter;
     private PinnedHeaderListView mListView;
+    private ProgressBar progress_db;
     private View view;
     private boolean keyboard_flag = false;
 
@@ -51,11 +55,27 @@ public class IndexedSearchActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        SetupTools();
-        SetupIndexedList();
-        // SetSideIndex();
 
-        setAlphabet();
+        //SetupIndexedList();
+        // setAlphabet();
+
+        Log.e("open_Activity", Utility.GetTimeNow());
+        SetupTools();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                progress_db.setVisibility(View.GONE);
+                lst_items = Ingredients.GetAllIngredients(IndexedSearchActivity.this);
+                SetupIndexedList();
+                setAlphabet();
+            }
+        }, 500);
+
+
+        //new GetItemAsync().execute();
+
 
         //view = getWindow().getDecorView().getRootView();
         //view.setOnTouchListener(this);
@@ -64,7 +84,10 @@ public class IndexedSearchActivity extends Activity implements
 
     private void SetupTools() {
 
+        lst_items = Ingredients.GetAllIngredients(IndexedSearchActivity.this);
         mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
+        progress_db = (ProgressBar) findViewById(R.id.progress_db);
+
         img_search_cancel = (ImageView) findViewById(R.id.img_search_cancel);
         et_search_food = (EditText) findViewById(R.id.et_search_food);
         lnr_sideIndex = (LinearLayout) findViewById(R.id.lnr_sideIndex);
@@ -105,17 +128,16 @@ public class IndexedSearchActivity extends Activity implements
 
     private void SetupIndexedList() {
 
-        lst_items = Ingredients.GetAllIngredients(this);
 
-        ingredientAdapter = new SearchAdapter(this, Sorting.
-                SortIngredients(lst_items));
+        ingredientAdapter = new SearchAdapter(this,
+                GetItemName(Sorting.SortIngredients(lst_items)));
 
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         //int pinnedHeaderBackgroundColor = getResources().getColor(getResIdFromAttribute(this, android.R.attr.colorBackground));
         //categoryAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
 
-        ingredientAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.colorAccent));
+        // ingredientAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.colorAccent));
 
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.header_list, mListView, false));
         mListView.setAdapter(ingredientAdapter);
@@ -195,8 +217,18 @@ public class IndexedSearchActivity extends Activity implements
 
         }
 
-        ingredientAdapter = new SearchAdapter(this, searchList);
+        ingredientAdapter = new SearchAdapter(this, GetItemName(searchList));
         mListView.setAdapter(ingredientAdapter);
+
+    }
+
+    private ArrayList<String> GetItemName(ArrayList<Ingredients> lst_ingre) {
+
+        itemName = new ArrayList<>();
+        for (int i = 0; i < lst_ingre.size(); i++) {
+            itemName.add(lst_ingre.get(i).getItem_name_en());
+        }
+        return itemName;
 
     }
 
@@ -257,7 +289,7 @@ public class IndexedSearchActivity extends Activity implements
                 for (int i = 0; i < mListView.getCount(); i++) {
                     View v = mListView.getAdapter().getView(i, null, mListView);
 
-                    FrameLayout frame_header = (FrameLayout) v.findViewById(R.id.frame_header);
+                    //FrameLayout frame_header = (FrameLayout) v.findViewById(R.id.frame_header);
 
                     TextView check_extra = (TextView) v.findViewById(R.id.header_text);
 
@@ -318,19 +350,16 @@ public class IndexedSearchActivity extends Activity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (keyboard_flag) {
-            Utility.HideKeyboard(this, getCurrentFocus());
-            keyboard_flag = false;
+        Utility.HideKeyboard(this, getCurrentFocus());
+        Intent intent = new Intent(this, ItemDetailsActivity.class);
 
-        } else {
-            Intent intent = new Intent(this, ItemDetailsActivity.class);
-            if (et_search_food.getText().toString().length() > 0)
-                intent.putExtra("item_id", searchList.get(position).getId());
-            else {
-                intent.putExtra("item_id", lst_items.get(position).getId());
-            }
-            startActivity(intent);
+        if (et_search_food.getText().toString().length() > 0)
+            intent.putExtra("item_id", searchList.get(position).getId());
+        else {
+            intent.putExtra("item_id", lst_items.get(position).getId());
         }
+        startActivity(intent);
+
     }
 
     @Override
@@ -344,11 +373,52 @@ public class IndexedSearchActivity extends Activity implements
             et_search_food.setText("");
             et_search_food.setFocusable(false);
             lst_items = Ingredients.GetAllIngredients(this);
-            ingredientAdapter = new SearchAdapter(this, Sorting.SortIngredients
-                    (lst_items));
+            ingredientAdapter = new SearchAdapter(this, GetItemName(Sorting.SortIngredients
+                    (lst_items)));
             mListView.setAdapter(ingredientAdapter);
         }
 
+    }
+
+    public class GetItemAsync extends AsyncTask<Void, Void, Void> {
+
+        // ProgressDialog dialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("pre_excute", Utility.GetTimeNow());
+            /*
+            dialog = new ProgressDialog(IndexedSearchActivity.this);
+            dialog.setMessage(getString(R.string.wait_message));
+            dialog.setCancelable(false);
+            dialog.show();*/
+
+            Log.e("async", "done");
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            super.onPostExecute(aVoid);
+            progress_db.setVisibility(View.GONE);
+            lst_items = Ingredients.GetAllIngredients(IndexedSearchActivity.this);
+            SetupIndexedList();
+            setAlphabet();
+            Log.e("draw_layout", Utility.GetTimeNow());
+            // dialog.dismiss();
+        }
     }
 
 }

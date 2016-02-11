@@ -419,6 +419,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
                 userData.setUserData(user_id, firstName, lastName, mobileNo, email, password,
                         gender, age, height, weight, exercise_type, calories);
 
+                StaticVarClass.verify_status = 0;
+
                 Toast.makeText(RegisterActivity.this, "Register Success"
                         , Toast.LENGTH_SHORT).show();
 

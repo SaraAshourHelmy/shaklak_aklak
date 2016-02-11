@@ -76,6 +76,13 @@ public class Utility {
         return date;
     }
 
+    public static String GetTimeNow() {
+
+        Calendar c = Calendar.getInstance();
+        //String date = StaticVarClass.dash_format.format(c.getTime());
+        return c + "";
+    }
+
     public static String GetMacAddress(Context context) {
         WifiManager wifiManager = (WifiManager) context.getSystemService
                 (context.WIFI_SERVICE);

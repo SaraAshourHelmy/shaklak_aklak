@@ -2,6 +2,7 @@ package media_sci.com.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,31 +21,43 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 12/7/2015.
  */
-public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Ingredients> {
+public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<String> {
 
     Context context;
-    ArrayList<Ingredients> lst_items;
+    //ArrayList<Ingredients> lst_items;
+    ArrayList<String> items;
 
-    public SearchAdapter(Context context, final ArrayList<Ingredients> items) {
+    public SearchAdapter(Context context, ArrayList<String> items) {
         this.context = context;
+
         setData(items);
+        this.items = items;
 
     }
 
 
-    public void setData(final ArrayList<Ingredients> items) {
-        this.lst_items = items;
-        final String[] generatedContactNames = generateContactNames(items);
+    public void setData(final ArrayList<String> items) {
+        // this.lst_items = items;
+        // final String[] generatedContactNames = generateContactNames(items);
         // this line response for view of header of list
-        setSectionIndexer(new StringArrayAlphabetIndexer(generatedContactNames, true));
+        Log.e("SetData_start", Utility.GetTimeNow());
+        setSectionIndexer(new StringArrayAlphabetIndexer(
+                items.toArray(new String[items.size()]), true));
+        Log.e("SetData_End", Utility.GetTimeNow());
     }
 
     private String[] generateContactNames(final List<Ingredients> items) {
+        /*
         final ArrayList<String> itemNames = new ArrayList<String>();
         if (items != null)
             for (final Ingredients itemEntity : items)
                 itemNames.add(itemEntity.getItem_name_en());
-        return itemNames.toArray(new String[itemNames.size()]);
+        return itemNames.toArray(new String[itemNames.size()]);*/
+        String[] itemName = new String[items.size()];
+        for (int i = 0; i < items.size(); i++) {
+
+        }
+        return itemName;
     }
 
     @Override
@@ -61,8 +74,8 @@ public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Ingredi
 
         }
 
-        final Ingredients item = getItem(position);
-        final String displayName = item.getItem_name_en();
+        //  final Ingredients item = getItem(position);
+        final String displayName = items.get(position);
         TextView name = (TextView) convertView.findViewById(R.id.tv_search_itemName);
 
         name.setText(displayName);
@@ -77,17 +90,20 @@ public class SearchAdapter extends SearchablePinnedHeaderListViewAdapter<Ingredi
         return convertView;
     }
 
+
     @Override
-    public boolean doFilter(final Ingredients item, final CharSequence constraint) {
+    public boolean doFilter(String item, CharSequence constraint) {
         if (TextUtils.isEmpty(constraint))
             return true;
-        final String displayName = item.getItem_name_en();
+        final String displayName = item;
         return !TextUtils.isEmpty(displayName) && displayName.toLowerCase(Locale.getDefault())
                 .contains(constraint.toString().toLowerCase(Locale.getDefault()));
     }
 
     @Override
-    public ArrayList<Ingredients> getOriginalList() {
-        return lst_items;
+    public ArrayList<String> getOriginalList() {
+        return items;
     }
+
+
 }

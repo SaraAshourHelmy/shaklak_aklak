@@ -134,7 +134,9 @@ public class FindFoodFragment extends Fragment implements
 
         if (v == img_search) {
             Intent intent = new Intent(getActivity(), IndexedSearchActivity.class);
+           // intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
+          //  getActivity().overridePendingTransition(R.anim.from_right, R.anim.to_left);
         }
     }
 }

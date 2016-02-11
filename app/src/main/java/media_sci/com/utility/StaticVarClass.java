@@ -51,7 +51,7 @@ public class StaticVarClass {
     public static SimpleDateFormat dash_format = new SimpleDateFormat("yyyy-MM-dd");
 
     public static double UserCalories = -1;
-    public static int verify_status = 1; // set to 0
+    public static int verify_status = 0; // set to 0
     public static String verification_code = "";
 
     public static double Calories = 0, Total_Fat = 0, Cholest = 0, Sodium = 0;

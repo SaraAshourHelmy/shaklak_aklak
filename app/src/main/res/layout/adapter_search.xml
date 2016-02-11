@@ -8,14 +8,22 @@
     >
 
     <!--just a background view for the header, so that it won't interfere with the headers changes and row-clicking-->
-    <FrameLayout
-        android:id="@+id/frame_header"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/colorBackground">
+        android:background="@color/light_gray">
 
-        <include layout="@layout/header_list"/>
-    </FrameLayout>
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/pink"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="A"
+            android:textColor="@color/black"
+            android:textSize="13sp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,9 +48,9 @@
             android:paddingStart="10dp"
             android:singleLine="true"
             android:text="friend name"
-            android:textSize="@dimen/custom_food_font"
             android:textColor="@color/black"
-            tools:ignore="HardcodedText,NewApi"/>
+            android:textSize="@dimen/custom_food_font"
+            />
 
     </LinearLayout>
 

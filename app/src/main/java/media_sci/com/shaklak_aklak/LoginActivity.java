@@ -161,6 +161,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
                 HttpResponse response = httpClient.execute(httpPost);
                 int status = response.getStatusLine().getStatusCode();
+                Log.e("login_status", status + "");
                 if (status == 200) {
                     HttpEntity entity = response.getEntity();
                     String data = EntityUtils.toString(entity);
@@ -181,6 +182,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                     int exercise_type = jsonObject.getInt("exercise_type");
                     double calories = jsonObject.getDouble("calories");
                     Log.e("calories", calories + "");
+
                     UserData userData = new UserData(LoginActivity.this);
                     userData.setUserData(user_id, first_name, last_name, phone, et_email.getText().toString(),
                             et_password.getText().toString(), gender, age, height, weight
@@ -332,6 +334,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                 // call re verify webservice
                 type = 2;
                 new LoginAsyncTask().execute();
+                dialog.dismiss();
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -346,7 +349,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        
+
         if (v != et_email || v != et_password)
             Utility.HideKeyboard(this, getCurrentFocus());
         return false;
