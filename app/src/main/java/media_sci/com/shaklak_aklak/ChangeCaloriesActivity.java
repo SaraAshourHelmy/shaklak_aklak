@@ -119,7 +119,7 @@ public class ChangeCaloriesActivity extends Activity implements
 
 
         } else {
-            et_target_calories.setError("Please Enter Calories");
+            et_target_calories.setError(getString(R.string.error_change_calories));
         }
     }
 

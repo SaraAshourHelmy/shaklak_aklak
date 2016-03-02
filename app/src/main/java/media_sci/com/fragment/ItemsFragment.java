@@ -13,14 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import media_sci.com.adapter.ItemAdapter;
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 /**
@@ -30,13 +32,15 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
         , AdapterView.OnItemClickListener, View.OnTouchListener {
 
     private ListView lst_items;
-    private ImageView img_cancel;
+    // private ImageView img_cancel;
+    private TextView tv_search_cancel;
     private View actionbar;
     private int section_id = -1, section_type = -1;
     private String section_img;
     private ArrayList<Ingredients> lst_items_content;
     private ItemAdapter itemAdapter;
     private EditText et_search;
+    private ArrayList<Ingredients> searchList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -50,6 +54,7 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
 
         // check keyboard
         Utility.CheckKeyboardVisible(view);
+        searchList.clear();
 
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("sec_id")) {
@@ -63,8 +68,8 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
         lst_items = (ListView) view.findViewById(R.id.lst_items);
         actionbar = (View) view.findViewById(R.id.actionbar_items);
         et_search = (EditText) view.findViewById(R.id.et_item_search);
-        img_cancel = (ImageView) view.findViewById(R.id.img_searchItem_cancel);
-        img_cancel.setOnClickListener(this);
+        tv_search_cancel = (TextView) view.findViewById(R.id.tv_search_cancel);
+        tv_search_cancel.setOnClickListener(this);
         lst_items.setOnItemClickListener(this);
 
         SetFont();
@@ -90,6 +95,12 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                if (s.length() > 0)
+                    tv_search_cancel.setVisibility(View.VISIBLE);
+                else
+                    tv_search_cancel.setVisibility(View.GONE);
+
+
                 SearchItems(s.toString());
             }
 
@@ -105,6 +116,7 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
 
         Typeface typeface = Utility.GetFont(getActivity());
         et_search.setTypeface(typeface);
+        tv_search_cancel.setTypeface(typeface);
 
     }
 
@@ -124,14 +136,24 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
 
     private void SearchItems(String txt) {
 
-        ArrayList<Ingredients> searchList = new ArrayList<>();
+        UserData userData = new UserData(getActivity());
 
-        int searchListLength = searchList.size();
+        //ArrayList<Ingredients> searchList = new ArrayList<>();
+
+        searchList.clear();
+        //int searchListLength = searchList.size();
         for (int i = 0; i < lst_items_content.size(); i++) {
 
-            String item_txt = lst_items_content.get(i).getItem_name_en().toLowerCase();
-            if (item_txt.contains(txt.toLowerCase())) {
-                searchList.add(lst_items_content.get(i));
+            if (userData.GetLanguage() == StaticVarClass.English) {
+                String item_txt = lst_items_content.get(i).getItem_name_en().toLowerCase();
+                if (item_txt.contains(txt.toLowerCase())) {
+                    searchList.add(lst_items_content.get(i));
+                }
+            } else {
+                String item_txt = lst_items_content.get(i).getItem_name_ar().toLowerCase();
+                if (item_txt.contains(txt.toLowerCase())) {
+                    searchList.add(lst_items_content.get(i));
+                }
             }
 
         }
@@ -144,10 +166,10 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        if (v == img_cancel) {
+        if (v == tv_search_cancel) {
             et_search.setText("");
             Utility.HideKeyboard(getActivity(), et_search);
-            SetupList();
+            //SetupList();
         }
 
     }
@@ -156,7 +178,11 @@ public class ItemsFragment extends Fragment implements View.OnClickListener
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         Utility.HideKeyboard(getActivity(), et_search);
-        OpenItemDetailsFragment(lst_items_content.get(position).getId());
+        if (searchList.size() > 0) {
+            OpenItemDetailsFragment(searchList.get(position).getId());
+        } else {
+            OpenItemDetailsFragment(lst_items_content.get(position).getId());
+        }
 
     }
 

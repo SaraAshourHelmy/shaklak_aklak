@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -45,17 +48,20 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
 
     private int result;
     private int user_id = -1, exercise_type = 0;
-    private EditText et_age, et_height, et_weight, et_password;
+    private EditText et_age, et_height, et_weight, et_password,
+            et_confirm_password;
+
     private RadioGroup rdg_genders;
     private RadioButton rd_male, rd_female;
-    private Button btn_sign_in, btn_back_login;
+    private Button btn_sign_in, btn_back_login, btn_next, btn_back_registerFisrt;
     private String firstName, lastName, mobileNo, email, age, height, weight, gender, password;
     private TextView tv_firstName, tv_lastName, tv_mobileNo, tv_email;
     private TextView tv_gender, tv_age, tv_height, tv_weight, tv_password;
-    private TextView tv_exercise, tv_perWeek;
+    private TextView tv_exercise, tv_perWeek, tv_register_title1, tv_register_title2;
     private EditText et_firstName, et_lastName, et_mobileNo, et_email;
     private Spinner spnr_exercise;
-    private ScrollView scrl_parent;
+    private LinearLayout lnr_register_first, lnr_register_second;
+    private ScrollView scrl_register_first, scrl_register_second;
     private double calories = 0;
 
     private View view;
@@ -65,11 +71,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         SetupTools();
-
-        scrl_parent = (ScrollView) findViewById(R.id.scrl_parent);
-        view = getWindow().getDecorView().getRootView();
-        view.setOnTouchListener(this);
-        scrl_parent.setOnTouchListener(this);
     }
 
     private void SetupTools() {
@@ -87,6 +88,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         tv_password = (TextView) findViewById(R.id.tv_password);
         tv_exercise = (TextView) findViewById(R.id.tv_exercise);
         tv_perWeek = (TextView) findViewById(R.id.tv_perWeek);
+        tv_register_title1 = (TextView) findViewById(R.id.tv_register_title1);
+        tv_register_title2 = (TextView) findViewById(R.id.tv_register_title2);
 
         et_firstName = (EditText) findViewById(R.id.et_firstName);
         et_lastName = (EditText) findViewById(R.id.et_lastName);
@@ -96,6 +99,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         et_height = (EditText) findViewById(R.id.et_height);
         et_weight = (EditText) findViewById(R.id.et_weight);
         et_password = (EditText) findViewById(R.id.et_password);
+        et_confirm_password = (EditText) findViewById(R.id.et_register_confirm_password);
 
         rdg_genders = (RadioGroup) findViewById(R.id.rgp_gender);
         rd_male = (RadioButton) findViewById(R.id.rb_male);
@@ -105,6 +109,12 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         btn_sign_in = (Button) findViewById(R.id.btn_signIn);
         btn_back_login = (Button) findViewById(R.id.btn_back_login);
 
+        scrl_register_first = (ScrollView) findViewById(R.id.scrl_register_first);
+        scrl_register_second = (ScrollView) findViewById(R.id.scrl_register_second);
+        lnr_register_first = (LinearLayout) findViewById(R.id.lnr_register_first);
+        lnr_register_second = (LinearLayout) findViewById(R.id.lnr_register_second);
+        btn_next = (Button) findViewById(R.id.btn_next);
+        btn_back_registerFisrt = (Button) findViewById(R.id.btn_backTo_register);
 
         SetFont();
 
@@ -116,9 +126,12 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 Utility.HideKeyboard(RegisterActivity.this, getCurrentFocus());
+                rd_male.setError(null);
+                rd_female.setError(null);
 
                 if (checkedId == R.id.rb_male) {
-                    gender = "0";
+
+                    gender = StaticVarClass.Male;
                     rd_male.setButtonDrawable(R.drawable.checked);
                     rd_female.setButtonDrawable(R.drawable.uncheck);
 
@@ -126,15 +139,19 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
 
                     rd_female.setButtonDrawable(R.drawable.checked);
                     rd_male.setButtonDrawable(R.drawable.uncheck);
-                    gender = "1";
+                    gender = StaticVarClass.Female;
                 }
             }
         });
 
         btn_sign_in.setOnClickListener(this);
         btn_back_login.setOnClickListener(this);
+        btn_next.setOnClickListener(this);
+        btn_back_registerFisrt.setOnClickListener(this);
+
         SetupExercise();
         SetFocusInTouch();
+        RemoveViewError();
     }
 
     private void SetFont() {
@@ -149,6 +166,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         tv_height.setTypeface(typeface);
         tv_weight.setTypeface(typeface);
         tv_password.setTypeface(typeface);
+        tv_perWeek.setTypeface(typeface);
+        tv_exercise.setTypeface(typeface);
+        tv_register_title1.setTypeface(typeface);
+        tv_register_title2.setTypeface(typeface);
         et_firstName.setTypeface(typeface);
         et_lastName.setTypeface(typeface);
         et_mobileNo.setTypeface(typeface);
@@ -161,12 +182,14 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         rd_female.setTypeface(typeface);
         btn_sign_in.setTypeface(typeface, Typeface.BOLD);
         btn_back_login.setTypeface(typeface, Typeface.BOLD);
+        btn_next.setTypeface(typeface, Typeface.BOLD);
+        btn_back_registerFisrt.setTypeface(typeface, Typeface.BOLD);
     }
 
     private void SetupExercise() {
 
-        String[] lst_exercise = getResources()
-                .getStringArray(R.array.arr_exercise);
+        String[] lst_exercise = StaticVarClass.GetExerciseList(this);
+        // getResources().getStringArray(R.array.arr_exercise);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>
                 (this, android.R.layout.simple_spinner_item, lst_exercise);
@@ -196,9 +219,172 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         et_mobileNo.setOnTouchListener(this);
         et_email.setOnTouchListener(this);
         et_password.setOnTouchListener(this);
+        et_confirm_password.setOnTouchListener(this);
         et_age.setOnTouchListener(this);
         et_height.setOnTouchListener(this);
         et_weight.setOnTouchListener(this);
+    }
+
+    private void RemoveViewError() {
+
+        et_firstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_firstName);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_lastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_lastName);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_mobileNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_mobileNo);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_email);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_password);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_confirm_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Utility.RemoveError(et_confirm_password);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_age.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Utility.RemoveError(et_age);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_height.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Utility.RemoveError(et_height);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_weight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Utility.RemoveError(et_weight);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -207,7 +393,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         if (v == btn_sign_in) {
 
             if (Utility.HaveNetworkConnection(this)) {
-                if (CheckDataValidation()) {
+                if (CheckValidationSecond()) {
                     PrepareRegister();
                 }
             } else {
@@ -217,25 +403,52 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+        } else if (v == btn_next) {
+
+            if (CheckValidationFirst()) {
+                scrl_register_first.setVisibility(View.GONE);
+                scrl_register_second.setVisibility(View.VISIBLE);
+            }
+        } else if (v == btn_back_registerFisrt) {
+
+            scrl_register_first.setVisibility(View.VISIBLE);
+            scrl_register_second.setVisibility(View.GONE);
         }
     }
 
-    private boolean CheckDataValidation() {
+    private boolean CheckValidationSecond() {
 
         boolean checkFlag = true;
 
-        if (et_weight.getText().length() < 1 || et_weight.getText().length() > 3) {
-            et_weight.setError("Please enter Real wight");
+        if (et_weight.getText().length() < 1
+                || et_weight.getText().toString().equals("0")) {
+            et_weight.setError(getString(R.string.error_weight));
+            et_weight.requestFocus(); // this line make real focus
+            checkFlag = false;
+        } else if (et_weight.getText().length() > 3 &&
+                !et_weight.getText().toString().contains(".")) {
+            et_weight.setError(getString(R.string.wrong_weight));
             et_weight.requestFocus(); // this line make real focus
             checkFlag = false;
         }
-        if (et_height.getText().length() < 1 || et_height.getText().length() > 3) {
-            et_height.setError("Please enter Real height");
+
+        // height ------
+        if (et_height.getText().length() < 1
+                || et_height.getText().toString().equals("0")) {
+            et_height.setError(getString(R.string.error_height));
+            et_height.requestFocus();
+            checkFlag = false;
+        } else if (et_height.getText().length() > 3
+                && !et_height.getText().toString().contains(".")) {
+            et_height.setError(getString(R.string.wrong_height));
             et_height.requestFocus();
             checkFlag = false;
         }
-        if (et_age.getText().length() < 1 || et_age.getText().length() > 2) {
-            et_age.setError("Please enter Real Age");
+
+        // age ----
+        if (et_age.getText().length() < 1
+                || et_age.getText().toString().equals("0")) {
+            et_age.setError(getString(R.string.error_age));
             // change background to red rectangle or set message
             et_age.requestFocus();
             checkFlag = false;
@@ -244,43 +457,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         if (rdg_genders.getCheckedRadioButtonId() <= 0) {
             checkFlag = false;
             Log.e("gender", "no selected");
-            rd_male.setError("Select Item");
+            rd_male.setError(getString(R.string.error_gender));
             rd_male.requestFocus();
         }
-        if (et_password.getText().length() < 4) {
-            et_password.setError("Password must be at least 4 characters");
-            et_password.requestFocus();
-            checkFlag = false;
-        }
-        int validMail = Utility.isValidEmail(et_email.getText().toString());
-
-        if (validMail != 1) {
-            checkFlag = false;
-            et_email.requestFocus();
-            if (validMail == 2)
-                et_email.setError("Please enter Email");
-            else if (validMail == 3)
-                et_email.setError("Email is wrong");
-        }
-        if (et_mobileNo.getText().length() != 11 ||
-                !et_mobileNo.getText().toString().startsWith("01")) {
-            et_mobileNo.setError("Mobile number is wrong");
-            et_mobileNo.requestFocus();
-            checkFlag = false;
-        }
-
-        if (et_lastName.getText().length() < 1) {
-            et_lastName.setError("Please Enter Last Name");
-            et_lastName.requestFocus();
-            checkFlag = false;
-        }
-        if (et_firstName.getText().length() < 1) {
-            et_firstName.setError("Please Enter First Name");
-            et_firstName.requestFocus();
-            checkFlag = false;
-        }
         return checkFlag;
-
     }
 
     private void PrepareRegister() {
@@ -295,6 +475,63 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
         password = et_password.getText().toString();
         Log.e("gender", gender);
         new RegisterAsyncTask().execute();
+
+    }
+
+    private boolean CheckValidationFirst() {
+        boolean checkFlag = true;
+
+        if (et_password.getText().length() < 4) {
+            et_password.setError(getString(R.string.error_password));
+            et_password.requestFocus();
+            checkFlag = false;
+        } else {
+
+            if (!et_confirm_password.getText().toString()
+                    .equals(et_password.getText().toString())) {
+                checkFlag = false;
+                et_confirm_password.setError(getString(R.string.error_confirm_password));
+                et_confirm_password.requestFocus();
+            }
+        }
+
+        int validMail = Utility.isValidEmail(et_email.getText().toString());
+
+        if (validMail != 1) {
+            checkFlag = false;
+            et_email.requestFocus();
+            if (validMail == 2)
+                et_email.setError(getString(R.string.error_no_email));
+            else if (validMail == 3)
+                et_email.setError(getString(R.string.error_email));
+        }
+
+        if (et_mobileNo.getText().length() != 11 ||
+                !et_mobileNo.getText().toString().startsWith("01")) {
+            if (et_mobileNo.getText().length() == 0) {
+
+                et_mobileNo.setError(getString(R.string.no_mobile));
+
+            } else {
+                et_mobileNo.setError(getString(R.string.error_mobile));
+            }
+            et_mobileNo.requestFocus();
+            checkFlag = false;
+        }
+
+        if (et_lastName.getText().length() < 1) {
+            et_lastName.setError(getString(R.string.error_last_name));
+            et_lastName.requestFocus();
+            checkFlag = false;
+        }
+
+        if (et_firstName.getText().length() < 1) {
+            et_firstName.setError(getString(R.string.error_first_name));
+            et_firstName.requestFocus();
+            checkFlag = false;
+        }
+
+        return checkFlag;
 
     }
 
@@ -340,7 +577,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
                     StaticVarClass.verification_code = returnData.getString("verification_code");
                     result = 1;
 
-                } else if (status == 401) {
+                } else if (status == 403) {
 
                     HttpEntity entity = response.getEntity();
                     String data = EntityUtils.toString(entity);
@@ -372,14 +609,16 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
             et_email.setFocusableInTouchMode(true);
         else if (v == et_password)
             et_password.setFocusableInTouchMode(true);
+        else if (v == et_confirm_password)
+            et_confirm_password.setFocusableInTouchMode(true);
         else if (v == et_age)
             et_age.setFocusableInTouchMode(true);
         else if (v == et_height)
             et_height.setFocusableInTouchMode(true);
         else if (v == et_weight)
             et_weight.setFocusableInTouchMode(true);
-        else
-            Utility.HideKeyboard(this, getCurrentFocus());
+        // else
+        //   Utility.HideKeyboard(this, getCurrentFocus());
 
 
         return false;
@@ -402,7 +641,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
 
             super.onPreExecute();
             dialog = new ProgressDialog(RegisterActivity.this);
-            dialog.setMessage("Please waiat ...");
+            dialog.setMessage(getString(R.string.wait_message));
             dialog.setCancelable(false);
             dialog.show();
 
@@ -419,9 +658,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener,
                 userData.setUserData(user_id, firstName, lastName, mobileNo, email, password,
                         gender, age, height, weight, exercise_type, calories);
 
-                StaticVarClass.verify_status = 0;
+                userData.SetVerificationStatus(0);
 
-                Toast.makeText(RegisterActivity.this, "Register Success"
+                Toast.makeText(RegisterActivity.this, getString(R.string.register_success)
                         , Toast.LENGTH_SHORT).show();
 
                 // call intent

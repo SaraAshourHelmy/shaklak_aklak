@@ -15,13 +15,15 @@ import media_sci.com.utility.Utility;
 
 public class UserMeal {
 
-    private int id;
-    private String ItemName;
+    private String id;
+    private String ItemName_en;
+    private String ItemName_ar;
     private String ingredient_id;
     private String date;
     private int is_custom;
     private double serving_size;
     private double serving_no;
+    private int counter_id;
 
     public static String GetDate(Context context) {
         SharedPreferences meal_shared = context.getSharedPreferences("meal_shared",
@@ -63,7 +65,7 @@ public class UserMeal {
                 userMeal = lst_userMeal.get(i);
 
                 String query = "insert or Replace into user_meal(meal_id,date,is_custom," +
-                        "serving_size,serving_no) values(?,?,?,?,?)";
+                        "serving_size,serving_no,id,counter_id) values(?,?,?,?,?,?,?)";
                 SQLiteStatement insert_userMeal = db.compileStatement(query);
                 insert_userMeal.clearBindings();
                 insert_userMeal.bindString(1, userMeal.ingredient_id);
@@ -71,6 +73,9 @@ public class UserMeal {
                 insert_userMeal.bindLong(3, userMeal.is_custom);
                 insert_userMeal.bindDouble(4, userMeal.serving_size);
                 insert_userMeal.bindDouble(5, userMeal.serving_no);
+                insert_userMeal.bindString(6, userMeal.id);
+                insert_userMeal.bindLong(7, userMeal.counter_id);
+
                 // set id to prevent duplicate data from webservice
                 //insert_userMeal.bindLong(6, userMeal.id);
                 insert_userMeal.executeInsert();
@@ -96,8 +101,9 @@ public class UserMeal {
         try {
 
             // get normal meals
-            String query = "select x.meal_id as MealID,x.serving_size as Serving_Size" +
-                    ",x.serving_no as Serving_No , y.item_name_en as ItemName " +
+            String query = "select x.id as ID , x.meal_id as MealID,x.serving_size as Serving_Size" +
+                    ",x.serving_no as Serving_No , x.counter_id " +
+                    ", y.item_name_en as ItemName , y.item_name_ar as Name_ar" +
                     " from user_meal as x inner join ingredients as y on " +
                     "x.meal_id=y.id where x.is_custom=0 and x.date='"
                     + date + "'";
@@ -106,10 +112,13 @@ public class UserMeal {
             if (c.moveToFirst()) {
                 do {
                     userMeal = new UserMeal();
+                    userMeal.setId(c.getString(c.getColumnIndex("ID")));
                     userMeal.setIngredient_id(c.getString(c.getColumnIndex("MealID")));
                     userMeal.setServing_size(c.getDouble(c.getColumnIndex("Serving_Size")));
                     userMeal.setServing_no(c.getDouble(c.getColumnIndex("Serving_No")));
-                    userMeal.setItemName(c.getString(c.getColumnIndex("ItemName")));
+                    userMeal.setItemName_en(c.getString(c.getColumnIndex("ItemName")));
+                    userMeal.setItemName_ar(c.getString(c.getColumnIndex("Name_ar")));
+                    userMeal.setCounter_id(c.getInt(c.getColumnIndex("counter_id")));
                     userMeal.setDate(date);
                     userMeal.setIs_custom(0);
                     lst_userMeals.add(userMeal);
@@ -135,7 +144,8 @@ public class UserMeal {
                     userMeal.setIngredient_id(c.getString(c.getColumnIndex("MealID")));
                     userMeal.setServing_size(c.getDouble(c.getColumnIndex("Serving_Size")));
                     userMeal.setServing_no(c.getDouble(c.getColumnIndex("Serving_No")));
-                    userMeal.setItemName(c.getString(c.getColumnIndex("ItemName")));
+                    userMeal.setItemName_en(c.getString(c.getColumnIndex("ItemName")));
+                    userMeal.setItemName_ar(c.getString(c.getColumnIndex("ItemName")));
                     userMeal.setDate(date);
                     userMeal.setIs_custom(1);
                     lst_userMeals.add(userMeal);
@@ -155,6 +165,7 @@ public class UserMeal {
         SQLiteDatabase db = Utility.ReadDatabase(context);
 
         try {
+
             String date = Utility.GetStringDateNow();
 
             // get sum of normal
@@ -242,21 +253,59 @@ public class UserMeal {
         db.close();
     }
 
+    public static int GetMaxUserMeal(Context context) {
+
+        int count = 0;
+
+        try {
+            SQLiteDatabase db = Utility.ReadDatabase(context);
+            String query = "select max(counter_id) as Counter_id from user_meal";
+            Cursor c = db.rawQuery(query, null);
+            if (c.moveToFirst()) {
+                count = c.getInt(c.getColumnIndex("Counter_id"));
+                Log.e("counter_id", count + "");
+            }
+            c.close();
+            db.close();
+
+        } catch (Exception e) {
+            Log.e("Count_error", "" + e);
+        }
+        return count;
+    }
+
+    public int getCounter_id() {
+        return counter_id;
+    }
+
+    public void setCounter_id(int counter_id) {
+        this.counter_id = counter_id;
+    }
+
     //---------------------- properties ----------------------------------
 
-    public String getItemName() {
-        return ItemName;
+
+    public String getItemName_ar() {
+        return ItemName_ar;
     }
 
-    public void setItemName(String itemName) {
-        ItemName = itemName;
+    public void setItemName_ar(String itemName_ar) {
+        ItemName_ar = itemName_ar;
     }
 
-    public int getId() {
+    public String getItemName_en() {
+        return ItemName_en;
+    }
+
+    public void setItemName_en(String itemName_en) {
+        ItemName_en = itemName_en;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

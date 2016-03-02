@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 import media_sci.com.shaklak_aklak.R;
 import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
@@ -42,11 +43,22 @@ public class SortAdapter extends ArrayAdapter<Ingredients> {
         TextView tv_itemName = (TextView) convertView.findViewById(R.id.tv_sort_itemName);
         TextView tv_itemValue = (TextView) convertView.findViewById(R.id.tv_sort_itemValue);
 
-        tv_itemName.setText(lst_ingredients.get(position).getItem_name_en());
+        UserData userData = new UserData(context);
+        if (userData.GetLanguage() == StaticVarClass.English)
+            tv_itemName.setText(lst_ingredients.get(position).getItem_name_en());
+
+        else if (userData.GetLanguage() == StaticVarClass.Arabic)
+            tv_itemName.setText(lst_ingredients.get(position).getItem_name_ar());
+
+
         tv_itemName.setTypeface(Utility.GetFont(context));
         double itemValue = 0;
         String itemUnit = "";
 
+        StaticVarClass.kcal = context.getString(R.string.kcal);
+        StaticVarClass.gram = context.getString(R.string.gram);
+        StaticVarClass.milli_gram = context.getString(R.string.milli_gram);
+        
         if (type == 1) {
             itemValue = lst_ingredients.get(position).getEnergy();
             itemUnit = StaticVarClass.kcal;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,11 +19,14 @@ import java.util.Comparator;
 
 import media_sci.com.adapter.SortAdapter;
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 
-public class SortFragment extends Fragment implements View.OnTouchListener {
+public class SortFragment extends Fragment implements
+        View.OnTouchListener, View.OnClickListener {
 
     String actionbar_title = "";
     private View actionbar;
@@ -31,6 +35,8 @@ public class SortFragment extends Fragment implements View.OnTouchListener {
     private ArrayList<Ingredients> lst_ingredients;
     private SortAdapter sortAdapter;
     private EditText et_search;
+    private TextView tv_search_cancel;
+    private ArrayList<Ingredients> searchList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -45,6 +51,10 @@ public class SortFragment extends Fragment implements View.OnTouchListener {
 
     private void SetupTools(View view) {
 
+        // check keyboard
+        Utility.CheckKeyboardVisible(view);
+
+        searchList.clear();
         lst_ingredients = Ingredients.GetAllIngredients(getActivity());
         actionbar = (View) view.findViewById(R.id.actionbar_sort);
         GetSortData();
@@ -52,7 +62,9 @@ public class SortFragment extends Fragment implements View.OnTouchListener {
 
         lst_sort = (ListView) view.findViewById(R.id.lst_sort);
         et_search = (EditText) view.findViewById(R.id.et_sort_search);
+        tv_search_cancel = (TextView) view.findViewById(R.id.tv_sort_cancel);
 
+        tv_search_cancel.setOnClickListener(this);
         sortAdapter = new SortAdapter(getActivity(), R.layout.adapter_sort,
                 lst_ingredients, sort_no);
         lst_sort.setAdapter(sortAdapter);
@@ -76,6 +88,11 @@ public class SortFragment extends Fragment implements View.OnTouchListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s.length() > 0)
+                    tv_search_cancel.setVisibility(View.VISIBLE);
+                else
+                    tv_search_cancel.setVisibility(View.GONE);
 
                 SearchItems(s.toString());
             }
@@ -127,14 +144,23 @@ public class SortFragment extends Fragment implements View.OnTouchListener {
 
     private void SearchItems(String txt) {
 
-        ArrayList<Ingredients> searchList = new ArrayList<>();
+        //ArrayList<Ingredients> searchList = new ArrayList<>();
 
-        int searchListLength = searchList.size();
+        searchList.clear();
+        UserData userData = new UserData(getActivity());
+
         for (int i = 0; i < lst_ingredients.size(); i++) {
 
-            String item_txt = lst_ingredients.get(i).getItem_name_en().toLowerCase();
-            if (item_txt.contains(txt.toLowerCase())) {
-                searchList.add(lst_ingredients.get(i));
+            if (userData.GetLanguage() == StaticVarClass.English) {
+                String item_txt = lst_ingredients.get(i).getItem_name_en().toLowerCase();
+                if (item_txt.contains(txt.toLowerCase())) {
+                    searchList.add(lst_ingredients.get(i));
+                }
+            } else {
+                String item_txt = lst_ingredients.get(i).getItem_name_ar().toLowerCase();
+                if (item_txt.contains(txt.toLowerCase())) {
+                    searchList.add(lst_ingredients.get(i));
+                }
             }
 
         }
@@ -364,11 +390,21 @@ public class SortFragment extends Fragment implements View.OnTouchListener {
     }
 
     @Override
+    public void onClick(View v) {
+
+        if (v == tv_search_cancel) {
+            et_search.setText("");
+            Utility.HideKeyboard(getActivity(), et_search);
+        }
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-        if (v != et_search)
-            Utility.HideKeyboard(getActivity(), et_search);
+        //if (v != et_search)
+        //    Utility.HideKeyboard(getActivity(), et_search);
         return false;
     }
+
 
 }

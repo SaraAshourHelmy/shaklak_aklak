@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -35,6 +36,7 @@ import cn.limc.androidcharts.diagram.PieChart;
 import cn.limc.androidcharts.series.TitleValueColorEntity;
 import media_sci.com.adapter.MealAdapter;
 import media_sci.com.models.UserCalculation;
+import media_sci.com.models.UserData;
 import media_sci.com.models.UserMeal;
 import media_sci.com.shaklak_aklak.ChangeCaloriesActivity;
 import media_sci.com.shaklak_aklak.R;
@@ -53,6 +55,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
     private View view;
     private LinearLayout lnr_calories, lnr_nutrients, lnr_pieChart;
+    private RelativeLayout rltv_no_data;
     private Button btn_calories, btn_nutrients, btn_pieChart;
     private TextView tv_selected_date;
     private ImageView img_edit;
@@ -82,6 +85,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     private ListView lstv_userMeals;
     private MaterialCalendarView cal_meals;
     private Button btn_calendar_ok;
+    private UserData userData;
 
 
     @Override
@@ -121,27 +125,35 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         // set need
 
-        tv_calories_need.setText(Utility.GetDecimalFormat(userCalculation.CaloriesCalc()));
+        tv_calories_need.setText(Utility.GetDecimalFormat(userCalculation.CaloriesCalc())
+                + " " + StaticVarClass.kcal);
 
         tv_total_fat_need.setText(Utility.GetDecimalFormat(userCalculation.TotalFat())
-                + StaticVarClass.gram);
+                + " " + StaticVarClass.gram);
 
-        tv_cholest_need.setText(String.valueOf((int) userCalculation.Cholest())
-                + StaticVarClass.milli_gram);
+        tv_cholest_need.setText(Utility.GetDecimalFormat(userCalculation.Cholest())
+                + " " + StaticVarClass.milli_gram);
 
-        tv_sodium_need.setText((int) userCalculation.SodiumCalc() + StaticVarClass.milli_gram);
-        tv_potassium_need.setText((int) userCalculation.Potassium() + StaticVarClass.milli_gram);
-        tv_carbo_need.setText(userCalculation.Carbohydrate() + StaticVarClass.gram);
+        tv_sodium_need.setText(Utility.GetDecimalFormat(userCalculation.SodiumCalc())
+                + " " + StaticVarClass.milli_gram);
+        tv_potassium_need.setText(Utility.GetDecimalFormat(userCalculation.Potassium())
+                + " " + StaticVarClass.milli_gram);
+        tv_carbo_need.setText(Utility.GetDecimalFormat(userCalculation.Carbohydrate())
+                + " " + StaticVarClass.gram);
         tv_fiber_need.setText(Utility.GetDecimalFormat(userCalculation.Fiber())
-                + StaticVarClass.gram);
+                + " " + StaticVarClass.gram);
         tv_sugars_need.setText(Utility.GetDecimalFormat(userCalculation.SugarCalc())
-                + StaticVarClass.gram);
+                + " " + StaticVarClass.gram);
         tv_protein_need.setText(Utility.GetDecimalFormat(userCalculation.ProteinCalc())
-                + StaticVarClass.gram);
-        tv_vitaminA_need.setText((int) userCalculation.VitaminA() + StaticVarClass.IU);
-        tv_vitaminC_need.setText((int) userCalculation.VitaminC() + StaticVarClass.milli_gram);
-        tv_calcium_need.setText((int) userCalculation.CalciumCalc() + StaticVarClass.milli_gram);
-        tv_iron_need.setText((int) userCalculation.IronCalc() + StaticVarClass.milli_gram);
+                + " " + StaticVarClass.gram);
+        tv_vitaminA_need.setText(Utility.GetDecimalFormat(userCalculation.VitaminA())
+                + " " + StaticVarClass.IU);
+        tv_vitaminC_need.setText(Utility.GetDecimalFormat(userCalculation.VitaminC())
+                + " " + StaticVarClass.milli_gram);
+        tv_calcium_need.setText(Utility.GetDecimalFormat(userCalculation.CalciumCalc())
+                + " " + StaticVarClass.milli_gram);
+        tv_iron_need.setText(Utility.GetDecimalFormat(userCalculation.IronCalc())
+                + " " + StaticVarClass.milli_gram);
 
         // set taken
         tv_calories_taken.setText(Utility.GetDecimalFormat(StaticVarClass.Calories)
@@ -393,11 +405,19 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
     private void SetupTools() {
 
+        userData = new UserData(getActivity());
+        StaticVarClass.kcal = getString(R.string.kcal);
+        StaticVarClass.gram = getString(R.string.gram);
+        StaticVarClass.milli_gram = getString(R.string.milli_gram);
+
         SetupToolsNutrient();
         actionbar = (View) view.findViewById(R.id.actionbar_daily);
         Utility.ActionBarSetting(actionbar, getString(R.string.daily), 3, "", getActivity());
         //if (weekCalendar == null)
         //  weekCalendar = (WeekCalendar) view.findViewById(R.id.weekCalendar);
+
+        rltv_no_data = (RelativeLayout) view.findViewById(R.id.rltv_no_data);
+
         lnr_calories = (LinearLayout) view.findViewById(R.id.lnr_daily_calories);
         lnr_nutrients = (LinearLayout) view.findViewById(R.id.lnr_daily_nutrients);
         lnr_pieChart = (LinearLayout) view.findViewById(R.id.lnr_daily_pieChart);
@@ -758,10 +778,18 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
 
     private void SetMealList() {
-        SortMeals(userMeals);
-        MealAdapter mealAdapter = new MealAdapter(getActivity(),
-                R.layout.adapter_meal, userMeals);
-        lstv_userMeals.setAdapter(mealAdapter);
+        if (userMeals.size() == 0) {
+            lstv_userMeals.setVisibility(View.GONE);
+            rltv_no_data.setVisibility(View.VISIBLE);
+        } else {
+
+            lstv_userMeals.setVisibility(View.VISIBLE);
+            rltv_no_data.setVisibility(View.GONE);
+            SortMeals(userMeals);
+            MealAdapter mealAdapter = new MealAdapter(getActivity(),
+                    R.layout.adapter_meal, userMeals);
+            lstv_userMeals.setAdapter(mealAdapter);
+        }
     }
 
 
@@ -774,9 +802,15 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             @Override
             public int compare(UserMeal meal1, UserMeal meal2) {
 
-                return meal1.getItemName().compareToIgnoreCase(
-                        meal2.getItemName()
-                );
+                if (userData.GetLanguage() == StaticVarClass.Arabic) {
+                    return meal1.getItemName_ar().compareTo(
+                            meal2.getItemName_ar()
+                    );
+                } else {
+                    return meal1.getItemName_en().compareToIgnoreCase(
+                            meal2.getItemName_en()
+                    );
+                }
 
             }
         });
@@ -803,7 +837,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Please wait ...");
+            dialog.setMessage(getActivity().getString(R.string.wait_message));
             dialog.setCancelable(false);
             dialog.show();
         }
@@ -860,6 +894,5 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         }
 
     }
-
 
 }

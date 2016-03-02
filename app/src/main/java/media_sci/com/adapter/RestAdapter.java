@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import media_sci.com.models.Restaurant;
+import media_sci.com.models.UserData;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 public class RestAdapter extends ArrayAdapter<Restaurant> {
@@ -40,7 +42,16 @@ public class RestAdapter extends ArrayAdapter<Restaurant> {
 
         // CustomImageLoader.getInstance().loadImage(lst_category.get(position).getImg_url()
         //       , img_category, null);
-        tv_catName.setText(lst_rest.get(position).getName_en());
+
+        UserData userData = new UserData(context);
+
+        if (userData.GetLanguage() == StaticVarClass.English)
+            tv_catName.setText(lst_rest.get(position).getName_en());
+
+        else if (userData.GetLanguage() == StaticVarClass.Arabic)
+            tv_catName.setText(lst_rest.get(position).getName_ar());
+
+      //  tv_catName.setText(lst_rest.get(position).getName_en());
 
         tv_catName.setTypeface(Utility.GetFont(context));
         return convertView;

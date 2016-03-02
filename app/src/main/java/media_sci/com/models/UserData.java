@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import media_sci.com.utility.StaticVarClass;
+
 /**
  * Created by Bassem on 12/15/2015.
  */
@@ -11,11 +13,44 @@ public class UserData {
 
     SharedPreferences userData;
     SharedPreferences user_calories;
+    SharedPreferences user_verification;
+    SharedPreferences language_shared;
 
     public UserData(Context context) {
         userData = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
         user_calories = context.getSharedPreferences("user_calories"
                 , Context.MODE_APPEND);
+        user_verification = context.getSharedPreferences("user_verification"
+                , Context.MODE_APPEND);
+        language_shared = context.getSharedPreferences("language_shared"
+                , Context.MODE_APPEND);
+
+    }
+
+    public void SetLanguage(int lang, int type_setting) {
+
+        SharedPreferences.Editor editor = language_shared.edit();
+
+        if (lang == StaticVarClass.English)
+            editor.putInt("lang", StaticVarClass.English);
+        else if (lang == StaticVarClass.Arabic)
+            editor.putInt("lang", StaticVarClass.Arabic);
+
+
+        editor.putInt("type_setting", type_setting);
+        editor.commit();
+
+
+    }
+
+    public int GetLanguage() {
+
+        return language_shared.getInt("lang", -1);
+    }
+
+    public int GetSettingType() {
+
+        return language_shared.getInt("type_setting", 0);
     }
 
     public void ClearUserData() {
@@ -50,6 +85,18 @@ public class UserData {
         editor.putFloat("calories", Float.valueOf(calories + ""));
         editor.commit();
 
+    }
+
+    public void SetVerificationStatus(int status) {
+
+        SharedPreferences.Editor editor = user_verification.edit();
+        editor.putInt("status", status);
+        editor.commit();
+    }
+
+    public int GetVerificationStatus() {
+
+        return user_verification.getInt("status", 0);
     }
 
     public int GetUserID() {

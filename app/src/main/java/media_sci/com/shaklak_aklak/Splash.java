@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import media_sci.com.models.UserData;
 import media_sci.com.utility.Utility;
 
 public class Splash extends Activity implements View.OnClickListener {
@@ -24,19 +25,33 @@ public class Splash extends Activity implements View.OnClickListener {
 
     private void SetupTools() {
 
+        CheckLanguage();
+
         tv_try_again = (TextView) findViewById(R.id.tv_try_again);
         progress_download = (ProgressBar) findViewById(R.id.progress_download);
 
         if (try_again == 0) {
             Utility.CreateDb(this, 0);
-        }
-        else if (try_again == 1) {
+        } else if (try_again == 1) {
             Utility.CreateDb(this, 1);
             progress_download.setVisibility(View.GONE);
             tv_try_again.setVisibility(View.VISIBLE);
         }
         tv_try_again.setOnClickListener(this);
 
+    }
+
+    private void CheckLanguage() {
+
+       // Utility.setLocale(this, StaticVarClass.English);
+        UserData userData = new UserData(this);
+
+        if (userData.GetSettingType() == 0) {
+            Utility.GetDevicesLanguage(this);
+
+        } else {
+            Utility.SetSettingLanguage(this, userData.GetLanguage());
+        }
     }
 
     @Override

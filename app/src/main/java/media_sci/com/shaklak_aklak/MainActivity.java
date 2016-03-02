@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
 
 import media_sci.com.fragment.CustomSortFragment;
@@ -14,25 +13,26 @@ import media_sci.com.fragment.DailyFragment;
 import media_sci.com.fragment.FavouriteFragment;
 import media_sci.com.fragment.FindFoodFragment;
 import media_sci.com.fragment.SettingFragment;
-import media_sci.com.utility.Utility;
 
 
 public class MainActivity extends FragmentActivity {
 
     public static int screenNo = 0;
     public static FragmentTabHost mTabHost;
-    LinearLayout lnr_dialog;
-    RelativeLayout lnr_picker;
+    LinearLayout lnr_dialog, lnr_main_language;
+    LinearLayout lnr_picker;
 
     @Override
     public void onBackPressed() {
 
         mTabHost.getTabWidget().setEnabled(true);
-       // Utility.NotPushLayoutKeyboard(this);
+        // Utility.NotPushLayoutKeyboard(this);
         if (screenNo == 2) {
             screenNo = 0;
             lnr_dialog.setVisibility(View.GONE);
             lnr_picker.setVisibility(View.GONE);
+            lnr_main_language.setVisibility(View.GONE);
+
         } else {
             super.onBackPressed();
         }
@@ -55,7 +55,8 @@ public class MainActivity extends FragmentActivity {
 
         //  SetupTabs();
         lnr_dialog = (LinearLayout) findViewById(R.id.lnr_dialog);
-        lnr_picker = (RelativeLayout) findViewById(R.id.lnr_picker);
+        lnr_picker = (LinearLayout) findViewById(R.id.lnr_picker);
+        lnr_main_language = (LinearLayout) findViewById(R.id.lnr_main_language);
         mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
         // mTabHost.setBackgroundResource(R.drawable.tab_background);
 

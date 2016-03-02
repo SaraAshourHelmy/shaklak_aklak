@@ -82,7 +82,7 @@ public class ConfirmForgetActivity extends Activity implements
 
             }
         } else {
-            et_forget_code.setError("Please Enter Code");
+            et_forget_code.setError(getString(R.string.error_code));
         }
     }
 

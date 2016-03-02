@@ -2,26 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:layout_margin="10dp"
+              android:background="@drawable/rectangle_border"
               android:orientation="vertical">
 
+
     <ScrollView
-        android:id="@+id/scrl_parent"
+        android:id="@+id/scrl_register_first"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:background="@drawable/rectangle_border"
         android:paddingBottom="10dp"
-        android:scrollbarSize="2dp"
-        android:scrollbarThumbVertical="@color/black"
-        android:scrollbars="vertical">
+        android:scrollbars="none"
+        android:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/lnr_register_first"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:paddingTop="20dp">
+
+            <TextView
+                android:id="@+id/tv_register_title1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/register"
+                android:textColor="@color/black"
+                android:textSize="@dimen/custom_food_font"/>
 
             <!-- first name -->
             <LinearLayout
@@ -35,7 +46,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="First Name"
+                    android:text="@string/first_name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -47,6 +58,7 @@
                     android:background="@drawable/rectangle_border"
                     android:focusable="false"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
@@ -56,16 +68,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
+
                     android:id="@+id/tv_lastName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Last Name"
+                    android:text="@string/last_name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -77,16 +90,18 @@
                     android:background="@drawable/rectangle_border"
                     android:focusable="false"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
+
             </LinearLayout>
 
             <!-- mobile number -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -95,7 +110,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Mobile Number"
+                    android:text="@string/mobile_no"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -108,19 +123,22 @@
                     android:focusable="false"
                     android:hint="01XXXXXXXXX"
                     android:maxLength="11"
+                    android:numeric="integer"
                     android:paddingLeft="10dp"
-                    android:phoneNumber="true"
+                    android:paddingRight="10dp"
+
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="@dimen/custom_food_font"/>
+
             </LinearLayout>
 
             <!-- email -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -129,7 +147,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Email"
+                    android:text="@string/email"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -142,15 +160,17 @@
                     android:focusable="false"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
+
             </LinearLayout>
 
             <!-- Password -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -159,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Password"
+                    android:text="@string/password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -171,16 +191,110 @@
                     android:background="@drawable/rectangle_border"
                     android:focusable="false"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:password="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/custom_food_font"/>
+
+            </LinearLayout>
+
+            <!-- Confirm password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_confirm_password"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/confirm_password"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/custom_food_font"/>
+
+                <EditText
+                    android:id="@+id/et_register_confirm_password"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/register_section"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/rectangle_border"
+                    android:focusable="false"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:password="true"
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
             </LinearLayout>
 
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_above="@+id/btn_back_login"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_selected"
+                android:gravity="center"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textSize="@dimen/custom_food_font"/>
+
+            <Button
+                android:id="@+id/btn_back_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_selected"
+                android:gravity="center"
+                android:text="@string/back"
+                android:textAllCaps="false"
+                android:textSize="@dimen/custom_food_font"/>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scrl_register_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/lnr_register_second"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_register_title2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/register"
+                android:textColor="@color/black"
+                android:textSize="@dimen/custom_food_font"/>
             <!-- gender -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -189,7 +303,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -198,7 +312,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:focusable="false"
+
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -206,7 +320,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text=" Male"
+                        android:text="@string/male"
                         android:textColor="@color/black"/>
 
                     <RadioButton
@@ -215,7 +329,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:text=" Female"
+                        android:text="@string/female"
                         android:textColor="@color/black"/>
 
                 </RadioGroup>
@@ -226,7 +340,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -235,7 +349,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Age"
+                    android:text="@string/age"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -246,8 +360,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_border"
                     android:focusable="false"
+                    android:gravity="center"
+                    android:maxLength="2"
                     android:numeric="integer"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -261,7 +378,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -270,7 +387,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Height"
+                    android:text="@string/height"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -281,8 +398,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_border"
                     android:focusable="false"
+                    android:gravity="center"
+                    android:maxLength="5"
                     android:numeric="decimal"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -292,7 +412,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
                     android:gravity="center"
-                    android:text="cm"
+                    android:text="@string/cm"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
             </LinearLayout>
@@ -301,7 +421,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/register_section"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -310,7 +430,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Weight"
+                    android:text="@string/weight"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -321,8 +441,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_border"
                     android:focusable="false"
+                    android:gravity="center"
+                    android:maxLength="5"
                     android:numeric="decimal"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
 
@@ -332,7 +455,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
                     android:gravity="center"
-                    android:text="Kg"
+                    android:text="@string/Kg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_food_font"/>
             </LinearLayout>
@@ -341,7 +464,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -360,7 +483,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:focusable="false"
+
                     android:paddingLeft="10dp"/>
 
                 <TextView
@@ -376,11 +499,12 @@
 
             </LinearLayout>
 
+
             <Button
                 android:id="@+id/btn_signIn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/button_selected"
                 android:gravity="center"
                 android:text="@string/ready"
@@ -388,18 +512,18 @@
                 android:textSize="@dimen/custom_food_font"/>
 
             <Button
-                android:id="@+id/btn_back_login"
+                android:id="@+id/btn_backTo_register"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
-                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/button_selected"
                 android:gravity="center"
-                android:text="@string/back_login"
+                android:text="@string/back"
                 android:textAllCaps="false"
                 android:textSize="@dimen/custom_food_font"/>
 
         </LinearLayout>
 
     </ScrollView>
-
 </LinearLayout>

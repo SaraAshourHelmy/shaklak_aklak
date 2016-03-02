@@ -85,7 +85,7 @@ public class FavAndMeal {
             Log.e("meals", GetCustomMealJson());
             params.add(new BasicNameValuePair("meals", GetCustomMealJson()));
             try {
-                httpPost.setEntity(new UrlEncodedFormEntity(params));
+                httpPost.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
                 HttpResponse response = httpClient.execute(httpPost);
                 int status = response.getStatusLine().getStatusCode();
                 Log.e("customMeal_status", status + "");
@@ -339,11 +339,13 @@ public class FavAndMeal {
             for (int i = 0; i < lst_meal.size(); i++) {
 
                 everyMeal = new JSONObject();
+                everyMeal.put("device_id", lst_meal.get(i).getId());
                 everyMeal.put("meal_id", lst_meal.get(i).getIngredient_id());
                 everyMeal.put("date", lst_meal.get(i).getDate());
                 everyMeal.put("is_custom", lst_meal.get(i).getIs_custom());
                 everyMeal.put("serving_number", lst_meal.get(i).getServing_no());
                 everyMeal.put("serving_size", lst_meal.get(i).getServing_size());
+                everyMeal.put("counter_id", lst_meal.get(i).getCounter_id());
 
                 meals.put(everyMeal);
             }
@@ -437,6 +439,8 @@ public class FavAndMeal {
                     userData.ClearUserData();
                     Ingredients.ClearAllFavourite(context);
                     UserMeal.ClearUserMeals(context);
+                    Ingredients.RemoveCustomMeal(context);
+
 
                     logout_flag = true;
                     Log.e("logout", "done");
@@ -496,7 +500,7 @@ public class FavAndMeal {
             super.onPreExecute();
             if (type == 6 || type == 1 || type == 2 || type == 8) {
                 dialog = new ProgressDialog(context);
-                dialog.setMessage("Please wait ...");
+                dialog.setMessage(context.getString(R.string.wait_message));
                 dialog.setCancelable(false);
                 dialog.show();
             }

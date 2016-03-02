@@ -156,7 +156,9 @@ public class ConfirmRegisterActivity extends Activity implements
             dialog.dismiss();
             // if success
             if (check_flag) {
-                StaticVarClass.verify_status = 1;
+                UserData userData = new UserData(ConfirmRegisterActivity.this);
+                userData.SetVerificationStatus(1);
+
                 Intent intent = new Intent(ConfirmRegisterActivity.this
                         , IntroActivity.class);
                 startActivity(intent);

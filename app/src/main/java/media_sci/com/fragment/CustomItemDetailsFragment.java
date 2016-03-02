@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,19 +33,16 @@ import media_sci.com.utility.Utility;
 public class CustomItemDetailsFragment extends Fragment implements View.OnClickListener {
 
     private static View view;
-    double[] lst_floats = {0, 0.125, 0.142, 0.166, 0.2, 0.25, 0.285, 0.333
-            , 0.375, 0.4, 0.428, 0.5, 0.571, 0.6, 0.625, 0.666, 0.714, 0.75, 0.8, 0.833
-            , 1.166, 0.875};
 
     private View actionbar;
     private double pkr_float_value = 0, serving_size = 1;
     private double pkr_integer_value = 1;
 
     // for serving size dialog
-    private RelativeLayout lnr_picker;
+    private LinearLayout lnr_picker;
     private NumberPicker pkr_integer, pkr_float;
     private TextView tv_servingNo_done;
-    private RelativeLayout rltv_servingNo;
+    private LinearLayout lnr_servingNo;
     private TextView tv_item_name, tv_servingSize, tv_servingSize_value;
     private TextView tv_servingNo, tv_servingNo_value, tv_percent;
     private TextView tv_calories, tv_calories_value, tv_caloriesFat, tv_caloriesFat_value;
@@ -62,6 +60,7 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
     private TextView tv_calcium, tv_calcium_value, tv_calcium_percent;
     private TextView tv_iron, tv_iron_value, tv_iron_percent;
     private Button btn_addMeal, btn_addFavourite;
+    private ImageView img_arrow;
 
     private String sec_img_url = "";
     private String item_id = "";
@@ -108,8 +107,12 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
 
     private void SetupTools() {
 
+        StaticVarClass.gram = getString(R.string.gram);
+        StaticVarClass.milli_gram = getString(R.string.milli_gram);
 
         actionbar = (View) view.findViewById(R.id.actionbar_itemDetails);
+        img_arrow = (ImageView) view.findViewById(R.id.img_serving_size_arrow);
+        img_arrow.setVisibility(View.INVISIBLE);
 
 
         Bundle bundle = getArguments();
@@ -125,15 +128,21 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
         Utility.ActionBarSetting(actionbar, getString(R.string.your_food), 2,
                 sec_img_url, getActivity());
 
-        rltv_servingNo = (RelativeLayout) view.findViewById(R.id.rltv_servingNo);
+        lnr_servingNo = (LinearLayout) view.findViewById(R.id.lnr_servingNo);
         tv_item_name = (TextView) view.findViewById(R.id.tv_details_itemName);
         tv_servingSize = (TextView) view.findViewById(R.id.tv_servingSize);
         tv_servingSize_value = (TextView) view.findViewById(R.id.tv_servingSize_value);
 
 
         // set serving size
+        Utility.TextDirection(getActivity(), tv_servingSize_value,
+                StaticVarClass.TextView_Type);
+
+        String unit_name = (ingredients.getType() == StaticVarClass.Food) ?
+                getString(R.string.gram) : getString(R.string.liter);
+
         tv_servingSize_value.setText(ingredients.getUnit_value() + " " +
-                ingredients.getUnit_name());
+                unit_name);
 
         tv_servingNo = (TextView) view.findViewById(R.id.tv_servingNo);
         tv_servingNo_value = (TextView) view.findViewById(R.id.tv_servingNo_value);
@@ -205,7 +214,7 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
 
         btn_addFavourite.setOnClickListener(this);
         btn_addMeal.setOnClickListener(this);
-        rltv_servingNo.setOnClickListener(this);
+        lnr_servingNo.setOnClickListener(this);
 
         SetFont();
         //SetDialog();
@@ -313,7 +322,7 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
 
         // cholest
         details_cholest = ingredients.getCholest()
-                * pkr_integer_value * pkr_float_value;
+                * serving_no;
         daily_cholest = (details_cholest * StaticVarClass.percent) / need_cholest;
 
         // sodium
@@ -360,7 +369,9 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
 
     private void SetViewValues() {
 
+        Utility.TextDirection(getActivity(), tv_item_name, StaticVarClass.TextView_Type);
         tv_item_name.setText(ingredients.getItem_name_en());
+
         tv_calories_value.setText(Utility.GetDecimalFormat(details_calories));
         tv_caloriesFat_value.setText(Utility.GetDecimalFormat(details_caloriesFat));
 
@@ -457,7 +468,7 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
 
                 AddFavourite();
             }
-        } else if (v == rltv_servingNo) {
+        } else if (v == lnr_servingNo) {
             SetServingNumber();
         } else if (v == tv_servingNo_done) {
             HideServingNumber();
@@ -468,11 +479,17 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
     private void AddToMeal() {
 
         String date = Utility.GetStringDateNow();
+        int count = UserMeal.GetMaxUserMeal(getActivity()) + 1;
+        String macAddress = Utility.GetMacAddress(getActivity());
+        String ID = count + macAddress;
+
 
         UserMeal userMeal = new UserMeal();
+        userMeal.setId(ID);
         userMeal.setIngredient_id(ingredients.getCustomID());
         userMeal.setDate(date);
         userMeal.setIs_custom(ingredients.getIs_custom());
+        userMeal.setCounter_id(count);
 
         // serving value calculation
         double serving_no = pkr_integer_value + pkr_float_value;
@@ -519,7 +536,7 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
                 R.anim.slide_up);
 
         ViewGroup viewGroup = (ViewGroup) getActivity().findViewById(R.id.rltv_main);
-        lnr_picker = (RelativeLayout) viewGroup.findViewById(R.id.lnr_picker);
+        lnr_picker = (LinearLayout) viewGroup.findViewById(R.id.lnr_picker);
         pkr_integer = (NumberPicker) viewGroup.findViewById(R.id.pkr_integer);
         pkr_float = (NumberPicker) viewGroup.findViewById(R.id.pkr_float);
         tv_servingNo_done =
@@ -549,15 +566,11 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
             }
         });
 
-        //
-        final String nums[] = {"--", "1/8", "1/7", "1/6", "1/5", "1/4", "2/7", "1/3", "3/8", "2/5", "3/7", "1/2", "4/7", "3/5", "5/8"
-                , "2/3", "5/7", "3/4", "4/5", "5/6", "7/6", "7/8"};
 
-
-        pkr_float.setMaxValue(nums.length - 1);
+        pkr_float.setMaxValue(StaticVarClass.GetServingNoPicker().length - 1);
         pkr_float.setMinValue(0);
         pkr_float.setWrapSelectorWheel(false); //this line remove max from top
-        pkr_float.setDisplayedValues(nums);
+        pkr_float.setDisplayedValues(StaticVarClass.GetServingNoPicker());
 
         // this line to remove keyboard and editable
         pkr_float.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -566,13 +579,13 @@ public class CustomItemDetailsFragment extends Fragment implements View.OnClickL
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 
-                pkr_float_value = lst_floats[newVal];
+                pkr_float_value = StaticVarClass.float_Serving_no[newVal];
                 // Log.e("pkr_float", "" + pkr_float_value);
                 Log.e("pkr_float", "" + newVal);
                 if (newVal == 0)
                     tv_percent.setText("");
                 else
-                    tv_percent.setText(nums[newVal]);
+                    tv_percent.setText(StaticVarClass.GetServingNoPicker()[newVal]);
                 SetIngredientDefault();
                 SetViewValues();
             }

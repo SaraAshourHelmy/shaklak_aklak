@@ -1,10 +1,13 @@
 package media_sci.com.utility;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 
 /**
  * Created by Bassem on 2/1/2016.
@@ -12,15 +15,23 @@ import media_sci.com.models.Ingredients;
 public class Sorting {
 
     public static ArrayList<Ingredients> SortIngredients
-            (ArrayList<Ingredients> lst_ingredients) {
+            (Context context, ArrayList<Ingredients> lst_ingredients) {
+        final UserData userData = new UserData(context);
         Collections.sort(lst_ingredients, new Comparator<Ingredients>() {
 
             @Override
             public int compare(Ingredients meal1, Ingredients meal2) {
 
-                return meal1.getItem_name_en().compareToIgnoreCase(
-                        meal2.getItem_name_en()
-                );
+
+                if (userData.GetLanguage() == StaticVarClass.Arabic) {
+                    return meal1.getItem_name_ar().compareTo(
+                            meal2.getItem_name_ar()
+                    );
+                } else {
+                    return meal1.getItem_name_en().compareToIgnoreCase(
+                            meal2.getItem_name_en()
+                    );
+                }
 
             }
         });

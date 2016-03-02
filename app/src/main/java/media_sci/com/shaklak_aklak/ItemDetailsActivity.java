@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import media_sci.com.adapter.SimpleAdapter;
 import media_sci.com.models.IngredientUnit;
 import media_sci.com.models.Ingredients;
 import media_sci.com.models.UserCalculation;
+import media_sci.com.models.UserData;
 import media_sci.com.models.UserFavourite;
 import media_sci.com.models.UserMeal;
 import media_sci.com.utility.FavAndMeal;
@@ -34,9 +34,6 @@ import media_sci.com.utility.Utility;
 public class ItemDetailsActivity extends Activity implements View.OnClickListener {
 
 
-    double[] lst_floats = {0, 0.125, 0.142, 0.166, 0.2, 0.25, 0.285, 0.333
-            , 0.375, 0.4, 0.428, 0.5, 0.571, 0.6, 0.625, 0.666, 0.714, 0.75, 0.8, 0.833
-            , 1.166, 0.875};
     ArrayList<IngredientUnit> lst_ingredient_units;
     ArrayList<String> lst_unitName = new ArrayList<>();
 
@@ -47,11 +44,11 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
     private double pkr_integer_value = 1;
     // for serving size dialog
     private LinearLayout lnr_dialog;
-    private RelativeLayout lnr_picker;
+    private LinearLayout lnr_picker;
     private NumberPicker pkr_integer, pkr_float;
     private TextView tv_servingSize_done, tv_servingNo_done;
     private ListView lst_servingSize;
-    private RelativeLayout rltv_servingSize, rltv_servingNo;
+    private LinearLayout lnr_servingSize, lnr_servingNo;
     private TextView tv_item_name, tv_servingSize, tv_servingSize_value;
     private TextView tv_servingNo, tv_servingNo_value, tv_percent;
     private TextView tv_calories, tv_calories_value, tv_caloriesFat, tv_caloriesFat_value;
@@ -103,6 +100,9 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
     private void SetupTools() {
 
 
+        StaticVarClass.gram = getString(R.string.gram);
+        StaticVarClass.Liter = getString(R.string.liter);
+
         actionbar = (View) findViewById(R.id.actionbar_itemDetails);
 
 
@@ -116,8 +116,8 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
         Utility.ActionBarSetting(actionbar, getString(R.string.your_food), 4,
                 "", this);
         img_close = (ImageView) actionbar.findViewById(R.id.img_action_icon);
-        rltv_servingSize = (RelativeLayout) findViewById(R.id.rltv_servingSize);
-        rltv_servingNo = (RelativeLayout) findViewById(R.id.rltv_servingNo);
+        lnr_servingSize = (LinearLayout) findViewById(R.id.lnr_servingSize);
+        lnr_servingNo = (LinearLayout) findViewById(R.id.lnr_servingNo);
         tv_item_name = (TextView) findViewById(R.id.tv_details_itemName);
         tv_servingSize = (TextView) findViewById(R.id.tv_servingSize);
         tv_servingSize_value = (TextView) findViewById(R.id.tv_servingSize_value);
@@ -202,7 +202,7 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
         tv_servingSize_done.setOnClickListener(this);
 
         // serving no
-        lnr_picker = (RelativeLayout) findViewById(R.id.lnr_picker);
+        lnr_picker = (LinearLayout) findViewById(R.id.lnr_picker);
         pkr_integer = (NumberPicker) findViewById(R.id.pkr_integer);
         pkr_float = (NumberPicker) findViewById(R.id.pkr_float);
         tv_servingNo_done = (TextView) findViewById(R.id.tv_servingNo_done);
@@ -210,8 +210,8 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
 
         btn_addFavourite.setOnClickListener(this);
         btn_addMeal.setOnClickListener(this);
-        rltv_servingSize.setOnClickListener(this);
-        rltv_servingNo.setOnClickListener(this);
+        lnr_servingSize.setOnClickListener(this);
+        lnr_servingNo.setOnClickListener(this);
         img_close.setOnClickListener(this);
 
         SetFont();
@@ -292,6 +292,7 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
                     + " (" + lst_ingredient_units.get(i).getUnit_value()
                     + unit + " )";
             lst_unitName.add(unit_name);
+
 
             // get default unit
             if (lst_ingredient_units.get(i).getDefault_unit() == 1) {
@@ -421,7 +422,15 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
 
     private void SetViewValues() {
 
-        tv_item_name.setText(ingredients.getItem_name_en());
+
+        UserData userData = new UserData(this);
+        Utility.TextDirection(this, tv_item_name, StaticVarClass.TextView_Type);
+
+        if (userData.GetLanguage() == StaticVarClass.English)
+            tv_item_name.setText(ingredients.getItem_name_en());
+        else if (userData.GetLanguage() == StaticVarClass.Arabic)
+            tv_item_name.setText(ingredients.getItem_name_ar());
+
         tv_calories_value.setText(Utility.GetDecimalFormat(details_calories));
         tv_caloriesFat_value.setText(Utility.GetDecimalFormat(details_caloriesFat));
 
@@ -529,11 +538,11 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
 
                 AddFavourite();
             }
-        } else if (v == rltv_servingSize) {
+        } else if (v == lnr_servingSize) {
 
             SetServingSize();
 
-        } else if (v == rltv_servingNo) {
+        } else if (v == lnr_servingNo) {
 
             // HideServingSize();
 
@@ -550,12 +559,18 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
 
     private void AddToMeal() {
 
+        int count = UserMeal.GetMaxUserMeal(this) + 1;
+        String macAddress = Utility.GetMacAddress(this);
+        String ID = count + macAddress;
+
         String date = Utility.GetStringDateNow();
 
         UserMeal userMeal = new UserMeal();
+        userMeal.setId(ID);
         userMeal.setIngredient_id(String.valueOf(ingredients.getId()));
         userMeal.setDate(date);
         userMeal.setIs_custom(ingredients.getIs_custom());
+        userMeal.setCounter_id(count);
 
         // serving value calculation
         double serving_no = pkr_integer_value + pkr_float_value;
@@ -608,7 +623,7 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
         lnr_dialog.setVisibility(View.VISIBLE);
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, R.layout.adapter_simple
-                , lst_unitName);
+                , lst_unitName, StaticVarClass.Black_Color);
         lst_servingSize.setAdapter(simpleAdapter);
         lst_servingSize.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                    @Override
@@ -679,15 +694,11 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
             }
         });
 
-        //
-        final String nums[] = {"--", "1/8", "1/7", "1/6", "1/5", "1/4", "2/7", "1/3", "3/8", "2/5", "3/7", "1/2", "4/7", "3/5", "5/8"
-                , "2/3", "5/7", "3/4", "4/5", "5/6", "7/6", "7/8"};
 
-
-        pkr_float.setMaxValue(nums.length - 1);
+        pkr_float.setMaxValue(StaticVarClass.GetServingNoPicker().length - 1);
         pkr_float.setMinValue(0);
         pkr_float.setWrapSelectorWheel(false); //this line remove max from top
-        pkr_float.setDisplayedValues(nums);
+        pkr_float.setDisplayedValues(StaticVarClass.GetServingNoPicker());
 
         // this line to remove keyboard and editable
         pkr_float.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -696,13 +707,13 @@ public class ItemDetailsActivity extends Activity implements View.OnClickListene
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 
-                pkr_float_value = lst_floats[newVal];
+                pkr_float_value = StaticVarClass.float_Serving_no[newVal];
                 // Log.e("pkr_float", "" + pkr_float_value);
                 Log.e("pkr_float", "" + pkr_float_value);
                 if (newVal == 0)
                     tv_percent.setText("");
                 else
-                    tv_percent.setText(nums[newVal]);
+                    tv_percent.setText(StaticVarClass.GetServingNoPicker()[newVal]);
                 SetIngredientDefault();
                 SetViewValues();
             }

@@ -32,17 +32,23 @@
             android:background="@color/white"
             android:focusable="false"
             android:gravity="center_vertical"
-            android:hint="Search"
+            android:hint="@string/search"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textSize="@dimen/custom_food_font"/>
 
-        <ImageView
-            android:id="@+id/img_searchItem_cancel"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <TextView
+            android:id="@+id/tv_search_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/close"/>
+            android:text="@string/cancel"
+            android:textColor="@color/pink"
+            android:textSize="@dimen/custom_food_font"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
     <View
@@ -55,7 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"
-        android:scrollbars="none"></ListView>
+        android:scrollbars="none"
+        ></ListView>
 
 
 </LinearLayout>

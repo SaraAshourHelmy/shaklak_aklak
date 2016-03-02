@@ -3,7 +3,6 @@ package media_sci.com.shaklak_aklak;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -23,12 +22,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import lb.library.PinnedHeaderListView;
 import media_sci.com.adapter.SearchAdapter;
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 import media_sci.com.utility.Sorting;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 public class IndexedSearchActivity extends Activity implements
@@ -50,11 +50,13 @@ public class IndexedSearchActivity extends Activity implements
     private ProgressBar progress_db;
     private View view;
     private boolean keyboard_flag = false;
+    private UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        userData = new UserData(this);
 
         //SetupIndexedList();
         // setAlphabet();
@@ -130,7 +132,7 @@ public class IndexedSearchActivity extends Activity implements
 
 
         ingredientAdapter = new SearchAdapter(this,
-                GetItemName(Sorting.SortIngredients(lst_items)));
+                GetItemName(Sorting.SortIngredients(this, lst_items)));
 
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
@@ -208,11 +210,20 @@ public class IndexedSearchActivity extends Activity implements
     private void SearchItems(String txt) {
 
         searchList.clear();
-        int searchListLength = searchList.size();
+        //int searchListLength = searchList.size();
+
         for (int i = 0; i < lst_items.size(); i++) {
-            String item_txt = lst_items.get(i).getItem_name_en().toLowerCase();
-            if (item_txt.contains(txt.toLowerCase())) {
-                searchList.add(lst_items.get(i));
+
+            if (userData.GetLanguage() == StaticVarClass.English) {
+                String item_txt = lst_items.get(i).getItem_name_en().toLowerCase();
+                if (item_txt.contains(txt.toLowerCase())) {
+                    searchList.add(lst_items.get(i));
+                }
+            } else if (userData.GetLanguage() == StaticVarClass.Arabic) {
+                String item_txt = lst_items.get(i).getItem_name_ar();
+                if (item_txt.contains(txt)) {
+                    searchList.add(lst_items.get(i));
+                }
             }
 
         }
@@ -226,7 +237,10 @@ public class IndexedSearchActivity extends Activity implements
 
         itemName = new ArrayList<>();
         for (int i = 0; i < lst_ingre.size(); i++) {
-            itemName.add(lst_ingre.get(i).getItem_name_en());
+            if (userData.GetLanguage() == StaticVarClass.English)
+                itemName.add(lst_ingre.get(i).getItem_name_en());
+            else
+                itemName.add(lst_ingre.get(i).getItem_name_ar());
         }
         return itemName;
 
@@ -234,32 +248,38 @@ public class IndexedSearchActivity extends Activity implements
 
     private void SetAllAlphabet() {
 
-        AllAlpha.add("A");
-        AllAlpha.add("B");
-        AllAlpha.add("C");
-        AllAlpha.add("D");
-        AllAlpha.add("E");
-        AllAlpha.add("F");
-        AllAlpha.add("G");
-        AllAlpha.add("H");
-        AllAlpha.add("I");
-        AllAlpha.add("J");
-        AllAlpha.add("K");
-        AllAlpha.add("L");
-        AllAlpha.add("M");
-        AllAlpha.add("N");
-        AllAlpha.add("O");
-        AllAlpha.add("P");
-        AllAlpha.add("Q");
-        AllAlpha.add("R");
-        AllAlpha.add("S");
-        AllAlpha.add("T");
-        AllAlpha.add("U");
-        AllAlpha.add("V");
-        AllAlpha.add("W");
-        AllAlpha.add("X");
-        AllAlpha.add("Y");
-        AllAlpha.add("Z");
+        // UserData userData = new UserData(this);
+        if (userData.GetLanguage() == StaticVarClass.English) {
+            AllAlpha.add("A");
+            AllAlpha.add("B");
+            AllAlpha.add("C");
+            AllAlpha.add("D");
+            AllAlpha.add("E");
+            AllAlpha.add("F");
+            AllAlpha.add("G");
+            AllAlpha.add("H");
+            AllAlpha.add("I");
+            AllAlpha.add("J");
+            AllAlpha.add("K");
+            AllAlpha.add("L");
+            AllAlpha.add("M");
+            AllAlpha.add("N");
+            AllAlpha.add("O");
+            AllAlpha.add("P");
+            AllAlpha.add("Q");
+            AllAlpha.add("R");
+            AllAlpha.add("S");
+            AllAlpha.add("T");
+            AllAlpha.add("U");
+            AllAlpha.add("V");
+            AllAlpha.add("W");
+            AllAlpha.add("X");
+            AllAlpha.add("Y");
+            AllAlpha.add("Z");
+        } else if (userData.GetLanguage() == StaticVarClass.Arabic) {
+
+            SetSideIndex();
+        }
 
 
     }
@@ -313,15 +333,15 @@ public class IndexedSearchActivity extends Activity implements
 
         for (int i = 0; i < lst_items.size(); i++) {
 
-            String category_name = lst_items.get(i).getItem_name_en();
-            String firstLetter = category_name.substring(0, 1);
+            String item_name = lst_items.get(i).getItem_name_ar();
+            String firstLetter = item_name.substring(0, 1);
 
 
             // If we've changed to a new letter, add the previous letter to the alphabet scroller
             if (previousLetter != null && !firstLetter.equals(previousLetter)) {
 
                 tmpIndexItem = new Object[3];
-                tmpIndexItem[0] = previousLetter.toUpperCase(Locale.UK);
+                tmpIndexItem[0] = previousLetter;//.toUpperCase(Locale.);
                 tmpIndexItem[1] = start;
                 tmpIndexItem[2] = end;
                 alphabet.add(tmpIndexItem);
@@ -338,13 +358,20 @@ public class IndexedSearchActivity extends Activity implements
         if (previousLetter != null) {
             // Save the last letter
             tmpIndexItem = new Object[3];
-            tmpIndexItem[0] = previousLetter.toUpperCase(Locale.UK);
+            tmpIndexItem[0] = previousLetter;//.toUpperCase(Locale.UK);
             tmpIndexItem[1] = start;
             tmpIndexItem[2] = size - 1;
             alphabet.add(tmpIndexItem);
         }
+        for (int i = 0; i < alphabet.size(); i++) {
 
-        setAlphabet();
+            Object[] tmp = alphabet.get(i);
+            String tmpLetter = tmp[0].toString();
+            AllAlpha.add(tmpLetter);
+        }
+
+
+        // setAlphabet();
     }
 
     @Override
@@ -369,56 +396,17 @@ public class IndexedSearchActivity extends Activity implements
 
             Utility.HideKeyboard(this, getCurrentFocus());
             keyboard_flag = false;
+            finish();
 
+            /*
             et_search_food.setText("");
             et_search_food.setFocusable(false);
             lst_items = Ingredients.GetAllIngredients(this);
             ingredientAdapter = new SearchAdapter(this, GetItemName(Sorting.SortIngredients
                     (lst_items)));
-            mListView.setAdapter(ingredientAdapter);
+            mListView.setAdapter(ingredientAdapter);*/
         }
 
-    }
-
-    public class GetItemAsync extends AsyncTask<Void, Void, Void> {
-
-        // ProgressDialog dialog;
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.e("pre_excute", Utility.GetTimeNow());
-            /*
-            dialog = new ProgressDialog(IndexedSearchActivity.this);
-            dialog.setMessage(getString(R.string.wait_message));
-            dialog.setCancelable(false);
-            dialog.show();*/
-
-            Log.e("async", "done");
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-
-            super.onPostExecute(aVoid);
-            progress_db.setVisibility(View.GONE);
-            lst_items = Ingredients.GetAllIngredients(IndexedSearchActivity.this);
-            SetupIndexedList();
-            setAlphabet();
-            Log.e("draw_layout", Utility.GetTimeNow());
-            // dialog.dismiss();
-        }
     }
 
 }

@@ -99,7 +99,7 @@ public class ChangePassword extends Activity implements View.OnClickListener
         if (et_new_password.getText().length() < 4) {
 
             checkFlag = false;
-            et_new_password.setError("Password must be at least 4 characters");
+            et_new_password.setError(getString(R.string.error_password));
             et_new_password.requestFocus();
 
         } else {
@@ -107,7 +107,7 @@ public class ChangePassword extends Activity implements View.OnClickListener
             if (!et_confirm_password.getText().toString()
                     .equals(et_new_password.getText().toString())) {
                 checkFlag = false;
-                et_confirm_password.setError("Password Not Match");
+                et_confirm_password.setError(getString(R.string.error_confirm_password));
                 et_confirm_password.requestFocus();
             }
         }
@@ -147,7 +147,7 @@ public class ChangePassword extends Activity implements View.OnClickListener
                     String height = jsonObject.getString("height");
                     String weight = jsonObject.getString("weight");
                     String email = jsonObject.getString("email");
-                    StaticVarClass.verify_status = jsonObject.getInt("is_verified");
+
 
                     String gender = (gender_txt.equals("male")) ? "0" : "1";
                     int exercise_type = jsonObject.getInt("exercise_type");
@@ -157,6 +157,7 @@ public class ChangePassword extends Activity implements View.OnClickListener
                     userData.setUserData(user_id, first_name, last_name, phone, email,
                             et_new_password.getText().toString(), gender, age, height, weight
                             , exercise_type, calories);
+                    userData.SetVerificationStatus(jsonObject.getInt("is_verified"));
                     check_flag = true;
                 }
             } catch (Exception e) {

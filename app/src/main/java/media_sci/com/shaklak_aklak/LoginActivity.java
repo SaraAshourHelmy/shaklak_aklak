@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +31,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import media_sci.com.models.Ingredients;
 import media_sci.com.models.UserData;
+import media_sci.com.models.UserMeal;
 import media_sci.com.utility.GetDataLogin;
 import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
@@ -44,6 +48,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
     private boolean checkFlag = false, reVerify_flag = false;
     private int error_no = -1;
     private boolean connect_flag = true;
+    private boolean login_error = false;
     private int type = 0;
     private View view;
 
@@ -72,7 +77,12 @@ public class LoginActivity extends Activity implements View.OnClickListener,
         btn_login.setOnClickListener(this);
         btn_register.setOnClickListener(this);
         btn_forgetPassword.setOnClickListener(this);
+
+        et_password.setOnTouchListener(this);
+        et_email.setOnTouchListener(this);
+
         SetFont();
+        RemoveViewError();
     }
 
     private void SetFont() {
@@ -84,6 +94,46 @@ public class LoginActivity extends Activity implements View.OnClickListener,
         btn_login.setTypeface(typeface, Typeface.BOLD);
         btn_forgetPassword.setTypeface(typeface, Typeface.BOLD);
         btn_register.setTypeface(typeface, Typeface.BOLD);
+    }
+
+    private void RemoveViewError() {
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_password);
+                //et_password.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Utility.RemoveError(et_email);
+                //et_password.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -129,13 +179,13 @@ public class LoginActivity extends Activity implements View.OnClickListener,
             checkFlag = false;
             et_email.requestFocus();
             if (validMail == 2)
-                et_email.setError("Please enter Email");
+                et_email.setError(getString(R.string.error_no_email));
             else if (validMail == 3)
-                et_email.setError("Email is wrong");
+                et_email.setError(getString(R.string.error_email));
         }
         if (et_password.getText().length() < 1) {
             checkFlag = false;
-            et_password.setError("Password Enter Password");
+            et_password.setError(getString(R.string.error_password));
         }
 
         return checkFlag;
@@ -144,8 +194,12 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 
     private void Login() {
 
-        // 401 email  or password
-        // response 0 if mail not found and 1 if password is wrong
+        // clear user data
+        Ingredients.ClearAllFavourite(LoginActivity.this);
+        UserMeal.ClearUserMeals(LoginActivity.this);
+        Ingredients.RemoveCustomMeal(LoginActivity.this);
+
+        //----------------
 
         HttpClient httpClient = Utility.SetTimeOut();
         HttpPost httpPost = Utility.SetHttpPost(StaticVarClass.loginURL);
@@ -176,7 +230,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                     String age = jsonObject.getString("age");
                     String height = jsonObject.getString("height");
                     String weight = jsonObject.getString("weight");
-                    StaticVarClass.verify_status = jsonObject.getInt("is_verified");
+
 
                     String gender = (gender_txt.equals("male")) ? "0" : "1";
                     int exercise_type = jsonObject.getInt("exercise_type");
@@ -187,8 +241,11 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                     userData.setUserData(user_id, first_name, last_name, phone, et_email.getText().toString(),
                             et_password.getText().toString(), gender, age, height, weight
                             , exercise_type, calories);
+
+                    userData.SetVerificationStatus(jsonObject.getInt("is_verified"));
+
                     checkFlag = true;
-                } else if (status == 401) {
+                } else if (status == 403) {
 
                     HttpEntity entity = response.getEntity();
                     String data = EntityUtils.toString(entity);
@@ -215,6 +272,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                 connect_flag = false;
 
             } catch (Exception e) {
+                login_error = true;
                 Log.e("login_error", "" + e);
             }
         }
@@ -266,7 +324,8 @@ public class LoginActivity extends Activity implements View.OnClickListener,
         if (connect_flag) {
             if (checkFlag) {
 
-                if (StaticVarClass.verify_status == 0) {
+                UserData userData = new UserData(LoginActivity.this);
+                if (userData.GetVerificationStatus() == 0) {
                     // view dialog to verify
                     SetVerifiedDialog();
                 } else {
@@ -350,7 +409,13 @@ public class LoginActivity extends Activity implements View.OnClickListener,
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-        if (v != et_email || v != et_password)
+        if (v == et_password) {
+            et_password.setFocusableInTouchMode(true);
+
+        } else if (v == et_email) {
+            et_email.setFocusableInTouchMode(true);
+
+        } else
             Utility.HideKeyboard(this, getCurrentFocus());
         return false;
     }
@@ -375,6 +440,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
             super.onPreExecute();
             dialog = new ProgressDialog(LoginActivity.this);
             dialog.setMessage(getResources().getString(R.string.wait_message));
+            dialog.setCancelable(false);
             dialog.show();
         }
 
@@ -382,7 +448,15 @@ public class LoginActivity extends Activity implements View.OnClickListener,
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             dialog.dismiss();
-            PostWebservice();
+
+            if (!connect_flag)
+                Utility.ViewDialog(LoginActivity.this, getString(R.string.error_connection));
+
+            if (login_error)
+                Utility.ViewDialog(LoginActivity.this, getString(R.string.fail));
+
+            if (connect_flag && !login_error)
+                PostWebservice();
 
         }
     }

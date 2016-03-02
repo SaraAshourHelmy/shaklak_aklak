@@ -5,7 +5,7 @@
               android:background="@color/light_gray"
               android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -15,16 +15,17 @@
             android:id="@+id/img_close_customFood"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
             android:src="@drawable/close"/>
 
         <TextView
             android:id="@+id/tv_customFood_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/add_recipes"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -35,12 +36,11 @@
             android:id="@+id/img_add_customFood"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/done"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -67,8 +67,8 @@
         android:layout_height=".5dp"
         android:background="@color/black"></View>
 
-    <RelativeLayout
-        android:id="@+id/rltv_custom_servingSize"
+    <LinearLayout
+        android:id="@+id/lnr_custom_servingSize"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/white"
@@ -78,632 +78,53 @@
             android:id="@+id/tv_custom_servingSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
             android:text="@string/serving_size"
             android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/et_custom_servingSize_value"
-            android:layout_width="@dimen/customItem_width"
+            android:layout_width="150dp"
             android:layout_height="@dimen/register_section"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/tv_servingSize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/rectangle_border"
             android:gravity="center"
             android:numeric="integer"
             android:textColor="@color/pink"/>
 
-
-        <Spinner
-            android:id="@+id/spnr_units"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:paddingLeft="5dp"/>
-
+        <TextView
+            android:id="@+id/tv_unit_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/gram"/>
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:id="@+id/img_custom_serving_arrow"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:visibility="gone"/>
+            android:src="@drawable/right_arrow"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height=".5dp"
         android:background="@color/black"></View>
 
-    <ScrollView
-        android:id="@+id/scrl_customFood"
+    <include
+        layout="@layout/create_custom_food"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:background="@color/light_gray"
-        android:scrollbarSize="2dp"
-        android:scrollbarStyle="outsideInset"
-        android:scrollbarThumbVertical="@color/black"
-        android:scrollbars="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
-            <!-- Calories -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-
-                <TextView
-                    android:id="@+id/tv_custom_calories"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/calories"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_calories_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-
-            <!-- Total Fat -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_totalFat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/total_fat"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_totalFat_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Saturated Fat -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_satFat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/saturated_fat"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_satFat_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-
-            <!-- Cholestrol -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_cholest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/cholest"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_cholest_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Sodium -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_sodium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/sodium"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_sodium_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Potassium -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section">
-
-                <TextView
-                    android:id="@+id/tv_custom_potassium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/potassium"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_potassium_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-
-            <!-- Total carbo -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section">
-
-                <TextView
-                    android:id="@+id/tv_custom_totalCarbo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/total_carbo"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_totalCarbo_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Dietary Fiber -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_dietaryFiber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/dietary_fiber"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_dietaryFiber_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Sugars -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section">
-
-                <TextView
-                    android:id="@+id/tv_custom_sugars"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/sugars"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_sugars_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-            <!-- Protein -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section">
-
-                <TextView
-                    android:id="@+id/tv_custom_protein"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/protein"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_protein_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Vitamin A -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_VitaminA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/vitamin_a"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_vitaminA_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Vitamin C -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_VitaminC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/vitamin_c"
-                    android:textColor="@color/black"/>
-
-                <EditText
-
-                    android:id="@+id/et_custom_vitaminC_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Calcium -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_calcium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/calcium"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_calcium_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height=".5dp"
-                android:background="@color/black"></View>
-
-            <!-- Iron -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/register_section"
-                >
-
-                <TextView
-                    android:id="@+id/tv_custom_iron"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/iron"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/et_custom_iron_value"
-                    android:layout_width="@dimen/customItem_width"
-                    android:layout_height="@dimen/customItem_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rectangle_border"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:hint="0.0"
-                    android:numeric="decimal"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="@dimen/custom_food_font"
-                    />
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"></include>
 
 </LinearLayout>

@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 import media_sci.com.shaklak_aklak.R;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 /**
@@ -39,7 +41,16 @@ public class ItemAdapter extends ArrayAdapter<Ingredients> {
         TextView tv_itemName = (TextView) convertView.findViewById(R.id.tv_item_name);
         ImageView img_arrow = (ImageView) convertView.findViewById(R.id.img_item_arrow);
 
-        tv_itemName.setText(lst_items.get(position).getItem_name_en());
+        UserData userData = new UserData(context);
+        Utility.TextDirection(context, tv_itemName, StaticVarClass.TextView_Type);
+
+        if (userData.GetLanguage() == StaticVarClass.English) {
+            tv_itemName.setText(lst_items.get(position).getItem_name_en());
+
+        } else if (userData.GetLanguage() == StaticVarClass.Arabic) {
+            tv_itemName.setText(lst_items.get(position).getItem_name_ar());
+        }
+
         tv_itemName.setTypeface(Utility.GetFont(context));
         return convertView;
 

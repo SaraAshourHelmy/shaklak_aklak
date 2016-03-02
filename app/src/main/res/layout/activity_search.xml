@@ -20,7 +20,7 @@
             android:layout_weight="10"
             android:background="@color/light_gray"
             android:focusable="false"
-            android:hint="search"
+            android:hint="@string/search"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:textSize="@dimen/custom_food_font"/>
@@ -59,13 +59,15 @@
 
         <LinearLayout
             android:id="@+id/lnr_sideIndex"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-
             android:orientation="vertical"
-            android:visibility="visible"></LinearLayout>
+            android:visibility="visible">
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progress_db"

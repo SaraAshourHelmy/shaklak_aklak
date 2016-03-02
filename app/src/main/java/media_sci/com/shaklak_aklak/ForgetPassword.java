@@ -32,6 +32,7 @@ import media_sci.com.utility.Utility;
 /**
  * Created by Bassem on 12/13/2015.
  */
+
 public class ForgetPassword extends Activity implements View.OnClickListener
         , View.OnTouchListener {
 
@@ -41,6 +42,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener
     private int user_id = -1;
     private String code = "";
     private boolean forget_flag = false;
+    private boolean correct_mail = true;
     private View view;
 
     @Override
@@ -101,9 +103,9 @@ public class ForgetPassword extends Activity implements View.OnClickListener
             checkFlag = false;
             et_email.requestFocus();
             if (validMail == 2)
-                et_email.setError("Please enter Email");
+                et_email.setError(getString(R.string.error_no_email));
             else if (validMail == 3)
-                et_email.setError("Email is wrong");
+                et_email.setError(getString(R.string.error_email));
         }
 
         return checkFlag;
@@ -123,6 +125,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
                 HttpResponse response = httpClient.execute(httpPost);
                 int status = response.getStatusLine().getStatusCode();
+                Log.e("forget_status", status + "");
                 if (status == 200) {
 
                     // check json result
@@ -134,6 +137,8 @@ public class ForgetPassword extends Activity implements View.OnClickListener
 
                     Log.e("forget_code", code);
                     forget_flag = true;
+                } else if (status == 403 /*or 400 */) {
+                    correct_mail = false;
                 }
             } catch (Exception e) {
                 Log.e("forgetPassword error", "" + e);
@@ -162,7 +167,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(ForgetPassword.this);
-            dialog.setMessage(getResources().getString(R.string.wait_message));
+            dialog.setMessage(getString(R.string.wait_message));
             dialog.show();
         }
 
@@ -177,10 +182,13 @@ public class ForgetPassword extends Activity implements View.OnClickListener
                 startActivity(intent);
                 finish();
             } else {
-                Utility.ViewDialog(ForgetPassword.this, getString(R.string.fail));
+                if (!correct_mail) {
+                    Utility.ViewDialog(ForgetPassword.this, getString
+                            (R.string.wrong_email));
+                } else
+                    Utility.ViewDialog(ForgetPassword.this, getString(R.string.fail));
             }
         }
     }
-
 
 }

@@ -8,18 +8,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import media_sci.com.adapter.ItemAdapter;
+import media_sci.com.adapter.SimpleAdapter;
 import media_sci.com.models.Ingredients;
+import media_sci.com.shaklak_aklak.MainActivity;
 import media_sci.com.shaklak_aklak.R;
 import media_sci.com.utility.FavAndMeal;
 import media_sci.com.utility.StaticVarClass;
@@ -29,12 +33,15 @@ public class CustomFoodFragment extends Fragment implements
         View.OnTouchListener, View.OnClickListener {
 
     private String[] units_arr;
-    private ImageView img_close, img_add_food;
-    private TextView tv_action_title, tv_servingSize;
+    private ArrayList<String> units_name = new ArrayList<>();
+    private ImageView img_close, img_add_food, img_serving_arrow;
+    private TextView tv_action_title, tv_servingSize,
+            tv_servingSize_done, tv_unit_name;
     private EditText et_item_name, et_servingSize_value;
-    private RelativeLayout rltv_servingSize;
+    private LinearLayout lnr_servingSize, lnr_dialog;
 
     // item contents
+    private ListView lst_servingSize;
     private TextView tv_calories, tv_totalFat, tv_satFat;
     private EditText et_calories_value, et_totalFat_value, et_satFat_value;
     private TextView tv_cholest, tv_sodium, tv_potassium, tv_protein;
@@ -51,6 +58,7 @@ public class CustomFoodFragment extends Fragment implements
 
     private String item_name = "", unit_name = "gram";
     private int unit_value = 0;
+    private int item_type = 0;
     private View view;
 
     @Override
@@ -66,18 +74,24 @@ public class CustomFoodFragment extends Fragment implements
         // Utility.PushLayoutKeyboard(getActivity());
 
         units_arr = getResources().getStringArray(R.array.arr_units);
+        for (int i = 0; i < units_arr.length; i++) {
+            units_name.add(units_arr[i]);
+        }
+
 
         ArrayList<Ingredients> lst_test = Ingredients.GetCustomIngredients(getActivity());
         Log.e("count_list", lst_test.size() + "");
 
+        tv_unit_name = (TextView) view.findViewById(R.id.tv_unit_name);
+        img_serving_arrow = (ImageView) view.findViewById(R.id.img_custom_serving_arrow);
         img_close = (ImageView) view.findViewById(R.id.img_close_customFood);
         img_add_food = (ImageView) view.findViewById(R.id.img_add_customFood);
         tv_action_title = (TextView) view.findViewById(R.id.tv_customFood_title);
         tv_servingSize = (TextView) view.findViewById(R.id.tv_custom_servingSize);
         et_servingSize_value = (EditText) view.findViewById(R.id.et_custom_servingSize_value);
         et_item_name = (EditText) view.findViewById(R.id.et_custom_itemName);
-        rltv_servingSize = (RelativeLayout) view.findViewById(R.id.rltv_custom_servingSize);
-        spnr_units = (Spinner) view.findViewById(R.id.spnr_units);
+        lnr_servingSize = (LinearLayout) view.findViewById(R.id.lnr_custom_servingSize);
+        // spnr_units = (Spinner) view.findViewById(R.id.spnr_units);
 
         // item contents
         tv_calories = (TextView) view.findViewById(R.id.tv_custom_calories);
@@ -126,39 +140,15 @@ public class CustomFoodFragment extends Fragment implements
         et_calcium_value.setOnTouchListener(this);
         et_iron_value.setOnTouchListener(this);
 
-        SetSpnrUnit();
+        // SetSpnrUnit();
         SetFont();
 
         img_add_food.setOnClickListener(this);
         img_close.setOnClickListener(this);
-        rltv_servingSize.setOnClickListener(this);
+        lnr_servingSize.setOnClickListener(this);
+        img_serving_arrow.setOnClickListener(this);
 
         Utility.CheckKeyboardVisible(view);
-
-    }
-
-    private void SetSpnrUnit() {
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, units_arr);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnr_units.setAdapter(adapter);
-        spnr_units.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-
-                if (position == 0)
-                    unit_name = "gram";
-                else
-                    unit_name = "liter";
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
     }
 
@@ -199,6 +189,33 @@ public class CustomFoodFragment extends Fragment implements
         et_iron_value.setTypeface(typeface);
     }
 
+    private void SetSpnrUnit() {
+
+        /*
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, units_arr);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnr_units.setAdapter(adapter);
+        spnr_units.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                item_type = position;
+                if (position == 0)
+
+                    unit_name = "gram";
+                else
+                    unit_name = "liter";
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
+
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -206,7 +223,6 @@ public class CustomFoodFragment extends Fragment implements
         v.setFocusableInTouchMode(true);
         return false;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -219,32 +235,87 @@ public class CustomFoodFragment extends Fragment implements
         } else if (v == img_close) {
             getActivity().onBackPressed();
 
-        } else if (v == rltv_servingSize) {
-
+        } else if (v == tv_servingSize_done) {
+            HideServingSize();
+        } else if (v == img_serving_arrow || v == lnr_servingSize) {
+            SetServingSize();
         }
     }
 
     private void CheckDataValidation() {
         GetCustomData();
-        if (item_name.length() > 0 && unit_name.length() > 0 && unit_value > 0) {
+        if (item_name.length() > 0 && unit_name.length() > 0 && unit_value > 0
+                && item_name.trim().length() > 0) {
 
             AddCustomFood();
 
         } else {
 
 
-            if (et_servingSize_value.getText().length() == 0) {
-                et_servingSize_value.setError("Enter Unit Value");
+            if (et_servingSize_value.getText().length() == 0 ||
+                    et_servingSize_value.getText().toString().trim().length() == 0) {
+                et_servingSize_value.setError(getString(R.string.error_serving_size));
                 et_servingSize_value.setFocusable(true);
                 et_servingSize_value.requestFocus();
             }
-            if (item_name.length() == 0) {
-                et_item_name.setError("Enter Food Name");
-                et_item_name.setHintTextColor(getResources().getColor(R.color.red));
+            if (item_name.length() == 0 || item_name.trim().length() == 0) {
+                et_item_name.setError(getString(R.string.error_food_name));
+                //et_item_name.setHintTextColor(getResources().getColor(R.color.red));
                 et_item_name.setFocusable(true);
                 et_item_name.requestFocus();
             }
         }
+    }
+
+    private void HideServingSize() {
+
+        MainActivity.screenNo = 0;
+        MainActivity.mTabHost.getTabWidget().setEnabled(true);
+        Animation bottom_down = AnimationUtils.loadAnimation(getActivity(),
+                R.anim.slide_down);
+        lnr_dialog.startAnimation(bottom_down);
+        lnr_dialog.setVisibility(View.GONE);
+    }
+
+    private void SetServingSize() {
+
+        MainActivity.mTabHost.getTabWidget().setEnabled(false);
+        MainActivity.screenNo = 2;
+        Animation bottomUp = AnimationUtils.loadAnimation(getActivity(),
+                R.anim.slide_up);
+
+        ViewGroup viewGroup = (ViewGroup) getActivity().findViewById(R.id.rltv_main);
+        lnr_dialog = (LinearLayout) viewGroup.findViewById(R.id.lnr_dialog);
+        tv_servingSize_done = (TextView) viewGroup.findViewById(R.id.tv_servingSize_done);
+        lst_servingSize = (ListView) viewGroup.findViewById(R.id.lst_serving_size);
+        tv_servingSize_done.setOnClickListener(this);
+
+        // set animation when open view
+        lnr_dialog.startAnimation(bottomUp);
+        lnr_dialog.setVisibility(View.VISIBLE);
+
+
+        //  if (ingredients.getType() == 0)
+        // set default value
+        //lst_unitName.add("100g");
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), R.layout.adapter_simple
+                , units_name, StaticVarClass.Black_Color);
+
+        lst_servingSize.setAdapter(simpleAdapter);
+        lst_servingSize.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                   @Override
+                                                   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                                                       unit_name = units_name.get(position);
+                                                       tv_unit_name.setText(unit_name);
+                                                   }
+
+                                               }
+
+        );
+
     }
 
     private void GetCustomData() {
@@ -328,6 +399,7 @@ public class CustomFoodFragment extends Fragment implements
         ingredients.setIron(iron);
         ingredients.setUnit_name(unit_name);
         ingredients.setUnit_value(unit_value);
+        ingredients.setType(item_type);
 
         ArrayList<Ingredients> lst_customMeal = new ArrayList<>();
         lst_customMeal.add(ingredients);

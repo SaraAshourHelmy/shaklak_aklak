@@ -79,7 +79,7 @@ public class UserCalculation {
     }
 
     public double Cholest() {
-        return 300;
+        return 300 ;
     }
 
     public double SodiumCalc() {

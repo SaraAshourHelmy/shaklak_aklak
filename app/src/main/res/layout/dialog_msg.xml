@@ -4,23 +4,26 @@
               android:layout_height="wrap_content"
               android:background="@color/white"
               android:orientation="vertical"
-              android:padding="30dp">
+              android:padding="20dp">
 
     <TextView
-        android:textSize="@dimen/text_size"
+        android:textSize="17sp"
         android:textColor="@color/black"
         android:id="@+id/tv_msg"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/btn_ok"
-        android:layout_width="@dimen/custom_food_width"
-        android:layout_height="@dimen/register_section"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_selected"
         android:gravity="center"
+        android:textSize="@dimen/custom_food_font"
+        android:textColor="@color/black"
         android:text="@string/ok"/>
 </LinearLayout>

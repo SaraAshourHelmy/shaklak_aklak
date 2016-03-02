@@ -4,20 +4,31 @@
               android:layout_height="60dp"
               android:orientation="horizontal">
 
+    <ImageView
+        android:src="@drawable/close"
+        android:id="@+id/img_delete_fav"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"/>
+
     <TextView
-        android:textColor="@color/black"
-        android:textSize="15sp"
         android:id="@+id/tv_favouriteName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:paddingLeft="10dp"/>
-
-    <TextView
-        android:id="@+id/tv_favouriteDate"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="right"
-        android:paddingRight="10dp"/>
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"/>
+    <!--
+
+        <TextView
+            android:id="@+id/tv_favouriteDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingRight="10dp"/> -->
+
 </LinearLayout>

@@ -12,8 +12,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import media_sci.com.models.Category;
+import media_sci.com.models.UserData;
 import media_sci.com.shaklak_aklak.R;
 import media_sci.com.utility.CustomImageLoader;
+import media_sci.com.utility.StaticVarClass;
 import media_sci.com.utility.Utility;
 
 
@@ -47,7 +49,20 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         CustomImageLoader.getInstance().loadImage(lst_category.get(position).getImg_url()
                 , img_category, null);
 
-        tv_catName.setText(lst_category.get(position).getName_en());
+        UserData userData = new UserData(context);
+        String cat_arabic = "";
+
+        /*
+        try {
+            cat_arabic = URLDecoder.decode(lst_category.get(position).getName_ar()
+                    , "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }*/
+        if (userData.GetLanguage() == StaticVarClass.English)
+            tv_catName.setText(lst_category.get(position).getName_en());
+        else if (userData.GetLanguage() == StaticVarClass.Arabic)
+            tv_catName.setText(lst_category.get(position).getName_ar());
 
         Typeface typeface = Utility.GetFont(context);
         tv_catName.setTypeface(typeface);

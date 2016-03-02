@@ -301,7 +301,7 @@ public class ParseData {
     public static void ParseCustomMeals(JSONObject customMealJson, Context context) {
 
         // remove old data
-        Ingredients.RemoveCustomMeal(context);
+        //Ingredients.RemoveCustomMeal(context);
         ArrayList<Ingredients> lst_ingredient = new ArrayList<>();
 
         Ingredients ingredient;
@@ -367,12 +367,13 @@ public class ParseData {
 
                 myMealObject = myMealList.getJSONObject(i);
                 userMeal = new UserMeal();
-                // userMeal.setId(myMealObject.getInt("id"));
+                userMeal.setId(myMealObject.getString("device_id"));
                 userMeal.setIngredient_id(myMealObject.getString("ingredient_id"));
                 userMeal.setDate(myMealObject.getString("date"));
                 userMeal.setIs_custom(myMealObject.getInt("is_custom"));
                 userMeal.setServing_size(myMealObject.getDouble("serving_size"));
                 userMeal.setServing_no(myMealObject.getDouble("serving_number"));
+                userMeal.setCounter_id(myMealObject.getInt("counter_id"));
 
                 lst_userMeal.add(userMeal);
             }

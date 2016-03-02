@@ -1,5 +1,6 @@
 package media_sci.com.utility;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -14,13 +16,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +43,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import media_sci.com.models.UserData;
 import media_sci.com.service.DataService;
@@ -50,6 +56,29 @@ public class Utility {
 
     private static int TimeOut = 20;
     private static SharedPreferences shared_db;
+
+    public static void TextDirection(Context context, View txt_view
+            , int view_type) {
+
+        UserData userData = new UserData(context);
+        if (userData.GetLanguage() == StaticVarClass.Arabic) {
+            if (view_type == StaticVarClass.TextView_Type) {
+
+                ((TextView) txt_view).setGravity(Gravity.RIGHT
+                        | Gravity.CENTER_VERTICAL);
+            } else
+                ((EditText) txt_view).setGravity(Gravity.RIGHT
+                        | Gravity.CENTER_VERTICAL);
+
+        } else {
+
+            if (view_type == StaticVarClass.TextView_Type) {
+
+                ((TextView) txt_view).setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+            } else
+                ((EditText) txt_view).setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        }
+    }
 
     public static void HideKeyboard(Context context, View v) {
         try {
@@ -148,7 +177,7 @@ public class Utility {
 
     }
 
-    public static void CreateDb(Context context, int try_again) {
+    public static void CreateDb(final Context context, int try_again) {
 
         shared_db = context.getSharedPreferences("check_db", context.MODE_PRIVATE);
         boolean check = shared_db.getBoolean("check", false);
@@ -174,32 +203,48 @@ public class Utility {
                 GetData getData = new GetData(context, 1);
 
             } else {
+
                 // call service
                 Intent service_intent = new Intent(context, DataService.class);
                 service_intent.putExtra("type", 1);
                 context.startService(service_intent);
 
                 UserData userData = new UserData(context);
+                Log.e("user_id", userData.GetUserID() + "");
 
                 if (userData.GetUserID() != -1) {
-                    if (StaticVarClass.verify_status == 0) {
-                        Intent intent = new Intent(context, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        context.startActivity(intent);
+                    if (userData.GetVerificationStatus() == 0) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(context, LoginActivity.class);
+                                context.startActivity(intent);
+                                ((Activity) context).finish();
+                            }
+                        }, 1500);
 
-                    } else if (StaticVarClass.verify_status == 1) {
-                        Intent intent = new Intent(context, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        context.startActivity(intent);
+                    } else if (userData.GetVerificationStatus() == 1) {
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(context, MainActivity.class);
+                                context.startActivity(intent);
+                                ((Activity) context).finish();
+                            }
+                        }, 1500);
+
                     }
 
                 } else {
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    context.startActivity(intent);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
+                        }
+                    }, 1500);
                 }
             }
         }
@@ -381,7 +426,56 @@ public class Utility {
         if (type == 1)
             MainActivity.mTabHost.getTabWidget().setVisibility(View.VISIBLE);
         else
-            MainActivity.mTabHost.getTabWidget().setVisibility(View.GONE);
+            MainActivity.mTabHost.getTabWidget().setVisibility(View.INVISIBLE);
+    }
+
+    public static void SetSettingLanguage(Context context, int language) {
+        Locale locale = null;
+        UserData userData = new UserData(context);
+
+        if (language == StaticVarClass.Arabic) {
+            locale = new Locale("ar");
+            Locale.setDefault(locale); // for layout
+            userData.SetLanguage(StaticVarClass.Arabic
+                    , StaticVarClass.Setting_language);
+
+        } else if (language == StaticVarClass.English) {
+
+            locale = new Locale("en");
+            Locale.setDefault(locale);
+            userData.SetLanguage(StaticVarClass.English,
+                    StaticVarClass.Setting_language);
+        }
+
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config,
+                context.getResources().getDisplayMetrics());
+
+    }
+
+    public static void GetDevicesLanguage(Context context) {
+
+        UserData userData = new UserData(context);
+        String lang = Locale.getDefault().getLanguage();
+        Log.e("language", lang);
+        if (lang.equals("en"))
+            userData.SetLanguage(StaticVarClass.English
+                    , StaticVarClass.Device_language);
+        else if (lang.equals("ar"))
+            userData.SetLanguage(StaticVarClass.Arabic,
+                    StaticVarClass.Device_language);
+
+        /*
+        Intent intent = new Intent(context, Splash.class);
+        context.startActivity(intent);
+        ((Activity) context).finish();*/
+
+    }
+
+    public static void RemoveError(EditText et_view) {
+        et_view.setError(null);
+
     }
 
 }

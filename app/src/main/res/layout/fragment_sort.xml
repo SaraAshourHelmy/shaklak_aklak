@@ -16,18 +16,41 @@
         android:layout_height=".5dp"
         android:background="@color/black"></View>
 
-    <EditText
-        android:id="@+id/et_sort_search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/white"
-        android:focusable="false"
-        android:gravity="center_vertical"
-        android:hint="Search"
-        android:paddingLeft="10dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/dark_gray"
-        android:textSize="@dimen/custom_food_font"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_sort_search"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_gray"
+            android:textSize="@dimen/custom_food_font"/>
+
+        <TextView
+            android:id="@+id/tv_sort_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/cancel"
+            android:textColor="@color/pink"
+            android:textSize="@dimen/custom_food_font"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

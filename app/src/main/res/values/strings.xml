@@ -57,6 +57,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete_msg">Are you sure to delete item ?</string>
+    <string name="clear_msg">Are you sure to clear all items ?</string>
+
     <string name="custom_foods">Custom Foods</string>
     <string name="highest">Highest</string>
     <string name="lowest">Lowest</string>
@@ -93,6 +95,53 @@
     <string name="verification_code">Verification Code</string>
     <string name="try_again">Try again</string>
     <string name="confirm">Confirm</string>
+    <string name="no_data">No Data Available</string>
+    <string name="lang">Language</string>
+    <string name="search">Search</string>
+    <string name="liter">L</string>
+    <string name="register_success">Register Success</string>
+    <string name="error_weight">Please enter weight</string>
+    <string name="wrong_weight">weight is wrong</string>
+
+    <string name="error_height">Please enter height</string>
+    <string name="wrong_height">height is wrong</string>
+
+    <string name="error_age">Please enter Age</string>
+    <string name="error_gender">Select gender</string>
+    <string name="error_password">Password must be at least 4 characters</string>
+    <string name="error_confirm_password">Password Not Match</string>
+    <string name="error_no_email">Please enter Email</string>
+    <string name="error_email">Email is wrong</string>
+    <string name="error_mobile">Mobile number is wrong</string>
+    <string name="no_mobile">Please enter mobile number</string>
+    <string name="error_last_name">Please Enter Last Name</string>
+    <string name="error_first_name">Please Enter First Name</string>
+    <string name="error_code">Please Enter Code</string>
+    <string name="error_change_calories">Please Enter Calories</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="mobile_no">Mobile Number</string>
+    <string name="gender">Gender</string>
+    <string name="male"> Male</string>
+    <string name="female"> Female</string>
+    <string name="age">Age</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="cm">cm</string>
+    <string name="Kg">Kg</string>
+    <string name="done">Done</string>
+
+    <string name="error_food_name">Enter Serving Name</string>
+    <string name="error_serving_size">Enter Serving Size</string>
+
+    <string name="not_found">No exercise</string>
+    <string name="heavy_ex">Very hard</string>
+    <string name="delete">Delete</string>
+    <string name="clear_all">Clear All</string>
+
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+
 
     <array name="arr_exercise">
         <item>No exercise</item>
@@ -105,6 +154,11 @@
     <array name="arr_units">
         <item>gram</item>
         <item>liter</item>
+    </array>
+
+    <array name="arr_language">
+        <item>English</item>
+        <item>عربي</item>
     </array>
 
 </resources>

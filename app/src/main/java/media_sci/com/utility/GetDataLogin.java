@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import media_sci.com.models.UserData;
-import media_sci.com.models.UserMeal;
 import media_sci.com.shaklak_aklak.MainActivity;
+import media_sci.com.shaklak_aklak.R;
 
 public class GetDataLogin {
 
@@ -30,6 +30,7 @@ public class GetDataLogin {
     private String date;
     private int is_today;
     private int type;
+    private boolean meal_flag = false, fav_flag = false, custom_meal_flag = false;
 
     public GetDataLogin(Context context, String date, int is_today
             , int type) {
@@ -74,11 +75,12 @@ public class GetDataLogin {
                 //
                 if (type == 1 || type == 3) {
                     Log.e("type", type + "");
-                    UserMeal.ClearUserMeals(context);
+                    //UserMeal.ClearUserMeals(context);
                 }
 
                 // parse update and delete unit
                 ParseData.ParseMyMeal(myMealJson, context);
+                meal_flag = true;
             }
         } catch (Exception e) {
             Log.e("get_myMeal_error", "" + e);
@@ -112,6 +114,7 @@ public class GetDataLogin {
 
                 // parse update and delete unit
                 ParseData.ParseFavourite(favJson, context);
+                fav_flag = true;
             }
         } catch (Exception e) {
             Log.e("get_fav_error", "" + e);
@@ -143,6 +146,7 @@ public class GetDataLogin {
 
                 // parse update and delete unit
                 ParseData.ParseCustomMeals(customMealJson, context);
+                custom_meal_flag = true;
             }
         } catch (Exception e) {
             Log.e("get_customMeal_error", "" + e);
@@ -175,7 +179,7 @@ public class GetDataLogin {
             super.onPreExecute();
             if (type != 3) {
                 dialog = new ProgressDialog(context);
-                dialog.setMessage("Please wait ...");
+                dialog.setMessage(context.getString(R.string.wait_message));
                 dialog.setCancelable(false);
                 dialog.show();
             }
@@ -190,10 +194,17 @@ public class GetDataLogin {
 
             if (type == 1) {
 
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                context.startActivity(intent);
-                ((Activity) context).finish();
+                if (meal_flag && fav_flag && custom_meal_flag) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    context.startActivity(intent);
+                    ((Activity) context).finish();
+                } else {
+                    UserData userData = new UserData(context);
+                    userData.ClearUserData();
+
+                    Utility.ViewDialog(context, context.getString(R.string.error_connection));
+                }
             }
         }
     }

@@ -39,7 +39,6 @@ public class FindFoodFragment extends Fragment implements
         return v;
     }
 
-
     private void SetupTools(View view) {
 
         lst_category = (ListView) view.findViewById(R.id.lst_category);
@@ -58,7 +57,6 @@ public class FindFoodFragment extends Fragment implements
         lst_category.setAdapter(categoryAdapter);
         lst_category.setOnItemClickListener(this);
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

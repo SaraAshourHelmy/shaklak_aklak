@@ -28,6 +28,7 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textColor="@color/black"/>
 
         <View
@@ -35,8 +36,8 @@
             android:layout_height=".5dp"
             android:background="@color/black"></View>
 
-        <RelativeLayout
-            android:id="@+id/rltv_servingSize"
+        <LinearLayout
+            android:id="@+id/lnr_servingSize"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
@@ -46,38 +47,40 @@
                 android:id="@+id/tv_servingSize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="@string/serving_size"
                 android:textColor="@color/black"/>
 
             <TextView
 
                 android:id="@+id/tv_servingSize_value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/tv_servingSize"
+                android:layout_weight="1"
                 android:textColor="@color/pink"/>
 
             <ImageView
-                android:src="@drawable/right_arrow"
+                android:id="@+id/img_serving_size_arrow"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/right_arrow"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height=".5dp"
             android:background="@color/black"></View>
 
-        <RelativeLayout
-            android:id="@+id/rltv_servingNo"
+        <LinearLayout
+            android:id="@+id/lnr_servingNo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
@@ -87,8 +90,9 @@
                 android:id="@+id/tv_servingNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="@string/serving_no"
                 android:textColor="@color/black"/>
 
@@ -97,35 +101,40 @@
                 android:id="@+id/tv_servingNo_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/tv_servingNo"
                 android:textColor="@color/pink"/>
 
             <TextView
 
                 android:id="@+id/tv_serving_percent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/tv_servingNo_value"
+                android:layout_weight="1"
                 android:textColor="@color/pink"/>
 
             <ImageView
-                android:src="@drawable/right_arrow"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/right_arrow"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height=".5dp"
             android:background="@color/black"></View>
+
+        <include
+            layout="@layout/nutrition_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"></include>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -871,14 +880,13 @@
 
         <TextView
             android:id="@+id/tv_servingSize_done"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:background="@color/popUp_color"
-            android:gravity="right|center_vertical"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="Done"
+            android:text="@string/done"
             android:textColor="@color/black"
             android:textSize="17sp"/>
 
@@ -889,12 +897,13 @@
             android:background="@color/popUp_color"></ListView>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/lnr_picker"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:background="@color/popUp_color"
+        android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:visibility="gone">
@@ -903,35 +912,41 @@
             android:id="@+id/tv_servingNo_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:background="@color/popUp_color"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="Done"
+            android:text="@string/done"
             android:textColor="@color/black"
             android:textSize="17sp"/>
 
-        <NumberPicker
-            android:id="@+id/pkr_integer"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tv_servingNo_done"
             android:layout_marginTop="10dp"
-            ></NumberPicker>
+            android:orientation="horizontal">
 
-        <NumberPicker
+            <NumberPicker
+                android:id="@+id/pkr_integer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_weight="1"
+                ></NumberPicker>
 
-            android:id="@+id/pkr_float"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_servingNo_done"
-            android:layout_marginTop="10dp">
+            <NumberPicker
 
-        </NumberPicker>
+                android:id="@+id/pkr_float"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
 
-    </RelativeLayout>
+            </NumberPicker>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -18,12 +18,12 @@
         android:background="@color/black"/>
 
     <ListView
-        android:divider="@color/black"
-        android:dividerHeight=".3dp"
-        android:scrollbars="none"
         android:id="@+id/lst_favourite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       ></ListView>
+        android:divider="@color/black"
+        android:dividerHeight=".3dp"
+        android:scrollbars="none"
+        ></ListView>
 
 </LinearLayout>

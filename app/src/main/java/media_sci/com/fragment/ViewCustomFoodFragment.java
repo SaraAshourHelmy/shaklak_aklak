@@ -33,7 +33,9 @@ public class ViewCustomFoodFragment extends Fragment implements
     private TextView tv_actionTitle;
     private ImageView img_addFood, img_actionIcon;
     private EditText et_search;
+    private TextView tv_search_cancel;
     private String img;
+    private ArrayList<Ingredients> searchList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +50,7 @@ public class ViewCustomFoodFragment extends Fragment implements
 
         // check keyboard
         Utility.CheckKeyboardVisible(view);
+        searchList.clear();
 
         view.setOnTouchListener(this);
 
@@ -60,6 +63,10 @@ public class ViewCustomFoodFragment extends Fragment implements
         img_addFood = (ImageView) view.findViewById(R.id.img_add_food);
         img_actionIcon = (ImageView) view.findViewById(R.id.img_actionFood_icon);
         et_search = (EditText) view.findViewById(R.id.et_customFood_search);
+        tv_search_cancel = (TextView) view.findViewById(R.id.tv_customFood_cancel);
+
+        tv_search_cancel.setOnClickListener(this);
+
         lst_custom_food = (ListView) view.findViewById(R.id.lst_custom_food);
         SetFont();
 
@@ -90,6 +97,11 @@ public class ViewCustomFoodFragment extends Fragment implements
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                if (s.length() > 0)
+                    tv_search_cancel.setVisibility(View.VISIBLE);
+                else
+                    tv_search_cancel.setVisibility(View.GONE);
+
                 SearchItems(s.toString());
             }
 
@@ -111,11 +123,13 @@ public class ViewCustomFoodFragment extends Fragment implements
         Typeface typeface = Utility.GetFont(getActivity());
         tv_actionTitle.setTypeface(typeface, Typeface.BOLD);
         et_search.setTypeface(typeface);
+        tv_search_cancel.setTypeface(typeface);
     }
 
     private void SearchItems(String txt) {
 
-        ArrayList<Ingredients> searchList = new ArrayList<>();
+        //ArrayList<Ingredients> searchList = new ArrayList<>();
+        searchList.clear();
 
         int searchListLength = searchList.size();
         for (int i = 0; i < lst_myMeals.size(); i++) {
@@ -138,7 +152,11 @@ public class ViewCustomFoodFragment extends Fragment implements
 
         Utility.HideKeyboard(getActivity(), getActivity().getCurrentFocus());
 
-        OpenItemDetailsFragment(lst_myMeals.get(position).getCustomID());
+        if (searchList.size() > 0) {
+            OpenItemDetailsFragment(searchList.get(position).getCustomID());
+        } else {
+            OpenItemDetailsFragment(lst_myMeals.get(position).getCustomID());
+        }
 
     }
 
@@ -166,6 +184,9 @@ public class ViewCustomFoodFragment extends Fragment implements
         if (v == img_addFood) {
 
             OpenCustomFoodFragment();
+        } else if (v == tv_search_cancel) {
+            et_search.setText("");
+            //SearchItems("");
         }
     }
 

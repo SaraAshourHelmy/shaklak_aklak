@@ -40,7 +40,8 @@ public class Ingredients {
                         "water,energy,protein,fat,sat_fat,cholest," +
                         "carbo_tot,sugars,carbo_fiber,ash,calcium,phosphorus," +
                         "iron,sodium,potassium,vit_a,thiamine_b1,riboflavin_b2," +
-                        "niacin_b3,ascorbic_acid,ndb_no,type,favourite,unit_value,unit_name,counter_id) " +
+                        "niacin_b3,ascorbic_acid,ndb_no,type,favourite,unit_value" +
+                        ",unit_name,counter_id) " +
                         "values(?,?,?,?,?,?,?,?,?,?," +
                         "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -74,6 +75,7 @@ public class Ingredients {
                 insertStmt.bindLong(26, ingredients.unit_value);
                 insertStmt.bindString(27, ingredients.unit_name);
                 insertStmt.bindLong(28, ingredients.counter_id);
+
                 insertStmt.executeInsert();
 
             }
@@ -102,6 +104,8 @@ public class Ingredients {
                     ingredients.setCustomID(c.getString(c.getColumnIndex("id")));
                     ingredients.setCounter_id(c.getInt(c.getColumnIndex("counter_id")));
                     ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name")));
+                    ingredients.setItem_name_ar(c.getString(c.getColumnIndex("item_name")));
+
                     ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
                     ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
                     ingredients.setProtein(c.getDouble(c.getColumnIndex("protein")));
@@ -412,6 +416,8 @@ public class Ingredients {
                     ingredients = new Ingredients();
                     ingredients.setCustomID(c.getString(c.getColumnIndex("id")));
                     ingredients.setItem_name_en(c.getString(c.getColumnIndex("item_name")));
+                    ingredients.setItem_name_ar(c.getString(c.getColumnIndex("item_name")));
+
                     ingredients.setWater(c.getDouble(c.getColumnIndex("water")));
                     ingredients.setEnergy(c.getDouble(c.getColumnIndex("energy")));
                     ingredients.setProtein(c.getDouble(c.getColumnIndex("protein")));

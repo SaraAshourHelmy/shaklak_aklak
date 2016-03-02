@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import media_sci.com.models.Ingredients;
+import media_sci.com.models.UserData;
 import media_sci.com.models.UserMeal;
 import media_sci.com.shaklak_aklak.R;
 import media_sci.com.utility.StaticVarClass;
@@ -41,7 +42,14 @@ public class MealAdapter extends ArrayAdapter<UserMeal> {
         TextView tv_mealName = (TextView) convertView.findViewById(R.id.tv_mealName);
         TextView tv_meal_calories = (TextView) convertView.findViewById(R.id.tv_meal_calories);
 
-        tv_mealName.setText(lst_userMeal.get(position).getItemName());
+        UserData userData = new UserData(context);
+        Utility.TextDirection(context, tv_mealName, StaticVarClass.TextView_Type);
+
+        if (userData.GetLanguage() == StaticVarClass.English)
+            tv_mealName.setText(lst_userMeal.get(position).getItemName_en());
+        else if (userData.GetLanguage() == StaticVarClass.Arabic)
+            tv_mealName.setText(lst_userMeal.get(position).getItemName_ar());
+
         tv_mealName.setTypeface(Utility.GetFont(context));
         tv_meal_calories.setTypeface(Utility.GetFont(context));
 
@@ -60,7 +68,8 @@ public class MealAdapter extends ArrayAdapter<UserMeal> {
                 .get(position).getServing_size() * ingredients.getEnergy();
 
         tv_meal_calories.setText(
-                Utility.GetDecimalFormat(calories) + " " + StaticVarClass.kcal);
+                Utility.GetDecimalFormat(calories) + " " +
+                        context.getString(R.string.kcal));
 
         return convertView;
     }
